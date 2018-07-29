@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+.header {
+
+}
+
+.info {
+
+}
+
+.main {
+
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  place-content: center;
+}
+
+.field {
+  border: 1px solid black;
+  height: 10vw;
+  width: 10vw;
+}
+
+.footer {
+
+}
+
+.status {
+
+}
