@@ -2,35 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+  <script src="client.js"></script>
   <link href="styles.css" rel="stylesheet">
   <title>2-Player Tic-Tac-Toe online game</title>
 </head>
 <body>
-<header class="header">
-  <h1>
-    Tic-Tac-Toe
-  </h1>
-</header>
-<main class="main">
-  <section class="info">
-    <p>Test Info Feld</p>
+<div class="page__wrap">
+  <header class="header__wrap">
+    <h1>
+      Tic-Tac-Toes
+    </h1>
+    <p>Zwei spieler Online match</p>
+  </header>
+  <section class="header__info">
+    <p>Sie spielen als X</p>
   </section>
-  <section class="board">
-    <div class="field">X</div>
-    <div class="field">O</div>
-    <div class="field">X</div>
-    <div class="field">O</div>
-    <div class="field">X</div>
-    <div class="field">O</div>
-    <div class="field">X</div>
-    <div class="field">O</div>
-    <div class="field">X</div>
-  </section>
-</main>
-<footer class="footer">
-  <section class="status">
-<p>Test Status Feld</p>
-  </section>
-</footer>
+  <main class="main__wrap">
+    <section>
+      <table class="field__wrap">
+        <tbody>
+        <tr class="field__row">
+          <td class="field__cell">X</td>
+          <td class="field__cell">O</td>
+          <td class="field__cell">X</td>
+        </tr>
+        <tr class="field__row">
+          <td class="field__cell">O</td>
+          <td class="field__cell">O</td>
+          <td class="field__cell">X</td>
+        </tr>
+        <tr class="field__row">
+          <td class="field__cell">O</td>
+          <td class="field__cell">O</td>
+          <td class="field__cell">X</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer class="footer__wrap">
+    <section class="footer__status">
+      <p>Test Status Feld</p>
+    </section>
+  </footer>
+</div>
 </body>
 </html>
