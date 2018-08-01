@@ -45,11 +45,11 @@ body {
 }
 
 .field__wrap {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.field__row {
+  border-collapse: separate;
+  border-collapse: separate;
+  border-spacing: 1;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 .field__cell {
@@ -61,6 +61,32 @@ body {
   font-family: sans-serif;
   font-size: 5vw;
   cursor: pointer;
+  /* transform: rotateX(0); */
+}
+
+/* .field__cell.clicked {
+  transform: rotateX(180deg);
+  transition: rotateX .4s ease-in-out;
+} */
+
+.field__cell:hover {
+  box-shadow: 0 0px 10px 0px rgba(0, 0, 0, .5);
+}
+
+.field__cell.one {
+  border-radius: 10px 0 0 0;
+}
+
+.field__cell.three {
+  border-radius: 0 10px 0 0;
+}
+
+.field__cell.seven {
+  border-radius: 0 0 0 10px;
+}
+
+.field__cell.nine {
+  border-radius: 0 0 10px 0;
 }
 
 .footer__wrap {
