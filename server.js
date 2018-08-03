@@ -36,6 +36,7 @@ const divideClients = (socket, clientCount) => {
   }
 };
 
+
 const clientDisconnects = socket => {
   return clients.filter(clientId => clientId === socket.id);
 };
