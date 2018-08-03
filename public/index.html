@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-  <script src="client.js"></script>
+  <script src="client.js" type="module"></script>
   <link href="styles.css" rel="stylesheet">
   <title>2-Player Tic-Tac-Toe online game</title>
 </head>
@@ -19,7 +19,7 @@
       <p>Zwei spieler Online match</p>
     </header>
     <section class="header__info">
-      <p>Sie spielen als X</p>
+      <p class="header__info__content"></p>
     </section>
     <main class="main__wrap">
       <section>
@@ -46,7 +46,7 @@
     </main>
     <footer class="footer__wrap">
       <section class="footer__status">
-        <p>Test Status Feld</p>
+        <p class="footer__status__content"></p>
       </section>
     </footer>
   </div>
