@@ -18,27 +18,24 @@ let clients = {
   spectator: []
 };
 
-// Start WebSocket-Server
-webServer.listen(8083, () => {
-  console.log("Server started at port 8083.");
-});
-
 //
-const divideClients = (socket, clientCount) => {
-  switch (true) {
-    case clientCount < 2:
-      clients.player.push(socket.id);
-      break;
-    case clientCount > 2:
-      clients.spectator.push(socket.id);
-      break;
-    default:
+const addToClients = socket => {
+  if (clients.player.length <= 1) {
+    clients.player.push(socket.id);
+    socket.join("player");
+    io.to("player").emit("message", "player-room");
+  } else {
+    clients.spectator.push(socket.id);
+    socket.join("spectator");
+    io.to("spectator").emit("message", "spectator-room");
   }
 };
 
-
-const clientDisconnects = socket => {
-  return clients.filter(clientId => clientId === socket.id);
+//
+const removeFromClients = socket => {
+  Object.values(clients).forEach(value => {
+    value.splice(value.indexOf(socket.id), 1);
+  });
 };
 
 // 
@@ -62,17 +59,18 @@ const welcomeMessage = (clientCount, socket) => {
   }
 };
 
-io.on("connection", socket => {
+io.sockets.on("connection", socket => {
   // console.log(socket.id);
-  // clients.push(socket.id);
-  divideClients(socket, io.engine.clientsCount);
+  // clients.push(socket.id); 
+  addToClients(socket);
   // welcomeMessage(io.engine.clientsCount, socket);
   // io.emit("clientCount", io.engine.clientsCount);
   console.log(clients);
   console.log(io.engine.clientsCount);
 
+
   socket.on("disconnect", socket => {
-    clientDisconnects(socket);
+    removeFromClients(socket);
     // clients.splice(clients.indexOf(socket), 1);
     // welcomeMessage(io.engine.clientsCount, socket);
 
@@ -80,4 +78,9 @@ io.on("connection", socket => {
     console.log(clients);
     console.log(io.engine.clientsCount);
   });
+});
+
+// Start WebSocket-Server
+webServer.listen(8083, () => {
+  console.log("Server started at port 8083.");
 });
