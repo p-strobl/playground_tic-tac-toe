@@ -13,19 +13,19 @@ server.use(express.static(__dirname + "/public"));
 const io = require("socket.io")(webServer);
 
 // Hold connected clients
-let clients = {
-  player: [],
-  spectator: []
-};
+let clients = [];
+
+//
+const countPlayer = () => clients.filter(element => element.type === "player").length;
 
 //
 const addToClients = socket => {
-  if (clients.player.length <= 1) {
-    clients.player.push(socket.id);
+  if ( countPlayer() <= 1) {
+    clients.push({type: "player", id: socket.id});
     socket.join("player");
     io.to("player").emit("message", "player-room");
   } else {
-    clients.spectator.push(socket.id);
+    clients.push({type: "spectator", id: socket.id});
     socket.join("spectator");
     io.to("spectator").emit("message", "spectator-room");
   }
@@ -33,9 +33,7 @@ const addToClients = socket => {
 
 //
 const removeFromClients = socket => {
-  Object.values(clients).forEach(value => {
-    value.splice(value.indexOf(socket.id), 1);
-  });
+  clients = clients.filter(element => element.id !== socket.id);
 };
 
 // 
@@ -70,12 +68,15 @@ io.sockets.on("connection", socket => {
 
 
   socket.on("disconnect", socket => {
+    console.log(socket.id);
+
     removeFromClients(socket);
     // clients.splice(clients.indexOf(socket), 1);
     // welcomeMessage(io.engine.clientsCount, socket);
 
     // io.emit("clientCount", io.engine.clientsCount);
     console.log(clients);
+    console.log(socket.id);
     console.log(io.engine.clientsCount);
   });
 });
