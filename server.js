@@ -6,6 +6,7 @@ const express = require("express");
 // Setup server
 const server = express();
 const webServer = require("http").Server(server);
+const port = 8082;
 
 server.use(express.static(__dirname + "/public"));
 
@@ -19,15 +20,27 @@ let clients = [];
 const countPlayer = () => clients.filter(element => element.type === "player").length;
 
 //
-const addToClients = socket => {
-  if ( countPlayer() <= 1) {
-    clients.push({type: "player", id: socket.id});
-    socket.join("player");
-    io.to("player").emit("message", "player-room");
+const joinRoom = (socket, room) => socket.join(room);
+
+//
+const roomMessage = (room, message) => io.to(room).emit("message", message);
+
+//
+const addToClients = (clientType, clientId) => clients.push({
+  type: clientType,
+  id: clientId
+});
+
+//
+const divideClients = socket => {
+  if (countPlayer() < 2) {
+    addToClients("player", socket.id);
+    joinRoom(socket, "player");
+    roomMessage("player", "Welcome to player-room.");
   } else {
-    clients.push({type: "spectator", id: socket.id});
-    socket.join("spectator");
-    io.to("spectator").emit("message", "spectator-room");
+    addToClients("spectator", socket.id);
+    joinRoom(socket, "spectator");
+    roomMessage("spectator", "Welcome to specator-room.");
   }
 };
 
@@ -58,23 +71,15 @@ const welcomeMessage = (clientCount, socket) => {
 };
 
 io.sockets.on("connection", socket => {
-  // console.log(socket.id);
-  // clients.push(socket.id); 
-  addToClients(socket);
+  divideClients(socket);
   // welcomeMessage(io.engine.clientsCount, socket);
-  // io.emit("clientCount", io.engine.clientsCount);
   console.log(clients);
+  console.log(socket.id);
   console.log(io.engine.clientsCount);
 
-
-  socket.on("disconnect", socket => {
-    console.log(socket.id);
-
+  socket.on("disconnect", () => {
     removeFromClients(socket);
-    // clients.splice(clients.indexOf(socket), 1);
     // welcomeMessage(io.engine.clientsCount, socket);
-
-    // io.emit("clientCount", io.engine.clientsCount);
     console.log(clients);
     console.log(socket.id);
     console.log(io.engine.clientsCount);
@@ -82,6 +87,6 @@ io.sockets.on("connection", socket => {
 });
 
 // Start WebSocket-Server
-webServer.listen(8083, () => {
-  console.log("Server started at port 8083.");
+webServer.listen(port, () => {
+  console.log(`Server started at port: ${port}`);
 });
