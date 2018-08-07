@@ -16,37 +16,50 @@ const io = require("socket.io")(webServer);
 // Hold connected clients
 let clients = [];
 
-//
-const countPlayer = () => clients.filter(element => element.type === "player").length;
+// Count Clients player
+const countPlayer = () =>
+  clients.filter(client => client.type === "player").length;
 
-//
-const joinRoom = (socket, room) => socket.join(room);
+// Create client class
+class Client {
+  constructor(socket, type, message) {
+    Object.assign(this, {
+      socket,
+      type,
+      message
+    });
+  };
 
-//
-const roomMessage = (room, message) => io.to(room).emit("message", message);
+  static removeFromClients(socket) {
+    clients = clients.filter(client => client.id !== socket.id)
+  };
 
-//
-const addToClients = (clientType, clientId) => clients.push({
-  type: clientType,
-  id: clientId
-});
+  addToClients() {
+    clients.push({
+      type: this.type,
+      id: this.socket.id
+    });
+  };
+
+  joinRoom() {
+    this.socket.join(this.type);
+  };
+
+  roomMessage() {
+    io.to(this.type).emit("message", this.message);
+  };
+};
 
 //
 const divideClients = socket => {
   if (countPlayer() < 2) {
-    addToClients("player", socket.id);
-    joinRoom(socket, "player");
-    roomMessage("player", "Welcome to player-room.");
+    var newClient = new Client(socket, "player", "Player-room");
   } else {
-    addToClients("spectator", socket.id);
-    joinRoom(socket, "spectator");
-    roomMessage("spectator", "Welcome to specator-room.");
+    var newClient = new Client(socket, "spectator", "Spectator-room");
   }
-};
-
-//
-const removeFromClients = socket => {
-  clients = clients.filter(element => element.id !== socket.id);
+  newClient.addToClients();
+  newClient.joinRoom();
+  newClient.roomMessage();
 };
 
 // 
@@ -74,14 +87,12 @@ io.sockets.on("connection", socket => {
   divideClients(socket);
   // welcomeMessage(io.engine.clientsCount, socket);
   console.log(clients);
-  console.log(socket.id);
   console.log(io.engine.clientsCount);
 
   socket.on("disconnect", () => {
-    removeFromClients(socket);
+    Client.removeFromClients(socket);
     // welcomeMessage(io.engine.clientsCount, socket);
     console.log(clients);
-    console.log(socket.id);
     console.log(io.engine.clientsCount);
   });
 });
