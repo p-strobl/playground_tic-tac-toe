@@ -2,7 +2,7 @@
 import {
   getHeaderInfoContent,
   getFooterStatusContent
-} from "./domHelper.js";
+} from "../helpers/domHelper.js";
 
 const socket = io.connect();
 

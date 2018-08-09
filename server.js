@@ -1,86 +1,52 @@
 "use strict";
 
-// Load Express.js
+// Load require
 const express = require("express");
+const path = require("path");
+const http = require("http");
+const socketIo = require("socket.io");
+
+const Client = require("./user/client.js");
+const Utility = require("./models/utility.js");
 
 // Setup server
+const port = 8082;
 const server = express();
-const webServer = require("http").Server(server);
+const webServer = http.Server(server);
+const io = socketIo(webServer);
 
-server.use(express.static(__dirname + "/public"));
+let clients = [];
 
-// Bind Socket.io to webServer
-const io = require("socket.io")(webServer);
+// Server class
+class WebServer {
+  constructor() {
+    this.initRoutes();
+    this.start();
+  }
 
-// Hold connected clients
-let clients = {
-  player: [],
-  spectator: []
-};
+  start() {
+    webServer.listen(port, () =>
+      console.log(`Server started at port: ${port}`));
+  }
 
-//
-const addToClients = socket => {
-  if (clients.player.length <= 1) {
-    clients.player.push(socket.id);
-    socket.join("player");
-    io.to("player").emit("message", "player-room");
-  } else {
-    clients.spectator.push(socket.id);
-    socket.join("spectator");
-    io.to("spectator").emit("message", "spectator-room");
+  initRoutes() {
+    server.use(express.static(path.join(__dirname, "public")));
   }
 };
 
-//
-const removeFromClients = socket => {
-  Object.values(clients).forEach(value => {
-    value.splice(value.indexOf(socket.id), 1);
-  });
-};
-
-// 
-const welcomeMessage = (clientCount, socket) => {
-  switch (true) {
-    case clientCount === 1:
-      socket.send("Bitte warten Sie auf Ihren gegner!");
-      // getFooterStatusContent.innerHTML = "Bitte warten Sie auf Ihren gegner!";
-      break;
-    case clientCount === 2:
-      socket.send("Zwei Spieler verbunden. Spiel kann beginnen!");
-
-      // getFooterStatusContent.innerHTML = "Zwei Spieler verbunden. Spiel kann beginnen!";
-      break;
-    case clientCount > 2:
-      socket.send("Es sind bereits zwei Spieler verbunden, bitte versuchen Sie es später noch ein mal.");
-
-      // getFooterStatusContent.innerHTML = "Es sind bereits zwei Spieler verbunden, bitte versuchen Sie es später noch ein mal.";
-      break;
-    default:
-  }
-};
-
+// Socket connecting
 io.sockets.on("connection", socket => {
-  // console.log(socket.id);
-  // clients.push(socket.id); 
-  addToClients(socket);
-  // welcomeMessage(io.engine.clientsCount, socket);
-  // io.emit("clientCount", io.engine.clientsCount);
+  new Utility(socket, clients).divideClients();
   console.log(clients);
   console.log(io.engine.clientsCount);
 
-
-  socket.on("disconnect", socket => {
-    removeFromClients(socket);
-    // clients.splice(clients.indexOf(socket), 1);
-    // welcomeMessage(io.engine.clientsCount, socket);
-
-    // io.emit("clientCount", io.engine.clientsCount);
+  // Socket disconnecting
+  socket.on("disconnect", () => {
+    clients = new Client(socket, clients).removeFromClients();
     console.log(clients);
     console.log(io.engine.clientsCount);
   });
 });
 
-// Start WebSocket-Server
-webServer.listen(8083, () => {
-  console.log("Server started at port 8083.");
-});
+// Start new server
+new WebServer();
