@@ -17,6 +17,9 @@ const io = socketIo(webServer);
 
 let clients = [];
 
+module.exports.io = io;
+module.exports.clients = clients;
+
 // Server class
 class WebServer {
   constructor() {
@@ -36,13 +39,13 @@ class WebServer {
 
 // Socket connecting
 io.sockets.on("connection", socket => {
-  new Utility(socket, clients).divideClients();
+  new Utility(socket).divideClients();
   console.log(clients);
   console.log(io.engine.clientsCount);
 
   // Socket disconnecting
   socket.on("disconnect", () => {
-    clients = new Client(socket, clients).removeFromClients();
+    clients = Client.removeFromClients(socket, clients);
     console.log(clients);
     console.log(io.engine.clientsCount);
   });
