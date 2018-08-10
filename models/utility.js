@@ -1,25 +1,42 @@
+"use strict";
+
 const Client = require("../user/client.js");
-// const Message = require("./communication.js");
 const Global = require("../server.js");
 
-class Utility {
-
-  constructor(socket) {
-    this.socket = socket;
-  }
-
-  playerCount() {
-    return Global.clients.filter(client => client.type === "player").length;
-  }
-
-  divideClients() {
-    let type = "";
-    this.playerCount() < 2 ?
-      type = "player" :
-      type = "spectator";
-    new Client(this.socket, type, "this.welcomeMessage()");
-  };
-
+const playerCount = globalClients => {
+  return globalClients.filter(client => client.kind === "player").length;
 };
 
-module.exports = Utility;
+const divideConnections = socket => {
+  let player = playerCount(Global.clients);
+  let kind = undefined;
+  player < 2 ?
+    kind = "player" :
+    kind = "spectator";
+  new Client(socket, kind, player);
+};
+
+// class Utility {
+
+//   constructor() {
+//     this.playerCount = this.playerCount();
+//   }
+
+//   playerCount() {
+//     return Global.clients.filter(client => client.kind === "player").length;
+//   }
+
+//   divideConnections(socket) {
+//     let kind = undefined;
+//     this.playerCount < 2 ?
+//       kind = "player" :
+//       kind = "spectator";
+//     new Client(socket, kind, this.playerCount);
+//   };
+
+// };
+
+// module.exports = Utility;
+
+module.exports.playerCount = playerCount;
+module.exports.divideConnections = divideConnections;

@@ -39,13 +39,14 @@ class WebServer {
 
 // Socket connecting
 io.sockets.on("connection", socket => {
-  new Utility(socket).divideClients();
+  Utility.divideConnections(socket);
+  // new Utility().divideConnections(socket);
   console.log(clients);
   console.log(io.engine.clientsCount);
 
   // Socket disconnecting
   socket.on("disconnect", () => {
-    clients = Client.removeFromClients(socket, clients);
+    clients = Client.removeFromClients(socket);
     console.log(clients);
     console.log(io.engine.clientsCount);
   });
