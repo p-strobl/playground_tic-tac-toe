@@ -10,8 +10,3 @@ socket.on("message", message => {
   console.log(message);
   getFooterStatusContent.innerHTML = message;
 });
-
-// socket.on("clientCount", clientNumber => {
-//   welcomeMessage(clientNumber);
-//   console.log(clientNumber);
-// });
