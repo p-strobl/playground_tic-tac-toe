@@ -11,8 +11,13 @@ class GameController {
   listen() {
     Global.io.sockets.on("connection", socket => {
       new User().add(socket);
+
       socket.on("disconnect", () => {
         new User().remove(socket);
+      });
+
+      socket.on("fieldClicked", data => {
+        console.log(data);
       });
     });
   }
