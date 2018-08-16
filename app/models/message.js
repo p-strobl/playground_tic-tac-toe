@@ -9,7 +9,7 @@ class Message {
     this.message;
   };
 
-  static to() {
+  to() {
     return {
       player: {
         one: "Bitte warten Sie auf Ihren Gegner!",
@@ -24,16 +24,18 @@ class Message {
   determine(room) {
     if (room === "player") {
       this.playerRoomLength <= 1 ?
-        this.message = Message.to().player.one :
-        this.message = Message.to().player.two;
+        this.message = new Message().to().player.one :
+        this.message = new Message().to().player.two;
     } else {
-      this.message = Message.to().spectator.all;
+      this.message = new Message().to().spectator.all;
     };
-    this.emit(room, this.message);
+    this.emit(room, this.message).welcomeMessage;
   };
 
   emit(room, message) {
-    Global.io.in(room).emit("message", message);
+    return {
+      welcomeMessage: Global.io.in(room).emit("welcomeMessage", message)
+    }
   };
 };
 

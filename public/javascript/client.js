@@ -1,20 +1,25 @@
 "use strict";
+
 import {
-  getHeaderInfoContent,
-  getFooterStatusContent,
-  getFieldCells
-} from "../helpers/domHelper.js";
+  fieldClickCell,
+  fieldReset
+} from "./field.js";
 
-const socket = io.connect();
+import {
+  messageStatusFooter
+} from "./message.js";
 
-socket.on("message", message => {
-  getFooterStatusContent.innerHTML = message;
-});
+export const socket = io.connect();
 
-const clickOnFieldCell = () => {
-  getFieldCells.forEach(cell => cell.addEventListener("click", () => {
-    socket.emit("fieldClicked", cell.id.substring(4));
-  }));
+socket.on("connect", () =>
+  fieldReset());
+
+socket.on("welcomeMessage", message =>
+  messageStatusFooter(message));
+
+const init = () => {
+  fieldReset();
+  fieldClickCell();
 };
 
-clickOnFieldCell();
+init();
