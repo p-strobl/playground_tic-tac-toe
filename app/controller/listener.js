@@ -1,16 +1,18 @@
 "use strict";
 
-const User = require("../models/user.js");
+const User = require("./user.js");
+const Utility = require("../model/utility.js");
 const Global = require("../../server.js");
 
-class GameController {
+class Listener {
   constructor() {
-    this.listen();
-  }
+    this.on();
+  };
 
-  listen() {
+  on() {
     Global.io.sockets.on("connection", socket => {
       new User().add(socket);
+      // console.log(new Utility().getPlayers());
 
       socket.on("disconnect", () => {
         new User().remove(socket);
@@ -20,7 +22,7 @@ class GameController {
         console.log(data);
       });
     });
-  }
+  };
 };
 
-module.exports = GameController;
+module.exports = Listener;

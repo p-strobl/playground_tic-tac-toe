@@ -9,7 +9,7 @@ class Utility {
     return this.playerRoomLength() < 2 ?
       "player" :
       "spectator";
-  }
+  };
 
   addToClients(socket) {
     Global.clients.push(socket);
@@ -28,7 +28,12 @@ class Utility {
       } else {
         return 0;
       }
-    }
+    };
+  };
+
+  getPlayers() {
+    // const players = Object.values(Global.clients[Global.clients.length - 1].adapter.rooms.player).forEach(element => Object.keys(element));
+    // return players;
   };
 
 };

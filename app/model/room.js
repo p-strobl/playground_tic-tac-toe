@@ -5,7 +5,8 @@ class Room {
 
   join(socket, room) {
     socket.join(room);
-  }
+  };
+
 };
 
 module.exports = Room;

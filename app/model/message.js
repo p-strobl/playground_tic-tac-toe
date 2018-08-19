@@ -18,7 +18,7 @@ class Message {
       spectator: {
         all: "Es sind bereits zwei Spieler verbunden, versuchen Sie es später noch ein mal."
       }
-    }
+    };
   };
 
   determine(room) {
@@ -35,7 +35,7 @@ class Message {
   emit(room, message) {
     return {
       welcomeMessage: Global.io.in(room).emit("welcomeMessage", message)
-    }
+    };
   };
 };
 
