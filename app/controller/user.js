@@ -3,6 +3,7 @@
 const Utility = require("../model/utility.js");
 const Message = require("../model/message.js");
 const Room = require("../model/room.js");
+// const Game = require("../../GameModule.js");
 
 class User {
   constructor() {
@@ -10,7 +11,7 @@ class User {
   };
 
   add(socket) {
-    new Utility().addToClients(socket);
+    new Utility().addToClients(socket, this.room);
     new Room().join(socket, this.room);
     new Message().determine(this.room, socket);
   };

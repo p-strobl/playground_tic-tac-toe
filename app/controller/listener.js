@@ -2,6 +2,7 @@
 
 const User = require("./user.js");
 const Utility = require("../model/utility.js");
+const Game = require("../../GameModule.js");
 const Global = require("../../server.js");
 
 class Listener {
@@ -12,6 +13,9 @@ class Listener {
   on() {
     Global.io.sockets.on("connection", socket => {
       new User().add(socket);
+      if (new Utility().playerRoomLength() === 2) {
+        new Game();
+      };
       // console.log(new Utility().getPlayers());
 
       socket.on("disconnect", () => {

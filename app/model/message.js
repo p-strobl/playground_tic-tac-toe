@@ -16,7 +16,7 @@ class Message {
         two: "Zwei Spieler verbunden. Spiel kann beginnen!"
       },
       spectator: {
-        all: "Es sind bereits zwei Spieler verbunden, versuchen Sie es später noch ein mal."
+        all: "Sorry, es waren bereits genug Spieler online."
       }
     };
   };

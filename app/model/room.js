@@ -5,6 +5,7 @@ class Room {
 
   join(socket, room) {
     socket.join(room);
+    // console.log(socket);
   };
 
 };

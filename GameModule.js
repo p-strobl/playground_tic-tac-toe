@@ -4,8 +4,8 @@ const Utility = require("./app/model/utility.js");
 
 class Game {
   constructor() {
-    this.players = new Utility().randomPlayerFigure();
-    this.field = new Array(9).fill("");
+    this.randomizedPlayers = new Utility().randomizePlayers();
+    this.emptyField = new Array(9).fill("");
   };
 
   gameField() {
