@@ -13,12 +13,12 @@ class User {
   add(socket) {
     new Utility().addToClients(socket, this.room);
     new Room().join(socket, this.room);
-    new Message().determine(this.room, socket);
+    new Message().welcome(this.room, socket);
   };
 
   remove(socket) {
     new Utility().removeFromClients(socket);
-    new Message().determine(this.room, socket);
+    new Message().welcome(this.room, socket);
   };
 };
 

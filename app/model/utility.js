@@ -32,20 +32,18 @@ class Utility {
     };
   };
 
-  getCurrentPlayers() {
+  connectedPlayer() {
     return Global.clients.filter(client => client.type === "player");
-    // console.log(Global.clients.forEach(element => element.find(item => item === "player")));
-    // return Object.values(Global.io.sockets.adapter.rooms.player);
   };
 
-  randomizePlayers() {
-    const player = this.getCurrentPlayers();
+  randomizeFigure() {
+    const connectedPlayer = this.connectedPlayer();
     const possibleFigure = "XO";
-    player[0].figure = possibleFigure.charAt(Math.floor(Math.random() * possibleFigure.length));
-    player[0].figure === "X" ?
-      player[1].figure = "O" :
-      player[1].figure = "X";
-    return player;
+    connectedPlayer[0].figure = possibleFigure.charAt(Math.floor(Math.random() * possibleFigure.length));
+    connectedPlayer[0].figure === "X" ?
+      connectedPlayer[1].figure = "O" :
+      connectedPlayer[1].figure = "X";
+    return connectedPlayer;
   };
 
 };

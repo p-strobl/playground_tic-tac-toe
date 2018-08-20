@@ -24,10 +24,16 @@ const randomizedPlayers = player => {
     player[1].figure = "X";
   return player;
 };
-
-
-
 console.log(randomizedPlayers(player));
+console.log(player[Math.floor(Math.random() * player.length)]);
+console.log(player[Math.floor(Math.random() * player.length)]);
+console.log(player[Math.floor(Math.random() * player.length)]);
+console.log(player[Math.floor(Math.random() * player.length)]);
+console.log(player[Math.floor(Math.random() * player.length)]);
+
+
+
+
 
 
 

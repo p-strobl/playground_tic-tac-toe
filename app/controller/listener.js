@@ -16,7 +16,6 @@ class Listener {
       if (new Utility().playerRoomLength() === 2) {
         new Game();
       };
-      // console.log(new Utility().getPlayers());
 
       socket.on("disconnect", () => {
         new User().remove(socket);
