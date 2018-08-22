@@ -4,22 +4,24 @@ const Utility = require("./app/model/utility.js");
 const Message = require("./app/model/message.js");
 
 class Game {
-  constructor() {
-    this.playerWithRandomFigure = new Utility().randomizeFigure();
-    this.randomizedStartPlayer = this.playerWithRandomFigure[Math.floor(Math.random() * this.playerWithRandomFigure.length)];
-    this.emptyField = new Array(9).fill("");
+  constructor(startPlayer) {
+    this.startPlayer = startPlayer;
   };
 
   gameField() {
-    return this.emptyField;
+    const emptyField = new Array(9).fill("");
+    return emptyField;
   };
 
   currentPlayer() {
-    return this.randomizedStartPlayer;
+    const playerWithRandomFigure = new Utility().randomizeFigure();
+    const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
+    return randomizedStartPlayer;
   };
 
-  move() {
-
+  move(currentPlayer, clickedField) {
+    console.log(currentPlayer);
+    console.log(clickedField);
   };
 
   result() {

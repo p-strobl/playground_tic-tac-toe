@@ -20,7 +20,7 @@ class Utility {
     });
   };
 
-  removeFromClients(socket) {
+  static removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
   }
 
