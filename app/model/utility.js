@@ -5,22 +5,22 @@ const Global = require("../../server.js");
 class Utility {
   constructor() {}
 
-  divideUser() {
-    return this.playerRoomLength() < 2 ?
-      "player" :
-      "spectator";
-  };
+  // divideUser() {
+  //   return this.playerRoomLength() < 2 ?
+  //     "player" :
+  //     "spectator";
+  // };
 
-  addToClients(socket, room) {
-    // Global.clients.push(socket);
-    Global.clients.push({
-      type: room,
-      id: socket.id,
-      figure: ""
-    });
-  };
+  // addToClients(socket, type) {
+  //   // Global.clients.push(socket);
+  //   Global.clients.push({
+  //     type: type,
+  //     id: socket.id,
+  //     figure: ""
+  //   });
+  // };
 
-  static removeFromClients(socket) {
+  removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
   }
 
@@ -32,8 +32,15 @@ class Utility {
     };
   };
 
+  socketRoomType(socket) {
+    // return Object.keys(socket.adapter.rooms).find(item =>
+    //   item != socket.id);
+    return Object.keys(socket.adapter.sids[socket.id])[1];
+  };
+
   connectedPlayer() {
-    return Global.clients.filter(client => client.type === "player");
+    return Global.clients.filter(client =>
+      client.type === "player");
   };
 
   randomizeFigure() {

@@ -2,23 +2,35 @@
 
 const Utility = require("../model/utility.js");
 const Message = require("../model/message.js");
-const Room = require("../model/room.js");
+const Global = require("../../server.js");
 // const Game = require("../../GameModule.js");
 
 class User {
-  constructor() {
-    this.room = new Utility().divideUser();
+  constructor(socket) {
+    this.socket = socket;
+    this.playerRoomCount = new Utility().playerRoomLength();
+    this.type = this.divideUser();
+    this.addToClients();
+    this.joinRoom();
+    new Message().broadcast(this.type);
   };
 
-  add(socket) {
-    new Utility().addToClients(socket, this.room);
-    new Room().join(socket, this.room);
-    new Message().welcome(this.room, socket);
+  divideUser() {
+    return this.playerRoomCount < 2 ?
+      "player" :
+      "spectator";
   };
 
-  remove(socket) {
-    new Utility().removeFromClients(socket);
-    new Message().welcome(this.room, socket);
+  addToClients() {
+    Global.clients.push({
+      type: this.type,
+      id: this.socket.id,
+      figure: ""
+    });
+  };
+
+  joinRoom() {
+    this.socket.join(this.type);
   };
 };
 

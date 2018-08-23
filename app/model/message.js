@@ -4,10 +4,7 @@ const Utility = require("./utility.js");
 const Global = require("../../server.js");
 
 class Message {
-  constructor() {
-    // this.playerRoomLength = new Utility().playerRoomLength();
-    // this.message;
-  };
+  constructor() {};
 
   text() {
     return {
@@ -41,22 +38,25 @@ class Message {
     };
   };
 
-  welcome(room) {
+  broadcast(type) {
     let message = "";
-    if (room === "player") {
+    // console.log(Object.keys(socket.adapter.sids[socket.id])[1]);
+    // const type = new Utility().socketRoomType(socket);
+    // if (type === "player") {
+    if (type === "player") {
       const playerRoomLength = new Utility().playerRoomLength();
       playerRoomLength <= 1 ?
-        message = new Message().text().welcome.player.one :
-        message = new Message().text().welcome.player.two;
+        message = this.text().welcome.player.one :
+        message = this.text().welcome.player.two;
     } else {
-      message = new Message().text().welcome.spectator.all;
+      message = new this.text().welcome.spectator.all;
     };
-    this.emit(room, message).welcomeMessage;
+    this.emit(type, message).welcomeMessage;
   };
 
-  emit(room, message) {
+  emit(type, message) {
     return {
-      welcomeMessage: Global.io.in(room).emit("welcomeMessage", message),
+      welcomeMessage: Global.io.in(type).emit("welcomeMessage", message),
       gameStart: ""
     };
   };
