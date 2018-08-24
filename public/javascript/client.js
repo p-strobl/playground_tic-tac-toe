@@ -11,14 +11,13 @@ import {
 
 export const socket = io.connect();
 
-socket.on("connect", () =>
-  fieldReset());
+// socket.on("connect", () =>
+  // fieldReset());
 
-socket.on("welcomeMessage", message =>
-  messageStatusFooter(message));
+socket.on("status", message => messageStatusFooter(message));
 
 const init = () => {
-  fieldReset();
+  // fieldReset();
   fieldClickCell();
 };
 

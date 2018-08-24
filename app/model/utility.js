@@ -5,24 +5,9 @@ const Global = require("../../server.js");
 class Utility {
   constructor() {}
 
-  // divideUser() {
-  //   return this.playerRoomLength() < 2 ?
-  //     "player" :
-  //     "spectator";
-  // };
-
-  // addToClients(socket, type) {
-  //   // Global.clients.push(socket);
-  //   Global.clients.push({
-  //     type: type,
-  //     id: socket.id,
-  //     figure: ""
-  //   });
-  // };
-
   removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
-  }
+  };
 
   playerRoomLength() {
     if (Global.clients.length !== 0 && Global.io.sockets.adapter.rooms.hasOwnProperty("player")) {
@@ -30,12 +15,6 @@ class Utility {
     } else {
       return 0;
     };
-  };
-
-  socketRoomType(socket) {
-    // return Object.keys(socket.adapter.rooms).find(item =>
-    //   item != socket.id);
-    return Object.keys(socket.adapter.sids[socket.id])[1];
   };
 
   connectedPlayer() {

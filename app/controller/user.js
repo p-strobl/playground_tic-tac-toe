@@ -12,7 +12,7 @@ class User {
     this.type = this.divideUser();
     this.addToClients();
     this.joinRoom();
-    new Message().broadcast(this.type);
+    new Message().enterOrLeave(this.type);
   };
 
   divideUser() {
@@ -22,11 +22,9 @@ class User {
   };
 
   addToClients() {
-    Global.clients.push({
-      type: this.type,
-      id: this.socket.id,
-      figure: ""
-    });
+    this.socket.type = this.type;
+    this.socket.figure = "";
+    Global.clients.push(this.socket);
   };
 
   joinRoom() {

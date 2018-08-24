@@ -38,27 +38,24 @@ class Message {
     };
   };
 
-  broadcast(type) {
+  emit(type, message) {
+    return {
+      welcomeStatus: Global.io.in(type).emit("status", message),
+      gameStart: ""
+    };
+  };
+
+  enterOrLeave(type) {
     let message = "";
-    // console.log(Object.keys(socket.adapter.sids[socket.id])[1]);
-    // const type = new Utility().socketRoomType(socket);
-    // if (type === "player") {
     if (type === "player") {
       const playerRoomLength = new Utility().playerRoomLength();
       playerRoomLength <= 1 ?
         message = this.text().welcome.player.one :
         message = this.text().welcome.player.two;
     } else {
-      message = new this.text().welcome.spectator.all;
+      message = this.text().welcome.spectator.all;
     };
-    this.emit(type, message).welcomeMessage;
-  };
-
-  emit(type, message) {
-    return {
-      welcomeMessage: Global.io.in(type).emit("welcomeMessage", message),
-      gameStart: ""
-    };
+    this.emit(type, message).welcomeStatus;
   };
 };
 

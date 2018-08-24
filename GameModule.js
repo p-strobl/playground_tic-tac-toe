@@ -9,8 +9,7 @@ class Game {
   };
 
   gameField() {
-    const emptyField = new Array(9).fill("");
-    return emptyField;
+    return new Array(9).fill("");
   };
 
   currentPlayer() {

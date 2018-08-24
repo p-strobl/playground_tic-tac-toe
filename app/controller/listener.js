@@ -8,10 +8,10 @@ const Global = require("../../server.js");
 
 class Listener {
   constructor() {
-    this.on();
+    this.listen();
   };
 
-  on() {
+  listen() {
     Global.io.sockets.on("connection", socket => {
       new User(socket);
       if (new Utility().playerRoomLength() === 2) {
@@ -20,8 +20,7 @@ class Listener {
 
       socket.on("disconnect", () => {
         new Utility().removeFromClients(socket);
-        new Message().broadcast(socket);
-        // new User().remove(socket);
+        new Message().enterOrLeave(socket.type);
       });
 
       socket.on("fieldClicked", data => {
