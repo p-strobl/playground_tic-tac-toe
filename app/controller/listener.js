@@ -20,7 +20,7 @@ class Listener {
 
       socket.on("disconnect", () => {
         new Utility().removeFromClients(socket);
-        new Message().enterOrLeave(socket.type);
+        new Message().to(socket.type);
       });
 
       socket.on("fieldClicked", data => {

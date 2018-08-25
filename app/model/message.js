@@ -45,7 +45,7 @@ class Message {
     };
   };
 
-  enterOrLeave(type) {
+  to(type) {
     let message = "";
     if (type === "player") {
       const playerRoomLength = new Utility().playerRoomLength();

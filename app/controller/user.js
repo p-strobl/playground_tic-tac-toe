@@ -12,7 +12,7 @@ class User {
     this.type = this.divideUser();
     this.addToClients();
     this.joinRoom();
-    new Message().enterOrLeave(this.type);
+    new Message().to(this.type);
   };
 
   divideUser() {
