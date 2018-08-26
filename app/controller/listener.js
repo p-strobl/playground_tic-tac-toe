@@ -14,13 +14,13 @@ class Listener {
   listen() {
     Global.io.sockets.on("connection", socket => {
       new User(socket);
-      if (new Utility().playerRoomLength() === 2) {
-        new Game();
+      if (Utility.playerRoomLength() === 2) {
+        new Game(new Utility().randomizedStartPlayer());
       };
 
       socket.on("disconnect", () => {
-        new Utility().removeFromClients(socket);
-        new Message().to(socket.type);
+        Utility.removeFromClients(socket);
+        new Message().status(socket.type);
       });
 
       socket.on("fieldClicked", data => {

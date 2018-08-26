@@ -4,8 +4,8 @@ const Utility = require("./app/model/utility.js");
 const Message = require("./app/model/message.js");
 
 class Game {
-  constructor(startPlayer) {
-    this.startPlayer = startPlayer;
+  constructor(randomizedStartPlayer) {
+    this.randomizedStartPlayer = randomizedStartPlayer;
   };
 
   gameField() {
@@ -13,9 +13,9 @@ class Game {
   };
 
   currentPlayer() {
-    const playerWithRandomFigure = new Utility().randomizeFigure();
-    const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
-    return randomizedStartPlayer;
+    // const playerWithRandomFigure = new Utility().randomizeFigure();
+    // const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
+    // return randomizedStartPlayer;
   };
 
   move(currentPlayer, clickedField) {

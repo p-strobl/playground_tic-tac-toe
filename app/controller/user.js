@@ -8,11 +8,11 @@ const Global = require("../../server.js");
 class User {
   constructor(socket) {
     this.socket = socket;
-    this.playerRoomCount = new Utility().playerRoomLength();
+    this.playerRoomCount = Utility.playerRoomLength();
     this.type = this.divideUser();
     this.addToClients();
     this.joinRoom();
-    new Message().to(this.type);
+    new Message().status(this.type);
   };
 
   divideUser() {

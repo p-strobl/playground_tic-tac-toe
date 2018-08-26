@@ -5,11 +5,11 @@ const Global = require("../../server.js");
 class Utility {
   constructor() {}
 
-  removeFromClients(socket) {
+  static removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
   };
 
-  playerRoomLength() {
+  static playerRoomLength() {
     if (Global.clients.length !== 0 && Global.io.sockets.adapter.rooms.hasOwnProperty("player")) {
       return Global.io.sockets.adapter.rooms.player.length;
     } else {
@@ -30,6 +30,11 @@ class Utility {
       connectedPlayer[1].figure = "O" :
       connectedPlayer[1].figure = "X";
     return connectedPlayer;
+  };
+
+  randomizedStartPlayer() {
+    const playerWithRandomFigure = this.randomizeFigure();
+    return playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
   };
 
 };

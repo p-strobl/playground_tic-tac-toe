@@ -45,11 +45,10 @@ class Message {
     };
   };
 
-  to(type) {
+  status(type) {
     let message = "";
     if (type === "player") {
-      const playerRoomLength = new Utility().playerRoomLength();
-      playerRoomLength <= 1 ?
+      Utility.playerRoomLength() <= 1 ?
         message = this.text().welcome.player.one :
         message = this.text().welcome.player.two;
     } else {
