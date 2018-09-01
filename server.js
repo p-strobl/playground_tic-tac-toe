@@ -5,7 +5,7 @@ const path = require("path");
 const http = require("http");
 const socketIo = require("socket.io");
 
-const Listener = require("./app/controller/listener.js");
+// const Listener = require("./app/controller/listener.js");
 
 const PORT = 8082;
 const server = express();
@@ -16,6 +16,12 @@ let clients = [];
 
 module.exports.io = io;
 module.exports.clients = clients;
+
+io.set("Test", test => {
+  {
+    test: "test"
+  };
+});
 
 class WebServer {
   constructor() {
@@ -40,6 +46,31 @@ class WebServer {
       console.log("**************************************");
       console.log(`${text}${preStart}${this.port}${preEnd}`);
       console.log("**************************************");
+    });
+  };
+};
+
+class Listener {
+  constructor() {
+    this.listen();
+  };
+
+  listen() {
+    io.sockets.on("connection", socket => {
+
+      // new User(socket);
+      // if (Utility.playerRoomLength() === 2) {
+      //   new Game(new Utility().randomizedStartPlayer());
+      // };
+
+      // socket.on("disconnect", () => {
+      //   Utility.removeFromClients(socket);
+      //   new Message().status(socket.type);
+      // });
+
+      // socket.on("fieldClicked", data => {
+      //   console.log(data);
+      // });
     });
   };
 };

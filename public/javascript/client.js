@@ -12,7 +12,8 @@ import {
 export const socket = io.connect();
 
 // socket.on("connect", () =>
-  // fieldReset());
+// fieldReset());
+console.log(socket);
 
 socket.on("status", message => messageStatusFooter(message));
 
