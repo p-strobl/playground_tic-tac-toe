@@ -12,18 +12,14 @@ const server = express();
 const webServer = http.Server(server);
 const io = socketIo(webServer);
 
+const User = require("./app/controller/User.js");
+
 let clients = [];
 
 module.exports.io = io;
 module.exports.clients = clients;
 
-io.set("Test", test => {
-  {
-    test: "test"
-  };
-});
-
-class WebServer {
+class Server {
   constructor() {
     this.webServer = webServer;
     this.port = PORT;
@@ -68,12 +64,12 @@ class Listener {
       //   new Message().status(socket.type);
       // });
 
-      // socket.on("fieldClicked", data => {
-      //   console.log(data);
-      // });
+      socket.on("fieldClicked", data => {
+        console.log(data);
+      });
     });
   };
 };
 
-new WebServer();
+new Server();
 new Listener();

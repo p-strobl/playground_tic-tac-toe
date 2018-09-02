@@ -27,9 +27,9 @@ class Game {
 
   };
 
-  message() {
-    return new Message().emit(this.playerWithRandomFigure).gameStart;
-  };
+  // message() {
+  //   return new Message().emit(this.playerWithRandomFigure).gameStart;
+  // };
 };
 
 module.exports = Game;
