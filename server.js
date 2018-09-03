@@ -14,6 +14,7 @@ const io = socketIo(webServer);
 
 const Utility = require("./app/model/utility.js");
 const User = require("./app/model/user.js");
+const Game = require("./GameModule.js");
 
 let clients = [];
 
@@ -56,10 +57,11 @@ class Listener {
     io.sockets.on("connection", socket => {
       new User(socket);
       socket.emit("userType", clients.find(client => client.id === socket.id).type);
-      clients.forEach(client => console.log(client.id));
-      // if (Utility.playerRoomLength() === 2) {
-      //   new Game(new Utility().randomizedStartPlayer());
-      // };
+      // clients.forEach(client => console.log(client.id));
+      if (Utility.playerRoomLength() === 2) {
+        new Game(new Utility().randomizedStartPlayer());
+      }
+      ;
 
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);

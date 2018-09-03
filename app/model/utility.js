@@ -3,7 +3,8 @@
 const Global = require("../../server.js");
 
 class Utility {
-  constructor() {}
+  constructor() {
+  };
 
   static removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
@@ -14,7 +15,7 @@ class Utility {
       return Global.io.sockets.adapter.rooms.player.length;
     } else {
       return 0;
-    };
+    }
   };
 
   connectedPlayer() {
