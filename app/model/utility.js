@@ -22,7 +22,7 @@ class Utility {
       client.type === "player");
   };
 
-  randomizeFigure() {
+  randomizeSymbol() {
     const connectedPlayer = this.connectedPlayer();
     const possibleFigure = "XO";
     connectedPlayer[0].figure = possibleFigure.charAt(Math.floor(Math.random() * possibleFigure.length));
@@ -33,7 +33,7 @@ class Utility {
   };
 
   randomizedStartPlayer() {
-    const playerWithRandomFigure = this.randomizeFigure();
+    const playerWithRandomFigure = this.randomizeSymbol();
     return playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
   };
 

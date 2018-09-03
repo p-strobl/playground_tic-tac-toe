@@ -13,7 +13,7 @@ class Game {
   };
 
   currentPlayer() {
-    // const playerWithRandomFigure = new Utility().randomizeFigure();
+    // const playerWithRandomFigure = new Utility().randomizeSymbol();
     // const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
     // return randomizedStartPlayer;
   };

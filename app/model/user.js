@@ -1,9 +1,7 @@
 "use strict";
 
-const Utility = require("../model/utility.js");
-const Message = require("../model/message.js");
+const Utility = require("./utility.js");
 const Global = require("../../server.js");
-// const Game = require("../../GameModule.js");
 
 class User {
   constructor(socket) {
@@ -12,7 +10,6 @@ class User {
     this.type = this.divideUser();
     this.addToClients();
     this.joinRoom();
-    new Message().status(this.type);
   };
 
   divideUser() {

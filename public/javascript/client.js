@@ -1,8 +1,8 @@
 "use strict";
 
 import {
-  fieldClickCell,
-  fieldReset
+  clickedFieldCell,
+  // fieldReset
 } from "./field.js";
 
 import {
@@ -11,15 +11,20 @@ import {
 
 export const socket = io.connect();
 
+socket.on("connect", () => {
+  socket.on("userType", type => socket.type = type);
+});
 // socket.on("connect", () =>
 // fieldReset());
-console.log(socket);
+// console.log(socket);
 
-socket.on("status", message => messageStatusFooter(message));
+// socket.on("status", message => messageStatusFooter(message));
+
+console.log(socket);
 
 const init = () => {
   // fieldReset();
-  fieldClickCell();
+  clickedFieldCell(socket);
 };
 
 init();

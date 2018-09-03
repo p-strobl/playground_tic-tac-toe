@@ -8,11 +8,13 @@ import {
   socket
 } from "./client.js";
 
-export const fieldReset = () =>
-  getFieldCells.forEach(cell => cell.innerHTML = "");
+// export const fieldReset = () =>
+//   getFieldCells.forEach(cell => cell.innerHTML = "");
 
-export const fieldClickCell = () => {
+export const clickedFieldCell = socket => {
   getFieldCells.forEach(cell => cell.addEventListener("click", () => {
-    socket.emit("fieldClicked", cell.id.substring(4));
+    if (socket.type === "player") {
+      socket.emit("fieldClicked", {clickedFieldCell: cell.id.substring(4), socketId: socket.id});
+    }
   }));
 };

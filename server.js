@@ -12,7 +12,8 @@ const server = express();
 const webServer = http.Server(server);
 const io = socketIo(webServer);
 
-const User = require("./app/controller/User.js");
+const Utility = require("./app/model/utility.js");
+const User = require("./app/model/user.js");
 
 let clients = [];
 
@@ -53,16 +54,17 @@ class Listener {
 
   listen() {
     io.sockets.on("connection", socket => {
-
-      // new User(socket);
+      new User(socket);
+      socket.emit("userType", clients.find(client => client.id === socket.id).type);
+      clients.forEach(client => console.log(client.id));
       // if (Utility.playerRoomLength() === 2) {
       //   new Game(new Utility().randomizedStartPlayer());
       // };
 
-      // socket.on("disconnect", () => {
-      //   Utility.removeFromClients(socket);
-      //   new Message().status(socket.type);
-      // });
+      socket.on("disconnect", () => {
+        Utility.removeFromClients(socket);
+        clients.forEach(client => console.log(client.id));
+      });
 
       socket.on("fieldClicked", data => {
         console.log(data);
