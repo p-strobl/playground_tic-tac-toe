@@ -1,14 +1,14 @@
 "use strict";
 
-const Global = require("../../server.js");
+const Global = require("../server.js");
 
 class Utility {
   constructor() {
-  };
+  }
 
   static removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
-  };
+  }
 
   static playerRoomLength() {
     if (Global.clients.length !== 0 && Global.io.sockets.adapter.rooms.hasOwnProperty("player")) {
@@ -16,12 +16,12 @@ class Utility {
     } else {
       return 0;
     }
-  };
+  }
 
   connectedPlayer() {
     return Global.clients.filter(client =>
       client.type === "player");
-  };
+  }
 
   randomizeSymbol() {
     const connectedPlayer = this.connectedPlayer();
@@ -31,12 +31,12 @@ class Utility {
       connectedPlayer[1].figure = "O" :
       connectedPlayer[1].figure = "X";
     return connectedPlayer;
-  };
+  }
 
   randomizedStartPlayer() {
     const playerWithRandomFigure = this.randomizeSymbol();
     return playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
-  };
+  }
 
 };
 

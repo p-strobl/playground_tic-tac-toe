@@ -1,10 +1,11 @@
 "use strict";
 
 const Utility = require("./utility.js");
-const Global = require("../../server.js");
+const Global = require("../server.js");
 
 class Message {
-  constructor() {};
+  constructor() {
+  };
 
   text() {
     return {
@@ -53,7 +54,8 @@ class Message {
         message = this.text().welcome.player.two;
     } else {
       message = this.text().welcome.spectator.all;
-    };
+    }
+    ;
     this.emit(type, message).welcomeStatus;
   };
 };

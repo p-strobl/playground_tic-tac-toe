@@ -1,35 +1,37 @@
 "use strict";
 
-const Utility = require("./app/model/utility.js");
-const Message = require("./app/model/message.js");
+const Utility = require("./app/utility.js");
+const Message = require("./app/message.js");
 
 class Game {
-  constructor(randomizedStartPlayer) {
-    this.randomizedStartPlayer = randomizedStartPlayer;
-  };
+  constructor(player) {
+    // this.randomizedStartPlayer = randomizedStartPlayer;
+    this.player = player;
+    this.field = new Array(9).fill("");
+    // this.field = [["", "", ""], ["", "", ""], ["", "", ""]];
 
-  gameField() {
-    return new Array(9).fill("");
-  };
+  }
 
   currentPlayer() {
     // const playerWithRandomFigure = new Utility().randomizeSymbol();
     // const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
     // return randomizedStartPlayer;
-  };
+  }
 
-  move(currentPlayer, clickedField) {
-    console.log(currentPlayer);
-    console.log(clickedField);
-  };
+  move(symbol, fieldId) {
+    this.field[fieldId] = symbol;
+    // let updatedfield = [];
+    // this.field = [].concat(...this.field);
+    // this.field[fieldId] = symbol;
+    // while (this.field.length) {
+    //   updatedfield.push(this.field.splice(0, 3));
+    // }
+    // this.field = updatedfield;
+  }
 
   result() {
 
-  };
-
-  // message() {
-  //   return new Message().emit(this.playerWithRandomFigure).gameStart;
-  // };
+  }
 };
 
 module.exports = Game;
