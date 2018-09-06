@@ -21,7 +21,7 @@ class User {
 
   addToClients() {
     this.socket.type = this.type;
-    this.socket.figure = "";
+    this.socket.symbol = "";
     Global.clients.push(this.socket);
   }
 

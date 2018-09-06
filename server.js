@@ -56,22 +56,25 @@ class Listener {
   listen() {
     io.sockets.on("connection", socket => {
       new User(socket);
-      const game = new Game("X");
-      console.log(game);
+
+      // console.log(game);
       // clients.forEach(client => console.log(client.id));
-      // if (Utility.playerRoomLength() === 2) {
-      //   new Game(new Utility().randomizedStartPlayer());
-      // }
+      if (Utility.playerRoomLength() === 2) {
+        // console.log(clients);
+        var game = new Game(new Utility().randomizedStartPlayer());
+
+        // console.log(clients);
+      }
 
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);
         clients.forEach(client => console.log(client.id));
       });
 
-      socket.on("fieldClicked", data => {
+      socket.on("cellClicked", data => {
         console.log(data);
-        game.move("X", data.clickedFieldCell);
-        console.log(game);
+        game.move(data.socketSymbol, data.clickedCell);
+        // console.log(game);
       });
     });
   };

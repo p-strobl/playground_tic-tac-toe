@@ -25,17 +25,17 @@ class Utility {
 
   randomizeSymbol() {
     const connectedPlayer = this.connectedPlayer();
-    const possibleFigure = "XO";
-    connectedPlayer[0].figure = possibleFigure.charAt(Math.floor(Math.random() * possibleFigure.length));
-    connectedPlayer[0].figure === "X" ?
-      connectedPlayer[1].figure = "O" :
-      connectedPlayer[1].figure = "X";
+    const possibleSymbol = "XO";
+    connectedPlayer[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
+    connectedPlayer[0].symbol === "X" ?
+      connectedPlayer[1].symbol = "O" :
+      connectedPlayer[1].symbol = "X";
     return connectedPlayer;
   }
 
   randomizedStartPlayer() {
-    const playerWithRandomFigure = this.randomizeSymbol();
-    return playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
+    const playerWithRandomSymbol = this.randomizeSymbol();
+    return playerWithRandomSymbol[Math.floor(Math.random() * playerWithRandomSymbol.length)];
   }
 
 };

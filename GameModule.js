@@ -1,6 +1,7 @@
 "use strict";
 
 const Utility = require("./app/utility.js");
+const View = require("./app/view/updateField.js")
 const Message = require("./app/message.js");
 
 class Game {
@@ -20,6 +21,7 @@ class Game {
 
   move(symbol, fieldId) {
     this.field[fieldId] = symbol;
+    new View(symbol, fieldId).updateField();
     // let updatedfield = [];
     // this.field = [].concat(...this.field);
     // this.field[fieldId] = symbol;
