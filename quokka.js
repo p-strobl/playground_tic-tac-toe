@@ -101,26 +101,44 @@
 // // // console.log(clients);
 // // console.log(cc);
 
-let field = [["", "", ""], ["", "", ""], ["", "", ""]];
-console.log(field);
-// console.log(field[1][0]);
+// let field = [["", "", ""], ["", "", ""], ["", "", ""]];
+// console.log(field);
+// // console.log(field[1][0]);
+//
+// // console.log(flatten);
+//
+// const move = (symbol, fieldId) => {
+//   field = [].concat(...field);
+//   field[fieldId] = symbol;
+//   let results = [];
+//   while (field.length) {
+//     results.push(field.splice(0, 3));
+//   }
+//   results
+//   // field.slice(0);
+//   // field
+//   // field = flatten.split(",", 2);
+// };
+//
+// move("X", 8);
+//
+// console.log(field);
 
-// console.log(flatten);
-
-const move = (symbol, fieldId) => {
-  field = [].concat(...field);
-  field[fieldId] = symbol;
-  let results = [];
-  while (field.length) {
-    results.push(field.splice(0, 3));
+const connectedPlayer = {
+  one: {
+    id: "ddd",
+    symbol: "X"
+  },
+  two: {
+    id: "vvv",
+    symbol: "O"
   }
-  results
-  // field.slice(0);
-  // field
-  // field = flatten.split(",", 2);
 };
 
-move("X", 8);
+console.log(connectedPlayer);
 
-console.log(field);
+
+console.log(Object.values(connectedPlayer).map(element => {
+  return {id: element.id, symbol: element.symbol};
+}));
 

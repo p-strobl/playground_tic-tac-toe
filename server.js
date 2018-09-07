@@ -61,7 +61,7 @@ class Listener {
       // clients.forEach(client => console.log(client.id));
       if (Utility.playerRoomLength() === 2) {
         // console.log(clients);
-        var game = new Game(new Utility().randomizedStartPlayer());
+        var game = new Game(new Utility().randomizeSymbol(socket));
 
         // console.log(clients);
       }
@@ -71,9 +71,9 @@ class Listener {
         clients.forEach(client => console.log(client.id));
       });
 
-      socket.on("cellClicked", data => {
-        console.log(data);
-        game.move(data.socketSymbol, data.clickedCell);
+      socket.on("cellClicked", socketMove => {
+        console.log(socketMove);
+        // game.move(socketMove);
         // console.log(game);
       });
     });

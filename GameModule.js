@@ -19,9 +19,10 @@ class Game {
     // return randomizedStartPlayer;
   }
 
-  move(symbol, fieldId) {
-    this.field[fieldId] = symbol;
-    new View(symbol, fieldId).updateField();
+  move(socketMove) {
+    console.log(socketMove);
+    // this.field[fieldId] = symbol;
+    // new View(symbol, fieldId).updateField();
     // let updatedfield = [];
     // this.field = [].concat(...this.field);
     // this.field[fieldId] = symbol;
