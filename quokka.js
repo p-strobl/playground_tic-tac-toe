@@ -138,7 +138,12 @@ const connectedPlayer = {
 console.log(connectedPlayer);
 
 
-console.log(Object.values(connectedPlayer).map(element => {
+const test = Object.values(connectedPlayer).map(element => {
   return {id: element.id, symbol: element.symbol};
-}));
+});
 
+test
+
+const bla = test.find(element => element.id === "ddd");
+
+console.log(bla.symbol);

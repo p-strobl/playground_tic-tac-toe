@@ -37,6 +37,7 @@ class Utility {
     //   return temp;
     // });
     Global.io.in("player").emit("userSymbol", Object.values(connectedPlayer).map(element => {
+      console.log({id: element.id, symbol: element.symbol});
       return {id: element.id, symbol: element.symbol};
     }));
 

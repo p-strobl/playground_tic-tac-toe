@@ -56,12 +56,12 @@ class Listener {
   listen() {
     io.sockets.on("connection", socket => {
       new User(socket);
-
+      const game = new Game();
       // console.log(game);
       // clients.forEach(client => console.log(client.id));
       if (Utility.playerRoomLength() === 2) {
         // console.log(clients);
-        var game = new Game(new Utility().randomizeSymbol(socket));
+        // var game = new Game(new Utility().randomizeSymbol(socket));
 
         // console.log(clients);
       }
