@@ -1,22 +1,25 @@
 "use strict";
 
 const Utility = require("./app/utility.js");
+const Global = require("./server.js")
 const View = require("./app/view/updateField.js")
 const Message = require("./app/message.js");
 
 class Game {
-  constructor(player) {
+  constructor() {
     // this.randomizedStartPlayer = randomizedStartPlayer;
-    this.player = player;
+    // this.startPlayer = startPlayer;
     this.field = new Array(9).fill("");
+    this.connectedPlayer = new Utility().connectedPlayer();
+    this.startPlayer = this.currentPlayer();
+    this.emitSymbol();
+    this.emitStartPlayer();
     // this.field = [["", "", ""], ["", "", ""], ["", "", ""]];
 
   }
 
   currentPlayer() {
-    // const playerWithRandomFigure = new Utility().randomizeSymbol();
-    // const randomizedStartPlayer = playerWithRandomFigure[Math.floor(Math.random() * playerWithRandomFigure.length)];
-    // return randomizedStartPlayer;
+    return new Utility().randomizedStartPlayer().symbol;
   }
 
   move(socketMove) {
@@ -34,6 +37,21 @@ class Game {
 
   result() {
 
+  }
+
+  emitSymbol() {
+    // const connectedPlayer = new Utility().connectedPlayer();
+    // Global.io.in("player").emit("userSymbolAndStartPlayer", Object.values(connectedPlayer).map(element => {
+    //   return {id: element.id, symbol: element.symbol, startPlayer: this.startPlayer};
+    // }));
+    Global.io.in("player").emit("userSymbol",
+      Object.values(this.connectedPlayer).map(element => {
+        return {id: element.id, symbol: element.symbol};
+      }));
+  }
+
+  emitStartPlayer() {
+    Global.io.in("player").emit("userStartPlayer", this.startPlayer);
   }
 };
 

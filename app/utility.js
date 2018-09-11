@@ -23,35 +23,13 @@ class Utility {
       client.type === "player");
   }
 
-  randomizeSymbol(socket) {
+  randomizeSymbol() {
     const connectedPlayer = this.connectedPlayer();
     const possibleSymbol = "XO";
     connectedPlayer[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
     connectedPlayer[0].symbol === "X" ?
       connectedPlayer[1].symbol = "O" :
       connectedPlayer[1].symbol = "X";
-
-    // const symbols = Object.values(connectedPlayer).map(element => {
-    //   let temp = {};
-    //   temp[element.id] = element.symbol;
-    //   return temp;
-    // });
-    Global.io.in("player").emit("userSymbol", Object.values(connectedPlayer).map(element => {
-      console.log({id: element.id, symbol: element.symbol});
-      return {id: element.id, symbol: element.symbol};
-    }));
-
-    // socket.emit("userSymbol", Global.clients.find(client => client.id === socket.id).symbol);
-    // socket.emit("userSymbol", Global.clients.find(client => client.id === socket.id).symbol);
-    // Global.io.in("player").emit("userSymbol", Global.clients.find(client => client.id === socket.id).symbol);
-
-    // console.log(connectedPlayer);
-    // Global.io.in("player").emit("userSymbol", {
-    //   playerOneId: connectedPlayer[0].id,
-    //   playerOneSymbol: connectedPlayer[0].symbol,
-    //   playerTwoId: connectedPlayer[1].id,
-    //   playerTwoSymbol: connectedPlayer[1].symbol
-    // });
     return connectedPlayer;
   }
 

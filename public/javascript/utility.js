@@ -1,6 +1,17 @@
 "use strict";
 
-export const setSymbol = (socket, userSymbol) => {
-  socket.symbol = userSymbol.find(user => user.id === socket.id).symbol;
-  console.log(socket.id + " : " + socket.symbol);
+import {setViewHeaderPlayerSymbol, setViewHeaderCurrentPlayer} from "./view.js";
+
+export const setType = (socket, type) => {
+  socket.type = type;
+};
+
+export const setSymbol = (socket, users) => {
+  socket.symbol = users.find(user => user.id === socket.id).symbol;
+  setViewHeaderPlayerSymbol(socket.symbol);
+};
+
+export const setStartPlayer = (socket, startPlayer) => {
+  socket.startPlayer = startPlayer;
+  setViewHeaderCurrentPlayer(socket.startPlayer);
 };

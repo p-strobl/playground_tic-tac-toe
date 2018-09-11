@@ -7,7 +7,7 @@ const socketIo = require("socket.io");
 
 // const Listener = require("./app/controller/listener.js");
 
-const PORT = 8082;
+const PORT = 8083;
 const server = express();
 const webServer = http.Server(server);
 const io = socketIo(webServer);
@@ -56,25 +56,23 @@ class Listener {
   listen() {
     io.sockets.on("connection", socket => {
       new User(socket);
-      const game = new Game();
       // console.log(game);
       // clients.forEach(client => console.log(client.id));
       if (Utility.playerRoomLength() === 2) {
         // console.log(clients);
-        // var game = new Game(new Utility().randomizeSymbol(socket));
+        const game = new Game();
+        console.log(game);
 
-        // console.log(clients);
+        socket.on("cellClicked", socketMove => {
+          console.log(socketMove);
+          // game.move(socketMove);
+          // console.log(game);
+        });
       }
 
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);
-        clients.forEach(client => console.log(client.id));
-      });
-
-      socket.on("cellClicked", socketMove => {
-        console.log(socketMove);
-        // game.move(socketMove);
-        // console.log(game);
+        clients.forEach(client => console.log(client.id + " Disconnected"));
       });
     });
   };

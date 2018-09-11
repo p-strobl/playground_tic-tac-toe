@@ -1,17 +1,22 @@
 "use strict";
 
 import {
-  clickedFieldCell, updateField
+  clickedFieldCell
 } from "./field.js";
+
 import {
-  setSymbol
+  setType, setSymbol, setStartPlayer
 } from "./utility.js";
+
+import {updateField} from "./view.js";
 
 export const socket = io.connect();
 
 socket.on("connect", () => {
-  socket.on("userType", type => socket.type = type);
-  socket.on("userSymbol", userSymbol => setSymbol(socket, userSymbol));
+  socket.on("userType", type => setType(socket, type));
+  socket.on("userSymbol", users => setSymbol(socket, users));
+  socket.on("userStartPlayer", startPlayer => setStartPlayer(socket, startPlayer));
+  // console.log(socket);
   socket.on("updateField", receivedData => updateField(receivedData));
 });
 
