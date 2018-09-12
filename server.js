@@ -5,8 +5,6 @@ const path = require("path");
 const http = require("http");
 const socketIo = require("socket.io");
 
-// const Listener = require("./app/controller/listener.js");
-
 const PORT = 8083;
 const server = express();
 const webServer = http.Server(server);
@@ -56,16 +54,14 @@ class Listener {
   listen() {
     io.sockets.on("connection", socket => {
       new User(socket);
-      // console.log(game);
-      // clients.forEach(client => console.log(client.id));
       if (Utility.playerRoomLength() === 2) {
         // console.log(clients);
         const game = new Game();
         console.log(game);
 
-        socket.on("cellClicked", socketMove => {
+        socket.on("clickedCell", socketMove => {
           console.log(socketMove);
-          // game.move(socketMove);
+          game.move(socketMove);
           // console.log(game);
         });
       }

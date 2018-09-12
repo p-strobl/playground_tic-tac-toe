@@ -2,13 +2,11 @@
 
 const Utility = require("./app/utility.js");
 const Global = require("./server.js")
-const View = require("./app/view/updateField.js")
-const Message = require("./app/message.js");
+// const View = require("./app/view/updateField.js")
+// const Message = require("./app/message.js");
 
 class Game {
   constructor() {
-    // this.randomizedStartPlayer = randomizedStartPlayer;
-    // this.startPlayer = startPlayer;
     this.field = new Array(9).fill("");
     this.connectedPlayer = new Utility().connectedPlayer();
     this.startPlayer = this.currentPlayer();
@@ -40,18 +38,17 @@ class Game {
   }
 
   emitSymbol() {
-    // const connectedPlayer = new Utility().connectedPlayer();
-    // Global.io.in("player").emit("userSymbolAndStartPlayer", Object.values(connectedPlayer).map(element => {
-    //   return {id: element.id, symbol: element.symbol, startPlayer: this.startPlayer};
-    // }));
     Global.io.in("player").emit("userSymbol",
       Object.values(this.connectedPlayer).map(element => {
-        return {id: element.id, symbol: element.symbol};
+        return {
+          id: element.id,
+          symbol: element.symbol
+        };
       }));
   }
 
   emitStartPlayer() {
-    Global.io.in("player").emit("userStartPlayer", this.startPlayer);
+    Global.io.in("player").emit("startPlayer", this.startPlayer);
   }
 };
 

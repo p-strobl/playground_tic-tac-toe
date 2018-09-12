@@ -1,13 +1,17 @@
 "use strict";
 
-import {getFieldCells, getHeaderInfoPlayerSymbol, getHeaderInfoCurrentPlayer} from "../helpers/domHelper.js";
+import {
+  getFieldCells,
+  getHeaderInfoPlayerSymbol,
+  getHeaderInfoCurrentPlayer
+} from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
-  getHeaderInfoPlayerSymbol.innerText = `Sie spielen als ${playerSymbol}`;
+  getHeaderInfoPlayerSymbol.innerHTML = `Sie spielen als ${playerSymbol}`;
 };
 
 export const setViewHeaderCurrentPlayer = currentPlayer => {
-  getHeaderInfoCurrentPlayer.innerText = `Am Zug ist: ${currentPlayer}`;
+  getHeaderInfoCurrentPlayer.innerHTML = `Am Zug ist: ${currentPlayer}`;
 };
 
 export const setViewFooter = () => {

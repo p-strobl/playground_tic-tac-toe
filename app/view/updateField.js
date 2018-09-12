@@ -9,7 +9,10 @@ class View {
   }
 
   updateField() {
-    Global.io.emit("updateField", {symbol: this.symbol, fieldId: this.fieldId});
+    Global.io.emit("updateField", {
+      symbol: this.symbol,
+      fieldId: this.fieldId
+    });
   }
 };
 

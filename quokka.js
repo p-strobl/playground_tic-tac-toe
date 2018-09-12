@@ -101,49 +101,53 @@
 // // // console.log(clients);
 // // console.log(cc);
 
-// let field = [["", "", ""], ["", "", ""], ["", "", ""]];
-// console.log(field);
-// // console.log(field[1][0]);
-//
-// // console.log(flatten);
-//
-// const move = (symbol, fieldId) => {
-//   field = [].concat(...field);
-//   field[fieldId] = symbol;
-//   let results = [];
-//   while (field.length) {
-//     results.push(field.splice(0, 3));
-//   }
-//   results
-//   // field.slice(0);
-//   // field
-//   // field = flatten.split(",", 2);
-// };
-//
-// move("X", 8);
-//
-// console.log(field);
+let field = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""]
+];
+console.log(field);
+// console.log(field[1][0]);
 
-const connectedPlayer = {
-  one: {
-    id: "ddd",
-    symbol: "X"
-  },
-  two: {
-    id: "vvv",
-    symbol: "O"
+// console.log(flatten);
+
+const move = (symbol, fieldId) => {
+  field = [].concat(...field);
+  field[fieldId] = symbol;
+  let results = [];
+  while (field.length) {
+    results.push(field.splice(0, 3));
   }
+  // results
+  // field.slice(0);
+  // field
+  // field = results.split(",", 2);
 };
 
-console.log(connectedPlayer);
+move("X", 8);
+
+console.log(field);
+
+// const connectedPlayer = {
+//   one: {
+//     id: "ddd",
+//     symbol: "X"
+//   },
+//   two: {
+//     id: "vvv",
+//     symbol: "O"
+//   }
+// };
+
+// console.log(connectedPlayer);
 
 
-const test = Object.values(connectedPlayer).map(element => {
-  return {id: element.id, symbol: element.symbol};
-});
+// const test = Object.values(connectedPlayer).map(element => {
+//   return {id: element.id, symbol: element.symbol};
+// });
 
-test
+// test
 
-const bla = test.find(element => element.id === "ddd");
+// const bla = test.find(element => element.id === "ddd");
 
-console.log(bla.symbol);
+// console.log(bla.symbol);

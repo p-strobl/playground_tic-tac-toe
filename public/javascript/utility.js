@@ -1,6 +1,9 @@
 "use strict";
 
-import {setViewHeaderPlayerSymbol, setViewHeaderCurrentPlayer} from "./view.js";
+import {
+  setViewHeaderPlayerSymbol,
+  setViewHeaderCurrentPlayer
+} from "./view.js";
 
 export const setType = (socket, type) => {
   socket.type = type;
@@ -13,5 +16,6 @@ export const setSymbol = (socket, users) => {
 
 export const setStartPlayer = (socket, startPlayer) => {
   socket.startPlayer = startPlayer;
+  socket.currentPlayer = startPlayer;
   setViewHeaderCurrentPlayer(socket.startPlayer);
 };
