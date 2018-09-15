@@ -101,33 +101,68 @@
 // // // console.log(clients);
 // // console.log(cc);
 
-let field = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""]
-];
-console.log(field);
+// let field = [
+//   ["", "", ""],
+//   ["", "", ""],
+//   ["", "", ""]
+// ];
+
+class Game {
+  constructor() {
+    this.field = new Array(9).fill("");
+  }
+
+  move(symbol, fieldId) {
+    this.field[fieldId] = symbol;
+    this.result(this.field);
+  }
+
+  result(updatedField) {
+    console.log(updatedField);
+
+  }
+};
+
+module.exports = Game;
+
+
+
+const game = new Game();
+
+
+console.log(game.move("X", 8));
+console.log(game);
+// let field = new Array(9).fill("");
+
 // console.log(field[1][0]);
 
 // console.log(flatten);
 
-const move = (symbol, fieldId) => {
-  field = [].concat(...field);
-  field[fieldId] = symbol;
-  let results = [];
-  while (field.length) {
-    results.push(field.splice(0, 3));
-  }
-  // results
-  // field.slice(0);
-  // field
-  // field = results.split(",", 2);
-};
+// const move = (symbol, fieldId) => {
+//   field[fieldId] = symbol;
+//   return field;
+//   // field = [].concat(...field);
+//   // field[fieldId] = symbol;
+//   // let results = [];
+//   // while (field.length) {
+//   //   results.push(field.splice(0, 3));
+//   // }
+//   // results
+//   // field.slice(0);
+//   // field
+//   // field = results.split(",", 2);
+// };
 
-move("X", 8);
+// console.log(field);
+// move("X", 8);
+// move("X", 1);
+// move("X", 3);
+// move("X", 6);
 
-console.log(field);
+// console.log(field);
 
+// const result = move();
+// console.log(result);
 // const connectedPlayer = {
 //   one: {
 //     id: "ddd",
