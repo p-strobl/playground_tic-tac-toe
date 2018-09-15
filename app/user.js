@@ -10,7 +10,8 @@ class User {
     this.type = this.divideUser();
     this.addToClients();
     this.joinRoom();
-    this.emitUserType();
+    this.emitClientType();
+    this.emitClientStatus();
   }
 
   divideUser() {
@@ -29,8 +30,18 @@ class User {
     this.socket.join(this.type);
   }
 
-  emitUserType() {
-    this.socket.emit("userType", Global.clients.find(client => client.id === this.socket.id).type);
+  emitClientType() {
+    this.socket.emit("clientType", Global.clients.find(client => client.id === this.socket.id).type);
+  }
+
+  emitClientStatus() {
+    let statusMessage = "";
+    if (this.type === "player") {
+      statusMessage = "Bitte warten Sie auf Ihren Gegner!";
+    } else {
+      statusMessage = "Sorry, es waren bereits genug Spieler online.";
+    }
+    this.socket.emit("clientStatus", statusMessage);
   }
 };
 

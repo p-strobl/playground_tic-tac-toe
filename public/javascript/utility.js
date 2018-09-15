@@ -16,6 +16,10 @@ export const setSymbol = (socket, users) => {
 
 export const setStartPlayer = (socket, startPlayer) => {
   socket.startPlayer = startPlayer;
-  socket.currentPlayer = startPlayer;
+  setCurrentPlayer(socket, startPlayer);
+};
+
+export const setCurrentPlayer = (socket, currentPlayer) => {
+  socket.currentPlayer = currentPlayer;
   setViewHeaderCurrentPlayer(socket.startPlayer);
 };

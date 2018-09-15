@@ -12,6 +12,7 @@ const io = socketIo(webServer);
 
 const Utility = require("./app/utility.js");
 const User = require("./app/user.js");
+const Emit = require("./app/emit.js")
 const Game = require("./GameModule.js");
 
 let clients = [];
@@ -54,9 +55,12 @@ class Listener {
   listen() {
     io.sockets.on("connection", socket => {
       new User(socket);
+
       if (Utility.playerRoomLength() === 2) {
         // console.log(clients);
-        const game = new Game();
+        const game = new Game(new Utility().randomizedStartPlayer().symbol);
+        game.currentPlayer;
+        new Emit().symbol;
         console.log(game);
 
         socket.on("clickedCell", socketMove => {

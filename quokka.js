@@ -108,30 +108,62 @@
 // ];
 
 class Game {
-  constructor() {
+  constructor(startPlayer) {
+    this.startPlayer = startPlayer;
     this.field = new Array(9).fill("");
   }
 
+  get currentPlayer() {
+    return this.startPlayer === undefined ? this.startPlayer = "O" : this.startPlayer;
+  }
+
   move(symbol, fieldId) {
-    this.field[fieldId] = symbol;
-    this.result(this.field);
+    switch (true) {
+      case this.field[fieldId] === "":
+        this.field[fieldId] = symbol;
+        break;
+      case this.field[fieldId] !== "":
+        return `Ungeueltiger Zug: Feld ${fieldId} ist nicht frei!`;
+
+      default:
+    }
+
+    // this.result(this.field);
   }
 
   result(updatedField) {
-    console.log(updatedField);
+    // console.log(updatedField);
 
   }
 };
 
-module.exports = Game;
-
-
-
-const game = new Game();
+// module.exports = Game;
+const game = new Game("X");
 
 
 console.log(game.move("X", 8));
+console.log(game.move("X", 8));
+console.log(game.move("X", 7));
+console.log(game.currentPlayer.length);
+
 console.log(game);
+
+const game2 = new Game();
+console.log(game2);
+console.log(game2.currentPlayer.length);
+
+
+
+
+
+
+
+
+
+
+
+
+
 // let field = new Array(9).fill("");
 
 // console.log(field[1][0]);

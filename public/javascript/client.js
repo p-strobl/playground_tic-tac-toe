@@ -11,15 +11,22 @@ import {
 } from "./utility.js";
 
 import {
-  updateField
+  updateField,
+  setViewHeaderCurrentPlayer
 } from "./view.js";
+
+import {
+  messageStatusFooter
+} from "./message.js";
 
 export const socket = io.connect();
 
 socket.on("connect", () => {
-  socket.on("userType", type => setType(socket, type));
-  socket.on("userSymbol", users => setSymbol(socket, users));
+  socket.on("clientType", type => setType(socket, type));
+  socket.on("clientStatus", message => messageStatusFooter(message));
+  socket.on("clientSymbol", users => setSymbol(socket, users));
   socket.on("startPlayer", startPlayer => setStartPlayer(socket, startPlayer));
+  // socket.on("currentPlayer", currenPlayer => setCurrentPlayer(currenPlayer));
   console.log(socket);
   // socket.on("updateField", receivedData => updateField(receivedData));
 });

@@ -3,9 +3,8 @@
 const Utility = require("./utility.js");
 const Global = require("../server.js");
 
-class Message {
-  constructor() {
-  };
+class Emit {
+  constructor() {};
 
   text() {
     return {
@@ -54,10 +53,25 @@ class Message {
         message = this.text().welcome.player.two;
     } else {
       message = this.text().welcome.spectator.all;
-    }
-    ;
+    };
     this.emit(type, message).welcomeStatus;
   };
+
+  get symbol() {
+    const connectedPlayer = new Utility().connectedPlayer();
+    Global.io.in("player").emit("clientSymbol",
+      Object.values(connectedPlayer).map(element => {
+        return {
+          id: element.id,
+          symbol: element.symbol
+        };
+      }));
+  }
+
+  startPlayer(startPlayer) {
+    console.log(startPlayer);
+    Global.io.emit("startPlayer", startPlayer);
+  }
 };
 
-module.exports = Message;
+module.exports = Emit;
