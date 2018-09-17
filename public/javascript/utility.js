@@ -2,15 +2,17 @@
 
 import {
   setViewHeaderPlayerSymbol,
-  setViewHeaderCurrentPlayer
+  setViewHeaderCurrentPlayer,
+  setViewUpdateField,
+  // setViewFooterStatus
 } from "./view.js";
 
-export const setType = (socket, type) => {
-  socket.type = type;
+export const setClientType = (socket, clientType) => {
+  socket.type = clientType;
 };
 
-export const setSymbol = (socket, users) => {
-  socket.symbol = users.find(user => user.id === socket.id).symbol;
+export const setPlayerSymbol = (socket, player) => {
+  socket.symbol = player.find(player => player.id === socket.id).symbol;
   setViewHeaderPlayerSymbol(socket.symbol);
 };
 
@@ -22,4 +24,23 @@ export const setStartPlayer = (socket, startPlayer) => {
 export const setCurrentPlayer = (socket, currentPlayer) => {
   socket.currentPlayer = currentPlayer;
   setViewHeaderCurrentPlayer(socket.startPlayer);
+};
+
+// export const setFooterStatus = message => {
+//   setViewFooter(message);
+// };
+
+
+
+export const setClientState = (socket, clientState) => {
+
+};
+
+export const setGameState = (socket, gameState) => {
+  socket.currentPlayer = gameState.currentPlayer;
+  socket.fieldState = gameState.fieldState;
+
+  setViewUpdateField(gameState);
+
+  console.log(gameState);
 };

@@ -57,20 +57,49 @@ class Emit {
     this.emit(type, message).welcomeStatus;
   };
 
-  get symbol() {
+  get playerSymbol() {
     const connectedPlayer = new Utility().connectedPlayer();
     Global.io.in("player").emit("clientSymbol",
-      Object.values(connectedPlayer).map(element => {
+      Object.values(connectedPlayer).map(player => {
         return {
-          id: element.id,
-          symbol: element.symbol
+          id: player.id,
+          symbol: player.symbol
         };
       }));
   }
 
+  get waitForSecondPlayerStatus() {
+    Global.io.in("player").emit("footerStatus",
+      "Bitte warten Sie auf Ihren Gegner!");
+  }
+
+  get gameStartStatus() {
+    Global.io.in("player").emit("footerStatus",
+      "Zwei Spieler verbunden. Spiel kann beginnen!")
+  }
+
+  get spectatorStatus() {
+    Global.io.in("spectator").emit("footerStatus",
+      "Sorry, es waren bereits genug Spieler online.");
+  }
+
+  currentPlayer(currentPlayer) {
+    Global.io.emit("currentPlayer", currentPlayer);
+  }
+
   startPlayer(startPlayer) {
-    console.log(startPlayer);
+    // console.log(startPlayer);
     Global.io.emit("startPlayer", startPlayer);
+  }
+
+  clientState(player) {
+    Global.io.in("player").emit("clientState", player);
+    Global.io.emit();
+  }
+
+  gameState(game) {
+    Global.io.emit("gameState", game);
+    // console.log(game);
   }
 };
 

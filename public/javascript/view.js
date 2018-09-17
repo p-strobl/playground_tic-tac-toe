@@ -3,7 +3,8 @@
 import {
   getFieldCells,
   getHeaderInfoPlayerSymbol,
-  getHeaderInfoCurrentPlayer
+  getHeaderInfoCurrentPlayer,
+  getFooterStatusContent
 } from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
@@ -14,10 +15,10 @@ export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.innerHTML = `Am Zug ist: ${currentPlayer}`;
 };
 
-export const setViewFooter = () => {
-
+export const setViewFooterStatus = message => {
+  getFooterStatusContent.innerHTML = message;
 };
 
-export const updateField = clickedField => {
-  return getFieldCells[clickedField.fieldId].innerHTML = clickedField.symbol;
+export const setViewUpdateField = gameState => {
+  return getFieldCells[gameState.clickedCell].innerHTML = gameState.clickedPlayer;
 };

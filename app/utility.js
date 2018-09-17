@@ -3,8 +3,7 @@
 const Global = require("../server.js");
 
 class Utility {
-  constructor() {
-  }
+  constructor() {}
 
   static removeFromClients(socket) {
     Global.clients = Global.clients.filter(client => client.id !== socket.id);
@@ -35,7 +34,7 @@ class Utility {
 
   randomizedStartPlayer() {
     const playerWithRandomSymbol = this.randomizeSymbol();
-    return playerWithRandomSymbol[Math.floor(Math.random() * playerWithRandomSymbol.length)];
+    return playerWithRandomSymbol[Math.floor(Math.random() * playerWithRandomSymbol.length)].symbol;
   }
 
 };

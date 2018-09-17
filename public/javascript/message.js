@@ -4,5 +4,5 @@ import {
   getFooterStatusContent
 } from "../helpers/domHelper.js";
 
-export const messageStatusFooter = message =>
+export const statusFooter = message =>
   getFooterStatusContent.innerHTML = message;

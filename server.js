@@ -11,7 +11,7 @@ const webServer = http.Server(server);
 const io = socketIo(webServer);
 
 const Utility = require("./app/utility.js");
-const User = require("./app/user.js");
+const Client = require("./app/client.js");
 const Emit = require("./app/emit.js")
 const Game = require("./GameModule.js");
 
@@ -54,21 +54,42 @@ class Listener {
 
   listen() {
     io.sockets.on("connection", socket => {
-      new User(socket);
+      const newClient = new Client(socket);
+      // console.log(newClient);
+      const emit = new Emit();
 
-      if (Utility.playerRoomLength() === 2) {
-        // console.log(clients);
-        const game = new Game(new Utility().randomizedStartPlayer().symbol);
-        game.currentPlayer;
-        new Emit().symbol;
-        console.log(game);
+      if (newClient.type === "player") {
+        switch (true) {
+          case newClient.playerRoomLength === 0:
+            emit.waitForSecondPlayerStatus;
+            break;
+          case newClient.playerRoomLength === 1:
+            // const emit = new Emit();
+            const randomizedPlayer = new Utility().randomizedStartPlayer();
+            const game = new Game(randomizedPlayer);
+            emit.gameState(game);
+            emit.playerSymbol;
+            emit.startPlayer(randomizedPlayer);
+            emit.gameStartStatus;
+            // game.currentPlayer;
 
-        socket.on("clickedCell", socketMove => {
-          console.log(socketMove);
-          game.move(socketMove);
-          // console.log(game);
-        });
+            socket.on("clickedCell", playerMove => {
+              console.log(playerMove);
+              game.move(playerMove);
+            });
+            break;
+
+          default:
+        }
+
+
+
+      } else if (newClient.type === "spectator") {
+        emit.spectatorStatus;
+        // emit.currentPlayer(game.currentPlayer);
       }
+
+
 
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);

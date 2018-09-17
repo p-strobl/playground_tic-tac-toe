@@ -2,31 +2,37 @@
 
 import {
   clickedFieldCell
-} from "./field.js";
+} from "./clickedFieldCell.js";
 
 import {
-  setType,
-  setSymbol,
-  setStartPlayer
+  setClientType,
+  setPlayerSymbol,
+  setStartPlayer,
+  // setClientState,
+  setGameState
 } from "./utility.js";
 
 import {
-  updateField,
-  setViewHeaderCurrentPlayer
+  // updateField,
+  // setViewHeaderCurrentPlayer,
+  setViewFooterStatus
 } from "./view.js";
 
 import {
-  messageStatusFooter
+  // messageStatusFooter
 } from "./message.js";
 
 export const socket = io.connect();
 
 socket.on("connect", () => {
-  socket.on("clientType", type => setType(socket, type));
-  socket.on("clientStatus", message => messageStatusFooter(message));
-  socket.on("clientSymbol", users => setSymbol(socket, users));
+  socket.on("clientType", clientType => setClientType(socket, clientType));
+  socket.on("clientSymbol", playerSymbol => setPlayerSymbol(socket, playerSymbol));
   socket.on("startPlayer", startPlayer => setStartPlayer(socket, startPlayer));
-  // socket.on("currentPlayer", currenPlayer => setCurrentPlayer(currenPlayer));
+  socket.on("footerStatus", message => setViewFooterStatus(message));
+  // socket.on("clientState", clientState => setClientState(socket, clientState));
+  // socket.on("clientStatus", status => statusFooter(status));
+  socket.on("gameState", gameState => setGameState(socket, gameState));
+
   console.log(socket);
   // socket.on("updateField", receivedData => updateField(receivedData));
 });

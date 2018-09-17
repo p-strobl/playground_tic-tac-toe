@@ -8,22 +8,47 @@ const Emit = require("./app/emit.js");
 class Game {
   constructor(startPlayer) {
     this.startPlayer = startPlayer;
-    this.field = new Array(9).fill("");
+    this.fieldState = new Array(9).fill("");
+  }
+
+  set gameField() {}
+
+  get gameField() {
+    let fieldState = this.fieldState;
+    return fieldState
   }
 
   get currentPlayer() {
     if (this.startPlayer === undefined) {
       this.startPlayer = "X";
     }
-    new Emit().startPlayer(this.startPlayer);
+    // new Emit().startPlayer(this.startPlayer);
     return this.startPlayer;
     // return this.startPlayer === undefined ?
     //   this.startPlayer = new Utility().randomizedStartPlayer().symbol :
     //   this.startPlayer;
   }
 
-  move(socketMove) {
-    console.log(socketMove);
+  move(clientMove) {
+    let currentPlayer = "";
+    const updateGameState = {
+      currentPlayer: currentPlayer,
+      clickedCell: clientMove.cellId,
+      clickedPlayer: clientMove.playerSymbol,
+      fieldState: this.gameField
+    };
+
+    clientMove.playerSymbol === "X" ?
+      updateGameState.currentPlayer = "O" :
+      updateGameState.currentPlayer = "X";
+
+    if (this.field[clientMove.cellId] === "") {
+      this.field[clientMove.cellId] = clientMove.playerSymbol;
+    }
+
+    console.log(updateGameState);
+    Global.io.emit("gameState", updateGameState);
+    // console.log(clientMove);
   }
 
   result() {
