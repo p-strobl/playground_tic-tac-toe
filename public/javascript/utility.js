@@ -4,8 +4,27 @@ import {
   setViewHeaderPlayerSymbol,
   setViewHeaderCurrentPlayer,
   setViewUpdateField,
-  // setViewFooterStatus
+  setViewFooterStatus
 } from "./view.js";
+
+const setClientStatus = (type, playerCount) => {
+  const status = {
+    player: {
+      one: "Bitte warten Sie auf Ihren Gegner!",
+      two: "Zwei Spieler verbunden. Spiel kann beginnen!"
+    },
+    spectator: {
+      all: "Sorry, es waren bereits genug Spieler online."
+    }
+  };
+  if (type === "player" && playerCount === 0) {
+    setViewFooterStatus(status.player.one);
+  } else if (type === "player" && playerCount === 1) {
+    setViewFooterStatus(status.player.two);
+  } else if (type === "spectator") {
+    setViewFooterStatus(spectator.all);
+  }
+};
 
 export const setClientType = (socket, clientType) => {
   socket.type = clientType;
@@ -23,7 +42,7 @@ export const setStartPlayer = (socket, startPlayer) => {
 
 export const setCurrentPlayer = (socket, currentPlayer) => {
   socket.currentPlayer = currentPlayer;
-  setViewHeaderCurrentPlayer(socket.startPlayer);
+  setViewHeaderCurrentPlayer(currentPlayer);
 };
 
 // export const setFooterStatus = message => {
@@ -32,9 +51,9 @@ export const setCurrentPlayer = (socket, currentPlayer) => {
 
 
 
-export const setClientState = (socket, clientState) => {
+// export const setClientState = (socket, clientState) => {
 
-};
+// };
 
 export const setGameState = (socket, gameState) => {
   socket.currentPlayer = gameState.currentPlayer;

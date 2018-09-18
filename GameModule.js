@@ -7,23 +7,27 @@ const Emit = require("./app/emit.js");
 
 class Game {
   constructor(startPlayer) {
-    this.startPlayer = startPlayer;
-    this.fieldState = new Array(9).fill("");
+    this.currentPlayer = startPlayer;
+    this.gameField = new Array(9).fill("");
+    this.result = "";
   }
 
-  set gameField() {}
+  gameField() {
+    return this._gameField;
+  }
 
-  get gameField() {
-    let fieldState = this.fieldState;
-    return fieldState
+  set currentPlayer(player) {
+    this._currentPlayer = player;
+    new Emit().currentPlayer(this._currentPlayer);
   }
 
   get currentPlayer() {
-    if (this.startPlayer === undefined) {
-      this.startPlayer = "X";
+    if (this._currentPlayer === undefined) {
+      this._currentPlayer = "X";
     }
+    return this._currentPlayer;
     // new Emit().startPlayer(this.startPlayer);
-    return this.startPlayer;
+    // return this._currentPlayer;
     // return this.startPlayer === undefined ?
     //   this.startPlayer = new Utility().randomizedStartPlayer().symbol :
     //   this.startPlayer;

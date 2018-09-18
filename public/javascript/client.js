@@ -7,7 +7,7 @@ import {
 import {
   setClientType,
   setPlayerSymbol,
-  setStartPlayer,
+  setCurrentPlayer,
   // setClientState,
   setGameState
 } from "./utility.js";
@@ -26,8 +26,8 @@ export const socket = io.connect();
 
 socket.on("connect", () => {
   socket.on("clientType", clientType => setClientType(socket, clientType));
-  socket.on("clientSymbol", playerSymbol => setPlayerSymbol(socket, playerSymbol));
-  socket.on("startPlayer", startPlayer => setStartPlayer(socket, startPlayer));
+  socket.on("playerSymbol", playerSymbol => setPlayerSymbol(socket, playerSymbol));
+  socket.on("currentPlayer", currentPlayer => setCurrentPlayer(socket, currentPlayer));
   socket.on("footerStatus", message => setViewFooterStatus(message));
   // socket.on("clientState", clientState => setClientState(socket, clientState));
   // socket.on("clientStatus", status => statusFooter(status));

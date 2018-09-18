@@ -54,23 +54,23 @@ class Listener {
 
   listen() {
     io.sockets.on("connection", socket => {
-      const newClient = new Client(socket);
-      // console.log(newClient);
+      const client = new Client(socket);
       const emit = new Emit();
 
-      if (newClient.type === "player") {
+      if (client.type === "player") {
         switch (true) {
-          case newClient.playerRoomLength === 0:
-            emit.waitForSecondPlayerStatus;
+          case client.playerRoomLength === 0:
+            emit.statusOnePlayer;
             break;
-          case newClient.playerRoomLength === 1:
-            // const emit = new Emit();
+          case client.playerRoomLength === 1:
             const randomizedPlayer = new Utility().randomizedStartPlayer();
             const game = new Game(randomizedPlayer);
-            emit.gameState(game);
             emit.playerSymbol;
-            emit.startPlayer(randomizedPlayer);
-            emit.gameStartStatus;
+            emit.statusTwoPlayer;
+
+            // emit.gameState(game);
+            // emit.startPlayer(randomizedPlayer);
+            // emit.gameStartStatus;
             // game.currentPlayer;
 
             socket.on("clickedCell", playerMove => {
@@ -81,11 +81,8 @@ class Listener {
 
           default:
         }
-
-
-
-      } else if (newClient.type === "spectator") {
-        emit.spectatorStatus;
+      } else if (client.type === "spectator") {
+        emit.statusSpectator;
         // emit.currentPlayer(game.currentPlayer);
       }
 
@@ -93,6 +90,9 @@ class Listener {
 
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);
+        if (Utility.playerRoomLength() === 1) {
+          emit.statusOnePlayer;
+        };
         clients.forEach(client => console.log(client.id + " Disconnected"));
       });
     });
