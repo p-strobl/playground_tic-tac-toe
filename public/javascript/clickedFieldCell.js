@@ -10,16 +10,18 @@ import {
 
 export const clickedFieldCell = socket => {
   getFieldCells.forEach(cell => cell.addEventListener("click", () => {
-    if (socket.type === "player" && socket.symbol === socket.currentPlayer) {
+    console.log("click");
+    console.log(socket);
+    if (socket.type === "player" && socket.symbol === socket.currentPlayer && socket.symbol !== undefined) {
       const cellClickedFrom = {
         cellId: cell.id.substring(4),
-        playerSymbol: socket.symbol,
-        fieldState: socket.fieldState
+        playerSymbol: socket.symbol
       };
       // socket.emit("clickedCell", {
       //   clickedCell: cell.id.substring(4),
       //   playerSymbol: socket.symbol
       // });
+      console.log(cellClickedFrom);
       socket.emit("clickedCell", cellClickedFrom);
     }
   }));

@@ -22,7 +22,6 @@ class Client {
 
   addToClients() {
     this.socket.type = this.type;
-    // this.socket.symbol = "";
     Global.clients.push(this.socket);
   }
 
@@ -34,16 +33,6 @@ class Client {
     this.socket.emit("clientType", Global.clients.find(client =>
       client.id === this.socket.id).type);
   }
-
-  // emitClientStatus() {
-  //   let statusMessage = "";
-  //   if (this.type === "player") {
-  //     statusMessage = "Bitte warten Sie auf Ihren Gegner!";
-  //   } else {
-  //     statusMessage = "Sorry, es waren bereits genug Spieler online.";
-  //   }
-  //   this.socket.emit("clientStatus", statusMessage);
-  // }
 };
 
 module.exports = Client;

@@ -32,6 +32,7 @@ export const setClientType = (socket, clientType) => {
 
 export const setPlayerSymbol = (socket, player) => {
   socket.symbol = player.find(player => player.id === socket.id).symbol;
+  console.log(socket);
   setViewHeaderPlayerSymbol(socket.symbol);
 };
 
@@ -56,10 +57,9 @@ export const setCurrentPlayer = (socket, currentPlayer) => {
 // };
 
 export const setGameState = (socket, gameState) => {
+  console.log(socket);
   socket.currentPlayer = gameState.currentPlayer;
-  socket.fieldState = gameState.fieldState;
-
+  socket.gameField = gameState.gameField;
   setViewUpdateField(gameState);
-
-  console.log(gameState);
+  console.log(socket);
 };

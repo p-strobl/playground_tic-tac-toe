@@ -26,33 +26,27 @@ class Game {
       this._currentPlayer = "X";
     }
     return this._currentPlayer;
-    // new Emit().startPlayer(this.startPlayer);
-    // return this._currentPlayer;
-    // return this.startPlayer === undefined ?
-    //   this.startPlayer = new Utility().randomizedStartPlayer().symbol :
-    //   this.startPlayer;
   }
 
   move(clientMove) {
-    let currentPlayer = "";
+    clientMove.playerSymbol === "X" ?
+    this.currentPlayer = "O" :
+    this.currentPlayer = "X";
+    
+    if (this.gameField[clientMove.cellId] === "") {
+      this.gameField[clientMove.cellId] = clientMove.playerSymbol;
+    }
+    
     const updateGameState = {
-      currentPlayer: currentPlayer,
+      currentPlayer: this.currentPlayer,
       clickedCell: clientMove.cellId,
       clickedPlayer: clientMove.playerSymbol,
-      fieldState: this.gameField
+      gameField: this.gameField
     };
 
-    clientMove.playerSymbol === "X" ?
-      updateGameState.currentPlayer = "O" :
-      updateGameState.currentPlayer = "X";
-
-    if (this.field[clientMove.cellId] === "") {
-      this.field[clientMove.cellId] = clientMove.playerSymbol;
-    }
-
-    console.log(updateGameState);
+    console.log("NEW GAMESTATE");
+    console.table(updateGameState);
     Global.io.emit("gameState", updateGameState);
-    // console.log(clientMove);
   }
 
   result() {

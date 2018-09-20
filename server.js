@@ -56,38 +56,37 @@ class Listener {
     io.sockets.on("connection", socket => {
       const client = new Client(socket);
       const emit = new Emit();
+      const game = new Game();
 
       if (client.type === "player") {
         switch (true) {
           case client.playerRoomLength === 0:
-            emit.statusOnePlayer;
+            emit.statusOnePlayer();
             break;
-          case client.playerRoomLength === 1:
-            const randomizedPlayer = new Utility().randomizedStartPlayer();
-            const game = new Game(randomizedPlayer);
-            emit.playerSymbol;
-            emit.statusTwoPlayer;
+          case client.playerRoomLength >= 1:
+            // const game = new Game(new Utility().randomizedStartPlayer());
+            game.currentPlayer = new Utility().randomizedStartPlayer();
+            emit.playerSymbol();
+            emit.statusTwoPlayer();
 
             // emit.gameState(game);
             // emit.startPlayer(randomizedPlayer);
             // emit.gameStartStatus;
             // game.currentPlayer;
 
-            socket.on("clickedCell", playerMove => {
-              console.log(playerMove);
-              game.move(playerMove);
-            });
             break;
 
           default:
         }
       } else if (client.type === "spectator") {
-        emit.statusSpectator;
+        emit.statusSpectator();
         // emit.currentPlayer(game.currentPlayer);
       }
 
-
-
+      socket.on("clickedCell", playerMove => {
+        console.log(playerMove);
+        game.move(playerMove);
+      });
       socket.on("disconnect", () => {
         Utility.removeFromClients(socket);
         if (Utility.playerRoomLength() === 1) {

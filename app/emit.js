@@ -38,7 +38,7 @@ class Emit {
     };
   };
 
-  get playerSymbol() {
+  playerSymbol() {
     const connectedPlayer = new Utility().connectedPlayer();
     Global.io.in("player").emit("playerSymbol",
       Object.values(connectedPlayer).map(player => {
@@ -49,17 +49,17 @@ class Emit {
       }));
   }
 
-  get statusOnePlayer() {
+  statusOnePlayer() {
     Global.io.in("player").emit("footerStatus",
       "Bitte warten Sie auf Ihren Gegner!");
   }
 
-  get statusTwoPlayer() {
+  statusTwoPlayer() {
     Global.io.in("player").emit("footerStatus",
       "Zwei Spieler verbunden. Spiel kann beginnen!")
   }
 
-  get statusSpectator() {
+  statusSpectator() {
     Global.io.in("spectator").emit("footerStatus",
       "Sorry, es waren bereits genug Spieler online.");
   }
