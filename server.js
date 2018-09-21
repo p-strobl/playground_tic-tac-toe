@@ -13,9 +13,10 @@ const io = socketIo(webServer);
 const Utility = require("./app/utility.js");
 const Client = require("./app/client.js");
 const Emit = require("./app/emit.js")
-const Game = require("./GameModule.js");
+const gameModule = require("./GameModule.js");
 
 let clients = [];
+const game = new gameModule.Game();
 
 module.exports.io = io;
 module.exports.clients = clients;
@@ -56,7 +57,7 @@ class Listener {
     io.sockets.on("connection", socket => {
       const client = new Client(socket);
       const emit = new Emit();
-      const game = new Game();
+      // const game = new Game();
 
       if (client.type === "player") {
         switch (true) {

@@ -52,8 +52,6 @@ class Game {
   result() {
 
   }
-
-
 };
 
-module.exports = Game;
+module.exports.gameModule = Game;
