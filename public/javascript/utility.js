@@ -3,8 +3,9 @@
 import {
   setViewHeaderPlayerSymbol,
   setViewHeaderCurrentPlayer,
-  setViewUpdateField,
-  setViewFooterStatus
+  setViewFooterStatus,
+  setViewNewGameField,
+  setViewUpdateGameField
 } from "./view.js";
 
 const setClientStatus = (type, playerCount) => {
@@ -30,8 +31,29 @@ export const setClientType = (socket, clientType) => {
   socket.type = clientType;
 };
 
-export const setPlayerSymbol = (socket, player) => {
-  socket.symbol = player.find(player => player.id === socket.id).symbol;
+export const startNewGame = (socket, newGame) => {
+  // console.log(game);
+  socket.gameState = newGame.gameState;
+  if (socket.type === "player") {
+    setPlayerSymbol(socket, newGame.playerSymbols);
+  }
+  setViewNewGameField();
+  setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
+  console.log(socket);
+  // console.log(socket);
+  // setViewFooterStatus(socket.type, readyState.gameReady);
+};
+
+export const updateGameState = (socket, updatedGame) => {
+  console.log(updatedGame);
+  socket.gameState = updatedGame.gameState;
+  setViewUpdateGameField(updatedGame.gameState);
+  setViewHeaderCurrentPlayer(updatedGame.gameState.currentPlayer);
+  console.log(socket.gameState);
+};
+
+const setPlayerSymbol = (socket, players) => {
+  socket.symbol = players.find(player => player.id === socket.id).symbol;
   console.log(socket);
   setViewHeaderPlayerSymbol(socket.symbol);
 };

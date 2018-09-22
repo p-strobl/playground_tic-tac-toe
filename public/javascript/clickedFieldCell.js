@@ -1,18 +1,18 @@
 "use strict";
 
 import {
-  getFieldCells
+  getGameFieldCells
 } from "../helpers/domHelper.js";
 
 import {
-  setViewUpdateField
+  setViewUpdateGameField
 } from "./view.js";
 
 export const clickedFieldCell = socket => {
-  getFieldCells.forEach(cell => cell.addEventListener("click", () => {
+  getGameFieldCells.forEach(cell => cell.addEventListener("click", () => {
     console.log("click");
     console.log(socket);
-    if (socket.type === "player" && socket.symbol === socket.currentPlayer && socket.symbol !== undefined) {
+    if (socket.type === "player" && socket.symbol === socket.gameState.currentPlayer && socket.symbol !== undefined) {
       const cellClickedFrom = {
         cellId: cell.id.substring(4),
         playerSymbol: socket.symbol
@@ -22,7 +22,7 @@ export const clickedFieldCell = socket => {
       //   playerSymbol: socket.symbol
       // });
       console.log(cellClickedFrom);
-      socket.emit("clickedCell", cellClickedFrom);
+      socket.emit("playerMove", cellClickedFrom);
     }
   }));
 };

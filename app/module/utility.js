@@ -1,21 +1,29 @@
-"use strict";
+!"use strict";
 
-const Global = require("../server.js");
+// const Global = require("../server.js");
 
 class Utility {
-  constructor() {}
+  constructor(io) {}
 
-  static removeFromClients(socket) {
-    Global.clients = Global.clients.filter(client => client.id !== socket.id);
-  }
+  // static removeFromClients(socket) {
+  //   Global.clients = Global.clients.filter(client => client.id !== socket.id);
+  // }
 
-  static playerRoomLength() {
-    if (Global.clients.length !== 0 && Global.io.sockets.adapter.rooms.hasOwnProperty("player")) {
-      return Global.io.sockets.adapter.rooms.player.length;
-    } else {
-      return 0;
-    }
-  }
+  // static playerRoomLength() {
+  //   if (Global.clients.length !== 0 && Global.io.sockets.adapter.rooms.hasOwnProperty("player")) {
+  //     return Global.io.sockets.adapter.rooms.player.length;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
+
+  // static playerRoomLength(clients, io) {
+  //   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {
+  //     return io.sockets.adapter.rooms.player.length;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
   connectedPlayer() {
     return Global.clients.filter(client =>

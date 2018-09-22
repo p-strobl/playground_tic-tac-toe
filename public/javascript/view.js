@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-  getFieldCells,
+  getGameFieldCells,
   getHeaderInfoPlayerSymbol,
   getHeaderInfoCurrentPlayer,
   getFooterStatusContent
@@ -15,10 +15,14 @@ export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.innerHTML = `Am Zug ist: ${currentPlayer}`;
 };
 
-export const setViewFooterStatus = message => {
+export const setViewFooterStatus = (type, readyState) => {
   getFooterStatusContent.innerHTML = message;
 };
 
-export const setViewUpdateField = gameState => {
-  return getFieldCells[gameState.clickedCell].innerHTML = gameState.clickedPlayer;
+export const setViewNewGameField = () => {
+  getGameFieldCells.forEach(cell => cell.innerHTML = "");
+};
+
+export const setViewUpdateGameField = updatedGameState => {
+  return getGameFieldCells[updatedGameState.clickedCell].innerHTML = updatedGameState.clickedPlayer;
 };

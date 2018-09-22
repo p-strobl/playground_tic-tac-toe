@@ -6,10 +6,13 @@ import {
 
 import {
   setClientType,
-  setPlayerSymbol,
-  setCurrentPlayer,
+  // setPlayerSymbol,
+  startNewGame,
+  updateGameState,
+  // setCurrentPlayer,
+  // setReadyState,
   // setClientState,
-  setGameState
+  // setGameState
 } from "./utility.js";
 
 import {
@@ -25,13 +28,15 @@ import {
 export const socket = io.connect();
 
 socket.on("connect", () => {
-  socket.on("clientType", clientType => setClientType(socket, clientType));
-  socket.on("playerSymbol", playerSymbol => setPlayerSymbol(socket, playerSymbol));
-  socket.on("currentPlayer", currentPlayer => setCurrentPlayer(socket, currentPlayer));
-  socket.on("footerStatus", message => setViewFooterStatus(message));
+  socket.on("setClientType", clientType => setClientType(socket, clientType));
+  // socket.on("playerSymbol", players => setPlayerSymbol(socket, players));
+  socket.on("startGame", newGame => startNewGame(socket, newGame));
+  socket.on("updateGame", updatedGame => updateGameState(socket, updatedGame));
+  // socket.on("currentPlayer", currentPlayer => setCurrentPlayer(socket, currentPlayer));
+  // socket.on("footerStatus", message => setViewFooterStatus(message));
   // socket.on("clientState", clientState => setClientState(socket, clientState));
   // socket.on("clientStatus", status => statusFooter(status));
-  socket.on("gameState", gameState => setGameState(socket, gameState));
+  // socket.on("gameState", gameState => setGameState(socket, gameState));
 
   console.log(socket);
   // socket.on("updateField", receivedData => updateField(receivedData));

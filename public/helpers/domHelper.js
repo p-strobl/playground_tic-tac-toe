@@ -8,4 +8,4 @@ export const getHeaderInfoCurrentPlayer = document.querySelector(".header__info_
 
 export const getFooterStatusContent = document.querySelector(".footer__status__content");
 
-export const getFieldCells = document.querySelectorAll(".field__cell");
+export const getGameFieldCells = document.querySelectorAll(".field__cell");
