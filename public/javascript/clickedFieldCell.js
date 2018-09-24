@@ -9,20 +9,24 @@ import {
 } from "./view.js";
 
 export const clickedFieldCell = socket => {
-  getGameFieldCells.forEach(cell => cell.addEventListener("click", () => {
-    console.log("click");
-    console.log(socket);
-    if (socket.type === "player" && socket.symbol === socket.gameState.currentPlayer && socket.symbol !== undefined) {
-      const cellClickedFrom = {
-        cellId: cell.id.substring(4),
-        playerSymbol: socket.symbol
-      };
-      // socket.emit("clickedCell", {
-      //   clickedCell: cell.id.substring(4),
-      //   playerSymbol: socket.symbol
-      // });
-      console.log(cellClickedFrom);
-      socket.emit("playerMove", cellClickedFrom);
+  getGameFieldCells.forEach(clickedCell => clickedCell.addEventListener("click", () => {
+
+    // if (socket.type === "player" && socket.symbol === socket.gameState.currentPlayer && validateMove(socket, clickedCell)) {
+    if (validateMove(socket, clickedCell)) {
+      socket.emit("playerMove", {
+        cellId: clickedCell.id.substring(4),
+        player: socket.symbol
+      });
+    } else {
+      console.log("Wrong Move");
+      // setViewErrorStatus();
     }
   }));
+};
+
+const validateMove = (socket, clickedCell) => {
+  return socket.gameState.gameField[clickedCell.id.substring(4)] === null &&
+    socket.type === "player" &&
+    socket.symbol === socket.gameState.currentPlayer ?
+    true : false;
 };

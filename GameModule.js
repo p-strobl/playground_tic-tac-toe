@@ -1,95 +1,67 @@
 "use strict";
 
-// const Utility = require("./app/utility.js");
 const Server = require("./server.js")
-let connectedPlayer = require("./app/module/connectedPlayer.js");
-// const View = require("./app/view/updateField.js")
-// const Emit = require("./app/emit.js");
+const connectedPlayer = require("./app/module/connectedPlayer.js");
 
 class Game {
   constructor(startPlayer) {
-    this._currentPlayer = startPlayer;
-    this._gameField = new Array(9).fill(null);
+    this.currentPlayer = startPlayer;
+    this.gameField = new Array(9).fill(null);
     this.result = "";
   }
 
   start() {
     const playerWithRandomizedSymbol = this.randomizeSymbol();
     const playerSymbols = this.getPlayerSymbol(playerWithRandomizedSymbol);
-    this._currentPlayer = this.randomizedStartPlayer(playerWithRandomizedSymbol);
+    this.currentPlayer = this.randomizedStartPlayer(playerWithRandomizedSymbol);
     Server.io.emit("startGame", {
       playerSymbols: playerSymbols,
       gameState: {
-        currentPlayer: this._currentPlayer,
-        gameField: this._gameField,
+        currentPlayer: this.currentPlayer,
+        gameField: this.gameField,
         result: this.result,
         running: true
-      }
+      },
+      statusMessage: "Zwei Spieler verbunden. Spiel kann beginnen!"
     });
   }
 
-  set gameField(playerSymbol) {
-    this._gameField = playerSymbol;
+  gameField(clientMove) {
+    this.gameField[clientMove.cellId] = clientMove.playerSymbol;
   }
 
-  get gameField() {
-    return this._gameField;
-  }
-
-  get currentPlayer() {
-    // if (this._currentPlayer === undefined) {
-    //   this._currentPlayer = "X";
-    // }
-    return this._currentPlayer;
-  }
-
-  set currentPlayer(player) {
-    this._currentPlayer = player;
+  currentPlayer(player) {
+    if (player === "X" || this.currentPlayer === undefined) {
+      this.currentPlayer = "O";
+    } else {
+      this.currentPlayer = "X";
+    }
   }
 
   move(clientMove) {
-
-    // this._gameField = clientMove.cellId;
-    if (clientMove.playerSymbol === "X") {
-      this._currentPlayer = "O";
-    } else {
-      this._currentPlayer = "X"
-    }
-
-    if (this._gameField[clientMove.cellId] === null) {
-      this._gameField[clientMove.cellId] = clientMove.playerSymbol;
-      // this._gameField[clientMove.cellId] = clientMove.playerSymbol;
-    }
+    console.log(clientMove);
+    console.log(this.gameField);
+    this.currentPlayer(clientMove.player);
+    this.gameField(clientMove);
 
     const updatedGameState = {
       gameState: {
-        currentPlayer: this._currentPlayer,
-        clickedPlayer: clientMove.playerSymbol,
-        clickedCell: clientMove.cellId,
-        gameField: this._gameField,
+        currentPlayer: this.currentPlayer,
+        gameField: this.gameField,
         result: null,
-        running: null
+        running: null,
+        clickedPlayer: clientMove.playerSymbol,
+        clickedCell: clientMove.cellId
       }
     };
 
-    Server.io.emit("updateGame", updatedGameState);
     console.log(updatedGameState.gameState.gameField);
-
-    // console.log("NEW GAMESTATE");
-    // console.table(updateGameState);
-    // Global.io.emit("gameState", updateGameState);
+    Server.io.sockets.emit("updateGame", updatedGameState);
   }
 
   result() {
 
   }
-
-  // connectedPlayer() {
-  //   return Global.clients.filter(client =>
-  //     client.type === "player");
-  // }
-
-
 
   randomizeSymbol() {
     const player = connectedPlayer();

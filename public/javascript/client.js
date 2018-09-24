@@ -9,6 +9,7 @@ import {
   // setPlayerSymbol,
   startNewGame,
   updateGameState,
+  setSpectatorState,
   // setCurrentPlayer,
   // setReadyState,
   // setClientState,
@@ -29,17 +30,10 @@ export const socket = io.connect();
 
 socket.on("connect", () => {
   socket.on("setClientType", clientType => setClientType(socket, clientType));
-  // socket.on("playerSymbol", players => setPlayerSymbol(socket, players));
   socket.on("startGame", newGame => startNewGame(socket, newGame));
   socket.on("updateGame", updatedGame => updateGameState(socket, updatedGame));
-  // socket.on("currentPlayer", currentPlayer => setCurrentPlayer(socket, currentPlayer));
-  // socket.on("footerStatus", message => setViewFooterStatus(message));
-  // socket.on("clientState", clientState => setClientState(socket, clientState));
-  // socket.on("clientStatus", status => statusFooter(status));
-  // socket.on("gameState", gameState => setGameState(socket, gameState));
-
-  console.log(socket);
-  // socket.on("updateField", receivedData => updateField(receivedData));
+  socket.on("footerStatus", message => setViewFooterStatus(message));
+  socket.on("spectatorState", currentGame => setSpectatorState(socket, currentGame));
 });
 
 // console.log(socket);

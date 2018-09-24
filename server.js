@@ -11,15 +11,7 @@ const webServer = http.Server(server);
 const io = socketIo(webServer);
 
 let clients = [];
-// const Utility = require("./app/utility.js");
-// const Client = require("./app/client.js");
-// const Emit = require("./app/emit.js")
-// const gameModule = require("./GameModule.js");
-
 const Listener = require("./app/controller/listener.js");
-
-
-// const game = new gameModule.Game();
 
 module.exports.io = io;
 module.exports.clients = clients;
@@ -51,7 +43,7 @@ class Server {
   };
 };
 
-function init() {
+const init = () => {
   new Server();
   new Listener();
 };

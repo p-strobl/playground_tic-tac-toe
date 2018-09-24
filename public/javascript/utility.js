@@ -5,27 +5,9 @@ import {
   setViewHeaderCurrentPlayer,
   setViewFooterStatus,
   setViewNewGameField,
-  setViewUpdateGameField
+  setViewUpdateGameField,
+  setViewSpectatorGameField
 } from "./view.js";
-
-const setClientStatus = (type, playerCount) => {
-  const status = {
-    player: {
-      one: "Bitte warten Sie auf Ihren Gegner!",
-      two: "Zwei Spieler verbunden. Spiel kann beginnen!"
-    },
-    spectator: {
-      all: "Sorry, es waren bereits genug Spieler online."
-    }
-  };
-  if (type === "player" && playerCount === 0) {
-    setViewFooterStatus(status.player.one);
-  } else if (type === "player" && playerCount === 1) {
-    setViewFooterStatus(status.player.two);
-  } else if (type === "spectator") {
-    setViewFooterStatus(spectator.all);
-  }
-};
 
 export const setClientType = (socket, clientType) => {
   socket.type = clientType;
@@ -36,25 +18,34 @@ export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
+    setViewFooterStatus(newGame.statusMessage);
   }
   setViewNewGameField();
   setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
-  console.log(socket);
+  // console.log(socket);
   // console.log(socket);
   // setViewFooterStatus(socket.type, readyState.gameReady);
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  console.log(updatedGame);
+  // console.log(updatedGame);
   socket.gameState = updatedGame.gameState;
   setViewUpdateGameField(updatedGame.gameState);
   setViewHeaderCurrentPlayer(updatedGame.gameState.currentPlayer);
+  console.log(socket.gameState.gameField);
   console.log(socket.gameState);
+};
+
+export const setSpectatorState = (socket, currentGame) => {
+  socket.gameState = currentGame.gameState;
+  setViewSpectatorGameField(currentGame.gameState);
+  setViewHeaderCurrentPlayer(currentGame.gameState.currentPlayer);
+  setViewFooterStatus(currentGame.message);
 };
 
 const setPlayerSymbol = (socket, players) => {
   socket.symbol = players.find(player => player.id === socket.id).symbol;
-  console.log(socket);
+  // console.log(socket);
   setViewHeaderPlayerSymbol(socket.symbol);
 };
 
@@ -67,16 +58,6 @@ export const setCurrentPlayer = (socket, currentPlayer) => {
   socket.currentPlayer = currentPlayer;
   setViewHeaderCurrentPlayer(currentPlayer);
 };
-
-// export const setFooterStatus = message => {
-//   setViewFooter(message);
-// };
-
-
-
-// export const setClientState = (socket, clientState) => {
-
-// };
 
 export const setGameState = (socket, gameState) => {
   console.log(socket);

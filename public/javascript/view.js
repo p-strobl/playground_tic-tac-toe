@@ -15,8 +15,8 @@ export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.innerHTML = `Am Zug ist: ${currentPlayer}`;
 };
 
-export const setViewFooterStatus = (type, readyState) => {
-  getFooterStatusContent.innerHTML = message;
+export const setViewFooterStatus = message => {
+  getFooterStatusContent.innerText = message;
 };
 
 export const setViewNewGameField = () => {
@@ -25,4 +25,14 @@ export const setViewNewGameField = () => {
 
 export const setViewUpdateGameField = updatedGameState => {
   return getGameFieldCells[updatedGameState.clickedCell].innerHTML = updatedGameState.clickedPlayer;
+};
+
+export const setViewErrorStatus = () => {
+
+};
+
+export const setViewSpectatorGameField = gameState => {
+  Object.entries(gameState._gameField).forEach(([key, value]) => {
+    getGameFieldCells[key].innerHTML = value;
+  });
 };

@@ -1,5 +1,6 @@
 "use strict";
 const gameModule = require('./GameModule.js');
+console.log(gameModule);
 const expect = (test, res1, res2) => {
   if (res1 !== res2) {
     console.log('Fehler in Test ' + test);
@@ -9,6 +10,7 @@ const expect = (test, res1, res2) => {
   }
 };
 const game1 = new gameModule.Game('X');
+console.log(game1);
 expect(1, game1.move('X', 0), '');
 expect(2, game1.move('X', 0), 'Ungueltiger Zug: X ist nicht am Zug!');
 expect(3, game1.move('O', 2), '');
