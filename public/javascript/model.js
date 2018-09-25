@@ -5,7 +5,8 @@ import {
 } from "../helpers/domHelper.js";
 
 import {
-  setViewUpdateGameField
+  setViewUpdateGameField,
+  setViewFooterStatus
 } from "./view.js";
 
 export const clickedFieldCell = socket => {
@@ -18,8 +19,7 @@ export const clickedFieldCell = socket => {
         player: socket.symbol
       });
     } else {
-      console.log("Wrong Move");
-      // setViewErrorStatus();
+      setViewFooterStatus("Dieses Feld ist bereits besetzt, bitte wählen Sie ein anderes, leeres Feld aus.");
     }
   }));
 };

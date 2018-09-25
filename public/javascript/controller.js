@@ -18,7 +18,7 @@ export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
-    setViewFooterStatus(newGame.statusMessage);
+    setViewFooterStatus(newGame.gameState.statusMessage);
   }
   setViewNewGameField();
   setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
@@ -28,11 +28,12 @@ export const startNewGame = (socket, newGame) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  // console.log(updatedGame);
+  console.log(updatedGame);
   socket.gameState = updatedGame.gameState;
   setViewUpdateGameField(updatedGame.gameState);
   setViewHeaderCurrentPlayer(updatedGame.gameState.currentPlayer);
-  console.log(socket.gameState.gameField);
+  setViewFooterStatus(updatedGame.gameState.statusMessage);
+  // console.log(socket.gameState.gameField);
   console.log(socket.gameState);
 };
 

@@ -23,14 +23,14 @@ class Listener {
       } else if (socket.type === "player" && playerRoomLength() === 2) {
         game.start();
       } else if (socket.type === "spectator") {
-        socket.emit("spectatorState", {
+        socket.emit("spectateGame", {
           gameState: game,
           message: "Sorry, es waren bereits genug Spieler online."
         });
         // console.log(game);
       }
 
-      socket.on("playerMove", updateGameState => game.move(updateGameState));
+      socket.on("playerMove", updateGameState => game.move(updateGameState.player, updateGameState.cellId));
 
       socket.on("disconnect", () => {
         new removeFromClients(socket);

@@ -1,9 +1,7 @@
 "use strict";
 
-const Utility = require("./utility.js");
 const Server = require("../../server.js");
 const playerRoomLength = require("./playerRoomLength.js");
-// const Global = require("../server.js");
 
 class Client {
   constructor(socket) {

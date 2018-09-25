@@ -11,26 +11,25 @@ class Game {
   }
 
   start() {
-    const playerWithRandomizedSymbol = this.randomizeSymbol();
-    const playerSymbols = this.getPlayerSymbol(playerWithRandomizedSymbol);
-    this.currentPlayer = this.randomizedStartPlayer(playerWithRandomizedSymbol);
+    const randomizedSymbols = this.randomizeSymbol();
+    const playerSymbols = this.getPlayerSymbols(randomizedSymbols);
+    this.currentPlayer = this.randomizeStartPlayer(randomizedSymbols);
     Server.io.emit("startGame", {
       playerSymbols: playerSymbols,
       gameState: {
         currentPlayer: this.currentPlayer,
         gameField: this.gameField,
         result: this.result,
-        running: true
-      },
-      statusMessage: "Zwei Spieler verbunden. Spiel kann beginnen!"
+        statusMessage: "Zwei Spieler verbunden. Spiel kann beginnen!"
+      }
     });
   }
 
-  gameField(clientMove) {
-    this.gameField[clientMove.cellId] = clientMove.playerSymbol;
+  updateGameField(player, cellId) {
+    this.gameField[cellId] = player;
   }
 
-  currentPlayer(player) {
+  switchCurrentPlayer(player) {
     if (player === "X" || this.currentPlayer === undefined) {
       this.currentPlayer = "O";
     } else {
@@ -38,28 +37,39 @@ class Game {
     }
   }
 
-  move(clientMove) {
-    console.log(clientMove);
-    console.log(this.gameField);
-    this.currentPlayer(clientMove.player);
-    this.gameField(clientMove);
+
+  move(player, cellId) {
+    this.updateGameField(player, cellId);
+    this.result = this.determineResult(player, cellId);
+    console.log(this.result);
+    this.switchCurrentPlayer(player);
 
     const updatedGameState = {
       gameState: {
         currentPlayer: this.currentPlayer,
         gameField: this.gameField,
-        result: null,
+        result: this.result,
         running: null,
-        clickedPlayer: clientMove.playerSymbol,
-        clickedCell: clientMove.cellId
+        clickedPlayer: player,
+        clickedCell: cellId,
+        statusMessage: `Das Spiel läuft, Spieler ${this.currentPlayer}, ist am Zug.`
       }
     };
 
-    console.log(updatedGameState.gameState.gameField);
     Server.io.sockets.emit("updateGame", updatedGameState);
   }
 
-  result() {
+
+  determineResult(player, cellId) {
+    console.log(player);
+    console.log(cellId);
+    console.log(this.gameField);
+
+
+
+
+    return "bla";
+
 
   }
 
@@ -73,11 +83,11 @@ class Game {
     return player;
   }
 
-  randomizedStartPlayer(randomizedSymbol) {
+  randomizeStartPlayer(randomizedSymbol) {
     return randomizedSymbol[Math.floor(Math.random() * randomizedSymbol.length)].symbol;
   }
 
-  getPlayerSymbol(playerWithRandomizedSymbol) {
+  getPlayerSymbols(playerWithRandomizedSymbol) {
     return Object.values(playerWithRandomizedSymbol).map(player => {
       return {
         id: player.id,

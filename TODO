@@ -1,4 +1,8 @@
 
 Todo:
-  ☐ User class restructure
-  ☐ Game class restructure
+  ✔ User class restructure @done(18-09-25 23:03)
+  ✔ Game class restructure @done(18-09-25 23:03)
+
+☐ redo error handler, not by client, do it by server @high 
+☐ result logic @critical 
+☐ add jsDocs comments @low 

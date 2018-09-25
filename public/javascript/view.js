@@ -8,23 +8,23 @@ import {
 } from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
-  getHeaderInfoPlayerSymbol.innerHTML = `Sie spielen als ${playerSymbol}`;
+  getHeaderInfoPlayerSymbol.textContent = `Sie spielen als ${playerSymbol}`;
 };
 
 export const setViewHeaderCurrentPlayer = currentPlayer => {
-  getHeaderInfoCurrentPlayer.innerHTML = `Am Zug ist: ${currentPlayer}`;
+  getHeaderInfoCurrentPlayer.textContent = `Am Zug ist: ${currentPlayer}`;
 };
 
-export const setViewFooterStatus = message => {
-  getFooterStatusContent.innerText = message;
+export const setViewFooterStatus = statusMessage => {
+  getFooterStatusContent.textContent = statusMessage;
 };
 
 export const setViewNewGameField = () => {
-  getGameFieldCells.forEach(cell => cell.innerHTML = "");
+  getGameFieldCells.forEach(cell => cell.textContent = "");
 };
 
 export const setViewUpdateGameField = updatedGameState => {
-  return getGameFieldCells[updatedGameState.clickedCell].innerHTML = updatedGameState.clickedPlayer;
+  return getGameFieldCells[updatedGameState.clickedCell].textContent = updatedGameState.clickedPlayer;
 };
 
 export const setViewErrorStatus = () => {
@@ -33,6 +33,6 @@ export const setViewErrorStatus = () => {
 
 export const setViewSpectatorGameField = gameState => {
   Object.entries(gameState._gameField).forEach(([key, value]) => {
-    getGameFieldCells[key].innerHTML = value;
+    getGameFieldCells[key].textContent = value;
   });
 };

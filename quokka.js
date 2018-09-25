@@ -107,50 +107,53 @@
 //   ["", "", ""]
 // ];
 
-class Game {
-  constructor(startPlayer) {
-    this.startPlayer = startPlayer;
-    this.field = new Array(9).fill("");
-  }
+// class Game {
+//   constructor(startPlayer) {
+//     this.startPlayer = startPlayer;
+//     this.field = new Array(9).fill("");
+//   }
 
-  get currentPlayer() {
-    return this.startPlayer === undefined ? this.startPlayer = "O" : this.startPlayer;
-  }
+//   get currentPlayer() {
+//     return this.startPlayer === undefined ? this.startPlayer = "O" : this.startPlayer;
+//   }
 
-  move(symbol, fieldId) {
-    switch (true) {
-      case this.field[fieldId] === "":
-        this.field[fieldId] = symbol;
-        break;
-      case this.field[fieldId] !== "":
-        return `Ungeueltiger Zug: Feld ${fieldId} ist nicht frei!`;
+//   move(symbol, fieldId) {
+//     switch (true) {
+//       case this.field[fieldId] === "":
+//         this.field[fieldId] = symbol;
+//         break;
+//       case this.field[fieldId] !== "":
+//         return `Ungeueltiger Zug: Feld ${fieldId} ist nicht frei!`;
 
-      default:
-    }
+//       default:
+//     }
 
-    // this.result(this.field);
-  }
+//     // this.result(this.field);
+//   }
 
-  result(updatedField) {
-    // console.log(updatedField);
+//   result(updatedField) {
+//     // console.log(updatedField);
 
-  }
-};
+//   }
+// };
 
-// module.exports = Game;
-const game = new Game("X");
+// // module.exports = Game;
+// const game = new Game("X");
 
 
-console.log(game.move("X", 8));
-console.log(game.move("X", 8));
-console.log(game.move("X", 7));
-console.log(game.currentPlayer.length);
+// console.log(game.move("X", 8));
+// console.log(game.move("X", 8));
+// console.log(game.move("X", 7));
+// console.log(game.currentPlayer.length);
 
-console.log(game);
+// console.log(game);
 
-const game2 = new Game();
-console.log(game2);
-console.log(game2.currentPlayer.length);
+// const game2 = new Game();
+// console.log(game2);
+// console.log(game2.currentPlayer.length);
+
+
+
 
 
 
@@ -218,3 +221,21 @@ console.log(game2.currentPlayer.length);
 // const bla = test.find(element => element.id === "ddd");
 
 // console.log(bla.symbol);
+
+
+const test1 = ["O", "O", "O", "", "", "", "", "", "", ];
+const test2 = ["", "", "", "O", "O", "O", "", "", "", ];
+const test3 = ["", "", "", "", "", "", "O", "O", "O", ];
+
+const test4 = ["O", "", "", "O", "", "", "O", "", "", ];
+const test5 = ["", "O", "", "", "O", "", "", "O", "", ];
+const test6 = ["", "", "O", "", "", "O", "", "", "O", ];
+
+const test7 = ["O", "", "", "", "O", "", "", "", "O", ];
+const test8 = ["", "", "O", "", "O", "", "O", "", "", ];
+
+test1.forEach((value, index) => {
+  console.log(`${index}:${value}`);
+  console.log(Array.from(value));
+  // console.log(value.every(item => item !== ""));
+});
