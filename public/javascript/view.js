@@ -27,12 +27,13 @@ export const setViewUpdateGameField = updatedGameState => {
   return getGameFieldCells[updatedGameState.clickedCell].textContent = updatedGameState.clickedPlayer;
 };
 
-export const setViewErrorStatus = () => {
-
-};
-
 export const setViewSpectatorGameField = gameState => {
-  Object.entries(gameState._gameField).forEach(([key, value]) => {
+  Object.entries(gameState.gameField).forEach(([key, value]) => {
     getGameFieldCells[key].textContent = value;
   });
+};
+
+export const setViewSpectatorStatus = () => {
+  getHeaderInfoPlayerSymbol.textContent = "Sie befinden sich im Zuschauer-Modus!";
+  getFooterStatusContent.textContent = "Sorry, es waren bereits genug Spieler online.";
 };

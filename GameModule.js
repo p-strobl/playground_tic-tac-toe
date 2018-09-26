@@ -14,12 +14,15 @@ class Game {
     const randomizedSymbols = this.randomizeSymbol();
     const playerSymbols = this.getPlayerSymbols(randomizedSymbols);
     this.currentPlayer = this.randomizeStartPlayer(randomizedSymbols);
+    this.gameField = new Array(9).fill(null);
+    this.result = "";
     Server.io.emit("startGame", {
       playerSymbols: playerSymbols,
       gameState: {
         currentPlayer: this.currentPlayer,
         gameField: this.gameField,
         result: this.result,
+        running: true,
         statusMessage: "Zwei Spieler verbunden. Spiel kann beginnen!"
       }
     });
@@ -37,11 +40,10 @@ class Game {
     }
   }
 
-
   move(player, cellId) {
     this.updateGameField(player, cellId);
     this.result = this.determineResult(player, cellId);
-    console.log(this.result);
+    // console.log(this.result);
     this.switchCurrentPlayer(player);
 
     const updatedGameState = {
@@ -49,21 +51,20 @@ class Game {
         currentPlayer: this.currentPlayer,
         gameField: this.gameField,
         result: this.result,
-        running: null,
+        running: true,
         clickedPlayer: player,
         clickedCell: cellId,
-        statusMessage: `Das Spiel läuft, Spieler ${this.currentPlayer}, ist am Zug.`
+        statusMessage: ""
       }
     };
 
     Server.io.sockets.emit("updateGame", updatedGameState);
   }
 
-
   determineResult(player, cellId) {
-    console.log(player);
-    console.log(cellId);
-    console.log(this.gameField);
+    // console.log(player);
+    // console.log(cellId);
+    // console.log(this.gameField);
 
 
 

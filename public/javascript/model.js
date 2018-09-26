@@ -5,28 +5,44 @@ import {
 } from "../helpers/domHelper.js";
 
 import {
-  setViewUpdateGameField,
   setViewFooterStatus
 } from "./view.js";
 
 export const clickedFieldCell = socket => {
   getGameFieldCells.forEach(clickedCell => clickedCell.addEventListener("click", () => {
 
-    // if (socket.type === "player" && socket.symbol === socket.gameState.currentPlayer && validateMove(socket, clickedCell)) {
-    if (validateMove(socket, clickedCell)) {
+    const permission = determinPermission(socket, clickedCell);
+    console.log(socket.gameState.gameField);
+    console.log(permission);
+    if (permission.valid === true) {
       socket.emit("playerMove", {
         cellId: clickedCell.id.substring(4),
         player: socket.symbol
       });
-    } else {
-      setViewFooterStatus("Dieses Feld ist bereits besetzt, bitte wählen Sie ein anderes, leeres Feld aus.");
     }
+    setViewFooterStatus(permission.message);
   }));
 };
 
-const validateMove = (socket, clickedCell) => {
-  return socket.gameState.gameField[clickedCell.id.substring(4)] === null &&
-    socket.type === "player" &&
-    socket.symbol === socket.gameState.currentPlayer ?
-    true : false;
+const determinPermission = (socket, clickedCell) => {
+  if (socket.type === "spectator") {
+    return {
+      valid: false,
+      message: "Sie können nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!"
+    };
+  } else if (socket.type === "player" && socket.gameState.gameField[clickedCell.id.substring(4)] !== null) {
+    return {
+      valid: false,
+      message: "Dieses Feld ist bereits besetzt, bitte wählen Sie ein anderes, noch leeres Feld aus."
+    };
+  } else if (socket.type === "player" && socket.symbol !== socket.gameState.currentPlayer) {
+    return {
+      valid: false,
+      message: "Sie sind nicht am Zug, bitte warten Sie den Zug Ihres Gegner's ab."
+    };
+  } else {
+    return {
+      valid: true,
+    }
+  }
 };

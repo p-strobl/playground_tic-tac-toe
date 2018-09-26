@@ -6,15 +6,20 @@ import {
   setViewFooterStatus,
   setViewNewGameField,
   setViewUpdateGameField,
-  setViewSpectatorGameField
+  setViewSpectatorGameField,
+  setViewSpectatorStatus
 } from "./view.js";
+
+import {
+  getGameFieldCells
+} from "../helpers/domHelper.js";
 
 export const setClientType = (socket, clientType) => {
   socket.type = clientType;
 };
 
 export const startNewGame = (socket, newGame) => {
-  // console.log(game);
+  // console.log(newGame);
   socket.gameState = newGame.gameState;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
@@ -28,23 +33,26 @@ export const startNewGame = (socket, newGame) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  console.log(updatedGame);
+  // console.log(updatedGame);
   socket.gameState = updatedGame.gameState;
   setViewUpdateGameField(updatedGame.gameState);
   setViewHeaderCurrentPlayer(updatedGame.gameState.currentPlayer);
   setViewFooterStatus(updatedGame.gameState.statusMessage);
   // console.log(socket.gameState.gameField);
-  console.log(socket.gameState);
+  // console.log(socket.gameState);
 };
 
 export const setSpectatorState = (socket, currentGame) => {
   socket.gameState = currentGame.gameState;
   setViewSpectatorGameField(currentGame.gameState);
+  setViewSpectatorStatus();
   setViewHeaderCurrentPlayer(currentGame.gameState.currentPlayer);
-  setViewFooterStatus(currentGame.message);
+  // setViewHeaderPlayerSymbol(currentGame.headerStatus)
+  // setViewFooterStatus(currentGame.footerStatus);
 };
 
 const setPlayerSymbol = (socket, players) => {
+  // console.log(players);
   socket.symbol = players.find(player => player.id === socket.id).symbol;
   // console.log(socket);
   setViewHeaderPlayerSymbol(socket.symbol);
@@ -61,9 +69,9 @@ export const setCurrentPlayer = (socket, currentPlayer) => {
 };
 
 export const setGameState = (socket, gameState) => {
-  console.log(socket);
+  // console.log(socket);
   socket.currentPlayer = gameState.currentPlayer;
   socket.gameField = gameState.gameField;
   setViewUpdateField(gameState);
-  console.log(socket);
+  // console.log(socket);
 };

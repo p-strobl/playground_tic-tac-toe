@@ -6,7 +6,6 @@ const removeFromClients = require("../module/removeFromClients.js");
 const playerRoomLength = require("../module/playerRoomLength.js");
 const gameModule = require("../../GameModule.js");
 
-
 class Listener {
   constructor() {
     this.events();
@@ -24,10 +23,8 @@ class Listener {
         game.start();
       } else if (socket.type === "spectator") {
         socket.emit("spectateGame", {
-          gameState: game,
-          message: "Sorry, es waren bereits genug Spieler online."
+          gameState: game
         });
-        // console.log(game);
       }
 
       socket.on("playerMove", updateGameState => game.move(updateGameState.player, updateGameState.cellId));

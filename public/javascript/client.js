@@ -12,7 +12,7 @@ import {
   setClientType,
   startNewGame,
   updateGameState,
-  setSpectatorState,
+  setSpectatorState
 } from "./controller.js";
 
 
