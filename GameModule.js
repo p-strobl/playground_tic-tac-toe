@@ -71,10 +71,10 @@ class Game {
       [2, 4, 6]
     ];
 
+    let winner = "";
+
     let moves = this.gameField.reduce((foundItems, element, index) =>
       (element === player) ? foundItems.concat(index) : foundItems, []);
-
-    let winner = "";
 
     for (let winArray of winCombinations.values()) {
       if (winArray.every(element => moves.indexOf(element) > -1)) {

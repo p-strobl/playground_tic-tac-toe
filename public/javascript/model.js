@@ -13,8 +13,6 @@ export const clickedFieldCell = socket => {
   getGameFieldCells.forEach(clickedCell => clickedCell.addEventListener("click", () => {
 
     const permission = determinPermission(socket, clickedCell);
-    console.log(socket.gameState.gameField);
-    console.log(permission);
     if (permission.valid === true) {
       socket.emit("playerMove", {
         cellId: clickedCell.id.substring(4),

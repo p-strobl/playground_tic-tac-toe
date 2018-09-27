@@ -19,6 +19,8 @@ class Listener {
       new Client(socket);
       console.log("Client connected, cliets.length = " + Server.clients.length);
 
+      // determineGameStart(socket);
+
       if (socket.type === "player" && playerRoomLength() === 1) {
         socket.emit("waitForOpponent");
       } else if (socket.type === "player" && playerRoomLength() === 2) {
