@@ -1,7 +1,8 @@
 "use strict";
 
 import {
-  getGameFieldCells
+  getGameFieldCells,
+  getRestartButton
 } from "../helpers/domHelper.js";
 
 import {
@@ -45,4 +46,10 @@ const determinPermission = (socket, clickedCell) => {
       valid: true,
     }
   }
+};
+
+export const userSideGameRestart = socket => {
+  getRestartButton.addEventListener("click", () => {
+    socket.emit("userSideGameRestart");
+  });
 };

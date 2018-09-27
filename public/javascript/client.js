@@ -1,7 +1,8 @@
 "use strict";
 
 import {
-  clickedFieldCell
+  clickedFieldCell,
+  userSideGameRestart
 } from "./model.js";
 
 import {
@@ -11,8 +12,9 @@ import {
 import {
   setClientType,
   startNewGame,
+  setSpectatorState,
   updateGameState,
-  setSpectatorState
+  waitForOpponent
 } from "./controller.js";
 
 
@@ -20,9 +22,11 @@ const init = () => {
   const socket = io.connect();
 
   clickedFieldCell(socket);
+  userSideGameRestart(socket);
 
   socket.on("connect", () => {
     socket.on("setClientType", clientType => setClientType(socket, clientType));
+    socket.on("waitForOpponent", () => waitForOpponent());
     socket.on("startGame", newGame => startNewGame(socket, newGame));
     socket.on("updateGame", updatedGame => updateGameState(socket, updatedGame));
     socket.on("footerStatus", message => setViewFooterStatus(message));

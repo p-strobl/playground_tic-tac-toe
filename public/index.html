@@ -11,48 +11,51 @@
 </head>
 
 <body>
-<div class="page__wrap">
-  <header class="header__wrap">
-    <h1>
-      Tic-Tac-Toe
-    </h1>
-    <p>Zwei spieler Online match</p>
-  </header>
-  <section class="header__info">
-    <div class="header__info__content">
-      <p class="header__info__playerSymbol"></p>
-      <p class="header__info__currentPlayer"></p>
+  <div class="page__wrap">
+    <header class="header__wrap">
+      <h1>
+        Tic-Tac-Toe
+      </h1>
+      <p>Zwei spieler Online match</p>
+    </header>
+    <section class="header__info">
+      <div class="header__info__content">
+        <p class="header__info__playerSymbol"></p>
+        <p class="header__info__currentPlayer"></p>
+      </div>
+    </section>
+    <main class="main__wrap">
+      <section>
+        <table class="field__wrap">
+          <tbody class="field__tbody">
+            <tr class="field__row">
+              <td class="field__cell one" id="feld0"></td>
+              <td class="field__cell two" id="feld1"></td>
+              <td class="field__cell three" id="feld2"></td>
+            </tr>
+            <tr class="field__row">
+              <td class="field__cell four" id="feld3"></td>
+              <td class="field__cell five" id="feld4"></td>
+              <td class="field__cell six" id="feld5"></td>
+            </tr>
+            <tr class="field__row">
+              <td class="field__cell seven" id="feld6"></td>
+              <td class="field__cell eight" id="feld7"></td>
+              <td class="field__cell nine" id="feld8"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer class="footer__wrap">
+      <section class="footer__status">
+        <p class="footer__status__content"></p>
+      </section>
+    </footer>
+    <div class="restart__wrap">
+      <button class="restart__button">Neu Start</button>
     </div>
-  </section>
-  <main class="main__wrap">
-    <section>
-      <table class="field__wrap">
-        <tbody class="field__tbody">
-        <tr class="field__row">
-          <td class="field__cell one" id="feld0"></td>
-          <td class="field__cell two" id="feld1"></td>
-          <td class="field__cell three" id="feld2"></td>
-        </tr>
-        <tr class="field__row">
-          <td class="field__cell four" id="feld3"></td>
-          <td class="field__cell five" id="feld4"></td>
-          <td class="field__cell six" id="feld5"></td>
-        </tr>
-        <tr class="field__row">
-          <td class="field__cell seven" id="feld6"></td>
-          <td class="field__cell eight" id="feld7"></td>
-          <td class="field__cell nine" id="feld8"></td>
-        </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
-  <footer class="footer__wrap">
-    <section class="footer__status">
-      <p class="footer__status__content"></p>
-    </section>
-  </footer>
-</div>
+  </div>
 </body>
 
 </html>

@@ -33,17 +33,15 @@ class Game {
   }
 
   switchCurrentPlayer(player) {
-    if (player === "X" || this.currentPlayer === undefined) {
-      this.currentPlayer = "O";
-    } else {
+    player === "X" || this.currentPlayer === undefined ?
+      this.currentPlayer = "O" :
       this.currentPlayer = "X";
-    }
   }
 
   move(player, cellId) {
     this.updateGameField(player, cellId);
-    this.result = this.determineResult(player, cellId);
-    // console.log(this.result);
+    this.result = this.determineResult(player);
+    console.log(this.result);
     this.switchCurrentPlayer(player);
 
     const updatedGameState = {
@@ -61,17 +59,30 @@ class Game {
     Server.io.sockets.emit("updateGame", updatedGameState);
   }
 
-  determineResult(player, cellId) {
-    // console.log(player);
-    // console.log(cellId);
-    // console.log(this.gameField);
+  determineResult(player) {
+    const winCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
 
+    let moves = this.gameField.reduce((foundItems, element, index) =>
+      (element === player) ? foundItems.concat(index) : foundItems, []);
 
+    let winner = "";
 
-
-    return "bla";
-
-
+    for (let winArray of winCombinations.values()) {
+      if (winArray.every(element => moves.indexOf(element) > -1)) {
+        winner = player;
+        break;
+      }
+    }
+    return winner;
   }
 
   randomizeSymbol() {

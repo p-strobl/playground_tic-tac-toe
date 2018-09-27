@@ -100,3 +100,19 @@ body {
   align-self: start;
   font-size: 2vw;
 }
+
+.restart__wrap {
+  position: fixed;
+  right: 5vw;
+  bottom: 5vh;
+}
+
+.restart__button {
+  height: 20px;
+  width: 100px;
+  border-radius: 3px;
+}
+
+.restart__button:hover {
+  box-shadow: 0 1px 5px 1px rgba(0, 0, 0, .2);
+}

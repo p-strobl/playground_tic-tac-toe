@@ -75,3 +75,7 @@ export const setGameState = (socket, gameState) => {
   setViewUpdateField(gameState);
   // console.log(socket);
 };
+
+export const waitForOpponent = () => {
+  setViewFooterStatus("Bitte warten Sie auf Ihren Gegner!");
+};
