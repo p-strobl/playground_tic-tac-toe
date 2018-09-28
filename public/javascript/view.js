@@ -23,6 +23,12 @@ export const setViewNewGameField = () => {
   getGameFieldCells.forEach(cell => cell.textContent = "");
 };
 
+export const setViewResetView = () => {
+  getHeaderInfoPlayerSymbol.textContent = "";
+  getHeaderInfoCurrentPlayer.textContent = "";
+  setViewNewGameField();
+};
+
 export const setViewUpdateGameField = updatedGameState => {
   return getGameFieldCells[updatedGameState.clickedCell].textContent = updatedGameState.clickedPlayer;
 };

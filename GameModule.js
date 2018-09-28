@@ -35,13 +35,12 @@ class Game {
   switchCurrentPlayer(player) {
     player === "X" || this.currentPlayer === undefined ?
       this.currentPlayer = "O" :
-      this.currentPlayer = "X";
+      this.currentPlayer = "X" ;
   }
 
   move(player, cellId) {
     this.updateGameField(player, cellId);
     this.result = this.determineResult(player);
-    console.log(this.result);
     this.switchCurrentPlayer(player);
 
     const updatedGameState = {
@@ -55,6 +54,13 @@ class Game {
         statusMessage: ""
       }
     };
+
+    // if (this.result === "") {
+    //   this.switchCurrentPlayer(player);
+    // } else {
+    //   updatedGameState.running = false;
+    //   return this.result;
+    // }
 
     Server.io.sockets.emit("updateGame", updatedGameState);
   }

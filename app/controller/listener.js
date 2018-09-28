@@ -17,22 +17,11 @@ class Listener {
     Server.io.sockets.on("connection", socket => {
 
       new Client(socket);
+      determineGameStart(socket, game);
       console.log("Client connected, cliets.length = " + Server.clients.length);
 
-      // determineGameStart(socket);
-
-      if (socket.type === "player" && playerRoomLength() === 1) {
-        socket.emit("waitForOpponent");
-      } else if (socket.type === "player" && playerRoomLength() === 2) {
-        game.start();
-      } else if (socket.type === "spectator") {
-        socket.emit("spectateGame", {
-          gameState: game
-        });
-      }
-
       socket.on("playerMove", updateGameState => game.move(updateGameState.player, updateGameState.cellId));
-      socket.on("userSideGameRestart", () => game.start());
+      socket.on("userSideGameRestart", () => userSideGameRestart(socket, game));
 
       socket.on("disconnect", () => {
         new removeFromClients(socket);
@@ -45,3 +34,23 @@ class Listener {
 };
 
 module.exports = Listener;
+
+const determineGameStart = (socket, game) => {
+  if (socket.type === "player" && playerRoomLength() === 1) {
+    socket.emit("waitForOpponent");
+  } else if (socket.type === "player" && playerRoomLength() === 2) {
+    game.start();
+  } else if (socket.type === "spectator") {
+    socket.emit("spectateGame", {
+      gameState: game
+    });
+  }
+};
+
+const userSideGameRestart = (socket, game) => {
+  if (playerRoomLength() === 2) {
+    game.start();
+  } else {
+    socket.emit("waitForOpponent");
+  }
+};

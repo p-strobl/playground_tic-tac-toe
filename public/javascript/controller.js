@@ -7,11 +7,14 @@ import {
   setViewNewGameField,
   setViewUpdateGameField,
   setViewSpectatorGameField,
-  setViewSpectatorStatus
+  setViewSpectatorStatus,
+  setViewResetView
 } from "./view.js";
 
 import {
-  getGameFieldCells
+  getGameFieldCells,
+  getHeaderInfoContent,
+  getHeaderInfoCurrentPlayer
 } from "../helpers/domHelper.js";
 
 export const setClientType = (socket, clientType) => {
@@ -64,5 +67,6 @@ export const setGameState = (socket, gameState) => {
 };
 
 export const waitForOpponent = () => {
+  setViewResetView();
   setViewFooterStatus("Bitte warten Sie auf Ihren Gegner!");
 };

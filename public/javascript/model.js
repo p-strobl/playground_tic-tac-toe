@@ -32,13 +32,18 @@ const determinPermission = (socket, clickedCell) => {
   } else if (socket.type === "player" && socket.gameState.gameField[clickedCell.id.substring(4)] !== null) {
     return {
       valid: false,
-      message: "Dieses Feld ist bereits besetzt, bitte wählen Sie ein anderes, noch leeres Feld aus."
+      message: `Ungueltiger Zug: Feld ${clickedCell.id.substring(4)} ist nicht frei!`
     };
   } else if (socket.type === "player" && socket.symbol !== socket.gameState.currentPlayer) {
     return {
       valid: false,
-      message: "Sie sind nicht am Zug, bitte warten Sie den Zug Ihres Gegner's ab."
+      message: `Ungueltiger Zug: ${socket.symbol} ist nicht am Zug!`
     };
+  } else if(socket.gameState.running === false) {
+    return {
+      valid: false,
+      message: "Ungueltiger Zug: Das Spiel ist zu Ende"
+    }
   } else {
     return {
       valid: true,
