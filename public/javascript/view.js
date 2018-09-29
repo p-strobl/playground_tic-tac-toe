@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-  getGameFieldCells,
+  getGameFields,
   getHeaderInfoPlayerSymbol,
   getHeaderInfoCurrentPlayer,
   getFooterStatusContent
@@ -20,7 +20,7 @@ export const setViewFooterStatus = statusMessage => {
 };
 
 export const setViewNewGameField = () => {
-  getGameFieldCells.forEach(cell => cell.textContent = "");
+  getGameFields.forEach(field => field.textContent = "");
 };
 
 export const setViewResetView = () => {
@@ -29,13 +29,13 @@ export const setViewResetView = () => {
   setViewNewGameField();
 };
 
-export const setViewUpdateGameField = updatedGameState => {
-  return getGameFieldCells[updatedGameState.clickedCell].textContent = updatedGameState.clickedPlayer;
+export const setViewUpdateGameField = updatedGame => {
+  return getGameFields[updatedGame.clickedField].textContent = updatedGame.clickedPlayer;
 };
 
 export const setViewSpectatorGameField = gameState => {
   Object.entries(gameState.gameField).forEach(([key, value]) => {
-    getGameFieldCells[key].textContent = value;
+    getGameFields[key].textContent = value;
   });
 };
 

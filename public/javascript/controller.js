@@ -12,10 +12,14 @@ import {
 } from "./view.js";
 
 import {
-  getGameFieldCells,
+  getGameFields,
   getHeaderInfoContent,
   getHeaderInfoCurrentPlayer
 } from "../helpers/domHelper.js";
+
+import {
+  determineStatusMessage
+} from "./model.js"
 
 export const setClientType = (socket, clientType) => {
   socket.type = clientType;
@@ -25,17 +29,17 @@ export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
-    setViewFooterStatus(newGame.gameState.statusMessage);
+    setViewFooterStatus(determineStatusMessage(newGame.gameState));
   }
   setViewNewGameField();
   setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  socket.gameState = updatedGame.gameState;
-  setViewUpdateGameField(updatedGame.gameState);
-  setViewHeaderCurrentPlayer(updatedGame.gameState.currentPlayer);
-  setViewFooterStatus(updatedGame.gameState.statusMessage);
+  socket.gameState = updatedGame;
+  setViewUpdateGameField(updatedGame);
+  setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
+  setViewFooterStatus(determineStatusMessage(updatedGame));
 };
 
 export const setSpectatorState = (socket, currentGame) => {
@@ -66,7 +70,7 @@ export const setGameState = (socket, gameState) => {
   setViewUpdateField(gameState);
 };
 
-export const waitForOpponent = () => {
+export const setWaitForOpponent = gameState => {
   setViewResetView();
-  setViewFooterStatus("Bitte warten Sie auf Ihren Gegner!");
+  setViewFooterStatus(determineStatusMessage(gameState));
 };

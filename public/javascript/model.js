@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-  getGameFieldCells,
+  getGameFields,
   getRestartButton
 } from "../helpers/domHelper.js";
 
@@ -9,13 +9,18 @@ import {
   setViewFooterStatus
 } from "./view.js";
 
-export const clickedFieldCell = socket => {
-  getGameFieldCells.forEach(clickedCell => clickedCell.addEventListener("click", () => {
+export const userSideGameRestart = socket => {
+  getRestartButton.addEventListener("click", () => {
+    socket.emit("userSideGameRestart");
+  });
+};
 
-    const permission = determinPermission(socket, clickedCell);
-    if (permission.valid === true) {
+export const determineClickedField = socket => {
+  getGameFields.forEach(clickedField => clickedField.addEventListener("click", () => {
+    const permission = determinPermission(socket, clickedField);
+    if (permission.valid) {
       socket.emit("playerMove", {
-        cellId: clickedCell.id.substring(4),
+        fieldId: clickedField.id.substring(4),
         player: socket.symbol
       });
     }
@@ -23,36 +28,48 @@ export const clickedFieldCell = socket => {
   }));
 };
 
-const determinPermission = (socket, clickedCell) => {
-  if (socket.type === "spectator") {
-    return {
-      valid: false,
-      message: "Sie können nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!"
-    };
-  } else if (socket.type === "player" && socket.gameState.gameField[clickedCell.id.substring(4)] !== null) {
-    return {
-      valid: false,
-      message: `Ungueltiger Zug: Feld ${clickedCell.id.substring(4)} ist nicht frei!`
-    };
-  } else if (socket.type === "player" && socket.symbol !== socket.gameState.currentPlayer) {
-    return {
-      valid: false,
-      message: `Ungueltiger Zug: ${socket.symbol} ist nicht am Zug!`
-    };
-  } else if(socket.gameState.running === false) {
+const determinPermission = (socket, clickedField) => {
+  console.log(socket.gameState);
+  if (socket.gameState.running === true) {
+    if (socket.type === "spectator") {
+      return {
+        valid: false,
+        message: "Sie können nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!"
+      };
+    } else if (socket.type === "player" && socket.gameState.gameField[clickedField.id.substring(4)] !== null) {
+      return {
+        valid: false,
+        message: `Ungueltiger Zug: Feld ${clickedField.id.substring(4)} ist nicht frei!`
+      };
+    } else if (socket.type === "player" && socket.symbol !== socket.gameState.currentPlayer) {
+      return {
+        valid: false,
+        message: `Ungueltiger Zug: ${socket.symbol} ist nicht am Zug!`
+      };
+    } else {
+      return {
+        valid: true,
+      }
+    }
+  } else {
     return {
       valid: false,
       message: "Ungueltiger Zug: Das Spiel ist zu Ende"
     }
-  } else {
-    return {
-      valid: true,
-    }
   }
 };
 
-export const userSideGameRestart = socket => {
-  getRestartButton.addEventListener("click", () => {
-    socket.emit("userSideGameRestart");
-  });
+export const determineStatusMessage = gameState => {
+  console.log(gameState);
+  switch (gameState.status) {
+    case "twoPlayerStart":
+      return "Zwei Spieler verbunden. Spiel kann beginnen!";
+    case "won":
+      return `Spiel beendet: Spieler ${gameState.result} hat gewonnen!`;
+    case "tie":
+      return "Spiel endet unentschieden!";
+    case "wait":
+      return "Bitte warten Sie auf Ihren Gegner!";
+    default:
+  }
 };

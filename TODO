@@ -1,4 +1,9 @@
 
+'Shift+Cmd+N' // Triggers `Todo: Toggle Box`
+'Option+D' // Triggers `Todo: Toggle Done`
+'Option+C' // Triggers `Todo: Toggle Cancelled`
+'Option+S' // Triggers `Todo: Toggle Start`
+
 Todo:
   ✔ User class restructure @done(18-09-25 23:03)
   ✔ Game class restructure @done(18-09-25 23:03)
@@ -6,3 +11,5 @@ Todo:
 ☐ redo error handler, not by client, do it by server @high 
 ☐ result logic @critical 
 ☐ add jsDocs comments @low 
+☐ Add messages to determineResult FN
+☐ Add turn counter to gameState obj

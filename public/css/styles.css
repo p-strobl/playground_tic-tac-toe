@@ -52,40 +52,40 @@ body {
   border-radius: 10px;
 }
 
-.field__cell {
+.field {
   border: 1px solid black;
   height: 10vw;
   width: 10vw;
   vertical-align: middle;
   text-align: center;
   font-family: sans-serif;
-  font-size: 5vw;
+  font-size: 8vw;
   cursor: pointer;
   /* transform: rotateX(0); */
 }
 
-/* .field__cell.clicked {
+/* .field.clicked {
   transform: rotateX(180deg);
   transition: rotateX .4s ease-in-out;
 } */
 
-.field__cell:hover {
+.field:hover {
   box-shadow: 0 0px 10px 0px rgba(0, 0, 0, .5);
 }
 
-.field__cell.one {
+#feld0 {
   border-radius: 10px 0 0 0;
 }
 
-.field__cell.three {
+#feld2 {
   border-radius: 0 10px 0 0;
 }
 
-.field__cell.seven {
+#feld6 {
   border-radius: 0 0 0 10px;
 }
 
-.field__cell.nine {
+#feld8 {
   border-radius: 0 0 10px 0;
 }
 

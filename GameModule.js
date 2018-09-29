@@ -10,59 +10,62 @@ class Game {
     this.result = "";
   }
 
+  gameState() {
+    return {
+      currentPlayer: this.currentPlayer,
+      gameField: this.gameField,
+      result: this.result,
+      running: null,
+      clickedPlayer: null,
+      clickedField: null,
+      status: null
+    };
+  }
+
   start() {
     const randomizedSymbols = this.randomizeSymbol();
     const playerSymbols = this.getPlayerSymbols(randomizedSymbols);
     this.currentPlayer = this.randomizeStartPlayer(randomizedSymbols);
     this.gameField = new Array(9).fill(null);
     this.result = "";
+    let gameState = this.gameState();
+    gameState.running = true;
+    gameState.status = "twoPlayerStart";
     Server.io.emit("startGame", {
       playerSymbols: playerSymbols,
-      gameState: {
-        currentPlayer: this.currentPlayer,
-        gameField: this.gameField,
-        result: this.result,
-        running: true,
-        statusMessage: "Zwei Spieler verbunden. Spiel kann beginnen!"
-      }
+      gameState: gameState
     });
   }
 
-  updateGameField(player, cellId) {
-    this.gameField[cellId] = player;
+  updateGameField(player, fieldId) {
+    this.gameField[fieldId] = player;
   }
 
   switchCurrentPlayer(player) {
     player === "X" || this.currentPlayer === undefined ?
       this.currentPlayer = "O" :
-      this.currentPlayer = "X" ;
+      this.currentPlayer = "X";
+    return this.currentPlayer;
   }
 
-  move(player, cellId) {
-    this.updateGameField(player, cellId);
+  move(player, fieldId) {
+    this.updateGameField(player, fieldId);
     this.result = this.determineResult(player);
-    this.switchCurrentPlayer(player);
-
-    const updatedGameState = {
-      gameState: {
-        currentPlayer: this.currentPlayer,
-        gameField: this.gameField,
-        result: this.result,
-        running: true,
-        clickedPlayer: player,
-        clickedCell: cellId,
-        statusMessage: ""
-      }
-    };
-
-    // if (this.result === "") {
-    //   this.switchCurrentPlayer(player);
-    // } else {
-    //   updatedGameState.running = false;
-    //   return this.result;
-    // }
-
-    Server.io.sockets.emit("updateGame", updatedGameState);
+    let gameState = this.gameState();
+    gameState.clickedPlayer = player;
+    gameState.clickedField = fieldId;
+    if (this.result !== "" && this.result !== "-") {
+      gameState.status = "won";
+      gameState.running = false;
+    } else if (this.result === "-") {
+      gameState.status = "tie";
+      gameState.running = false;
+    } else {
+      gameState.currentPlayer = this.switchCurrentPlayer(player);
+      gameState.running = true;
+    }
+    Server.io.emit("updateGame", gameState);
+    return this.result;
   }
 
   determineResult(player) {
@@ -76,19 +79,20 @@ class Game {
       [0, 4, 8],
       [2, 4, 6]
     ];
-
-    let winner = "";
-
+    let result = "";
     let moves = this.gameField.reduce((foundItems, element, index) =>
       (element === player) ? foundItems.concat(index) : foundItems, []);
-
     for (let winArray of winCombinations.values()) {
-      if (winArray.every(element => moves.indexOf(element) > -1)) {
-        winner = player;
+      let winnerFound = winArray.every(element => moves.includes(element));
+      if (winnerFound) {
+        result = player;
+        break;
+      } else if (winnerFound === false && moves.length === 5) {
+        result = "-";
         break;
       }
     }
-    return winner;
+    return result;
   }
 
   randomizeSymbol() {
