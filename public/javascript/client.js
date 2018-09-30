@@ -26,7 +26,7 @@ const init = () => {
 
   socket.on("connect", () => {
     socket.on("setClientType", clientType => setClientType(socket, clientType));
-    socket.on("waitForOpponent", gameState => setWaitForOpponent(gameState));
+    socket.on("waitForOpponent", message => setWaitForOpponent(message));
     socket.on("startGame", newGame => startNewGame(socket, newGame));
     socket.on("updateGame", updatedGame => updateGameState(socket, updatedGame));
     socket.on("spectateGame", currentGame => setSpectatorState(socket, currentGame));

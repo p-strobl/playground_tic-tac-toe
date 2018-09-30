@@ -4,7 +4,7 @@ const Server = require("../../server.js");
 const Client = require("../module/newClient.js");
 const removeFromClients = require("../module/removeFromClients.js");
 const playerRoomLength = require("../module/playerRoomLength.js");
-const gModule = require("../../GameModule.js");
+const gameModule = require("../../GameModule.js");
 
 class Listener {
   constructor() {
@@ -12,7 +12,8 @@ class Listener {
   }
 
   events() {
-    const game = new gModule.Game();
+    console.log("Listner", gameModule);
+    const game = new gameModule.Game();
 
     Server.io.sockets.on("connection", socket => {
 
@@ -38,7 +39,7 @@ module.exports = Listener;
 const determineGameStart = (socket, game) => {
   if (socket.type === "player" && playerRoomLength() === 1) {
     socket.emit("waitForOpponent", {
-      status: "wait"
+      status: 'Bitte warten Sie auf Ihren Gegner!'
     });
   } else if (socket.type === "player" && playerRoomLength() === 2) {
     game.start();
@@ -54,7 +55,7 @@ const userSideGameRestart = (socket, game) => {
     game.start();
   } else {
     socket.emit("waitForOpponent", {
-      status: "wait"
+      status: 'Bitte warten Sie auf Ihren Gegner!'
     });
   }
 };

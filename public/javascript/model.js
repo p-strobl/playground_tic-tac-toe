@@ -17,19 +17,22 @@ export const userSideGameRestart = socket => {
 
 export const determineClickedField = socket => {
   getGameFields.forEach(clickedField => clickedField.addEventListener("click", () => {
-    const permission = determinPermission(socket, clickedField);
-    if (permission.valid) {
+    // const permission = determinPermission(socket, clickedField);
+    // if (permission.valid) {
+    if (socket.type === "player") {
       socket.emit("playerMove", {
         fieldId: clickedField.id.substring(4),
         player: socket.symbol
       });
+    } else {
+      setViewFooterStatus('Sie können nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!');
     }
-    setViewFooterStatus(permission.message);
+    // }
   }));
 };
 
 const determinPermission = (socket, clickedField) => {
-  console.log(socket.gameState);
+  // console.log(socket.gameState);
   if (socket.gameState.running === true) {
     if (socket.type === "spectator") {
       return {
@@ -59,17 +62,13 @@ const determinPermission = (socket, clickedField) => {
   }
 };
 
-export const determineStatusMessage = gameState => {
-  console.log(gameState);
-  switch (gameState.status) {
-    case "twoPlayerStart":
-      return "Zwei Spieler verbunden. Spiel kann beginnen!";
-    case "won":
+export const determineEndGameMessage = gameState => {
+  switch (gameState.result) {
+    case 'X':
+    case 'O':
       return `Spiel beendet: Spieler ${gameState.result} hat gewonnen!`;
-    case "tie":
+    case '­-':
       return "Spiel endet unentschieden!";
-    case "wait":
-      return "Bitte warten Sie auf Ihren Gegner!";
     default:
   }
 };

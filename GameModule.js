@@ -5,9 +5,9 @@ const connectedPlayer = require("./app/module/connectedPlayer.js");
 
 class Game {
   constructor(startPlayer) {
-    this.currentPlayer = startPlayer;
+    this.currentPlayer = startPlayer || 'X';
     this.gameField = new Array(9).fill(null);
-    this.result = "";
+    this.result = '';
   }
 
   gameState() {
@@ -15,10 +15,10 @@ class Game {
       currentPlayer: this.currentPlayer,
       gameField: this.gameField,
       result: this.result,
-      running: null,
       clickedPlayer: null,
       clickedField: null,
-      status: null
+      status: null,
+      valid: false
     };
   }
 
@@ -27,13 +27,13 @@ class Game {
     const playerSymbols = this.getPlayerSymbols(randomizedSymbols);
     this.currentPlayer = this.randomizeStartPlayer(randomizedSymbols);
     this.gameField = new Array(9).fill(null);
-    this.result = "";
-    let gameState = this.gameState();
-    gameState.running = true;
-    gameState.status = "twoPlayerStart";
+    this.result = '';
     Server.io.emit("startGame", {
       playerSymbols: playerSymbols,
-      gameState: gameState
+      gameState: { ...this.gameState(),
+        status: 'Zwei Spieler verbunden. Spiel kann beginnen!',
+        valid: true
+      }
     });
   }
 
@@ -42,30 +42,47 @@ class Game {
   }
 
   switchCurrentPlayer(player) {
-    player === "X" || this.currentPlayer === undefined ?
-      this.currentPlayer = "O" :
-      this.currentPlayer = "X";
+    player === 'X' ?
+      this.currentPlayer = 'O' :
+      this.currentPlayer = 'X';
     return this.currentPlayer;
   }
 
-  move(player, fieldId) {
-    this.updateGameField(player, fieldId);
-    this.result = this.determineResult(player);
-    let gameState = this.gameState();
-    gameState.clickedPlayer = player;
-    gameState.clickedField = fieldId;
-    if (this.result !== "" && this.result !== "-") {
-      gameState.status = "won";
-      gameState.running = false;
-    } else if (this.result === "-") {
-      gameState.status = "tie";
-      gameState.running = false;
+  validateMove(player, fieldId) {
+    if (this.gameField[fieldId] !== null && this.currentPlayer === player) {
+      return `Ungueltiger Zug: Feld ${fieldId} ist nicht frei!`;
+    } else if (player !== this.currentPlayer && this.result === '') {
+      return `Ungueltiger Zug: ${player} ist nicht am Zug!`;
+    } else if (this.result !== '') {
+      return `Ungueltiger Zug: Das Spiel ist zu Ende!`;
     } else {
-      gameState.currentPlayer = this.switchCurrentPlayer(player);
-      gameState.running = true;
+      return true;
+    }
+  }
+
+  move(player, fieldId) {
+    let validateMove = this.validateMove(player, fieldId);
+    let gameState = null;
+    if (validateMove === true) {
+      this.updateGameField(player, fieldId);
+      this.determineResult(player);
+      this.switchCurrentPlayer(player);
+      gameState = { ...this.gameState(),
+        clickedPlayer: player,
+        clickedField: fieldId,
+        valid: true
+      }
+      validateMove = '';
+    } else {
+      gameState = { ...this.gameState(),
+        clickedPlayer: player,
+        clickedField: fieldId,
+        status: validateMove,
+        valid: false
+      }
     }
     Server.io.emit("updateGame", gameState);
-    return this.result;
+    return validateMove;
   }
 
   determineResult(player) {
@@ -79,29 +96,27 @@ class Game {
       [0, 4, 8],
       [2, 4, 6]
     ];
-    let result = "";
     let moves = this.gameField.reduce((foundItems, element, index) =>
       (element === player) ? foundItems.concat(index) : foundItems, []);
     for (let winArray of winCombinations.values()) {
       let winnerFound = winArray.every(element => moves.includes(element));
       if (winnerFound) {
-        result = player;
+        this.result = player;
         break;
-      } else if (winnerFound === false && moves.length === 5) {
-        result = "-";
+      } else if (winnerFound === false && !this.gameField.includes(null)) {
+        this.result = '­-';
         break;
       }
     }
-    return result;
   }
 
   randomizeSymbol() {
     const player = connectedPlayer();
-    const possibleSymbol = "XO";
+    const possibleSymbol = 'XO';
     player[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
-    player[0].symbol === "X" ?
-      player[1].symbol = "O" :
-      player[1].symbol = "X";
+    player[0].symbol === 'X' ?
+      player[1].symbol = 'O' :
+      player[1].symbol = 'X';
     return player;
   }
 

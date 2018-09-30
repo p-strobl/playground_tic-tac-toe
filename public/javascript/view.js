@@ -4,7 +4,8 @@ import {
   getGameFields,
   getHeaderInfoPlayerSymbol,
   getHeaderInfoCurrentPlayer,
-  getFooterStatusContent
+  getFooterStatusContent,
+  getRestartButton
 } from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
@@ -42,4 +43,12 @@ export const setViewSpectatorGameField = gameState => {
 export const setViewSpectatorStatus = () => {
   getHeaderInfoPlayerSymbol.textContent = "Sie befinden sich im Zuschauer-Modus!";
   getFooterStatusContent.textContent = "Sorry, es waren bereits genug Spieler online.";
+};
+
+export const setViewHideResetButton = () => {
+  getRestartButton.classList.add("hide");
+};
+
+export const setViewShowResetButton = () => {
+  getRestartButton.classList.remove("hide");
 };

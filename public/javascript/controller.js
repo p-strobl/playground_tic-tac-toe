@@ -8,17 +8,18 @@ import {
   setViewUpdateGameField,
   setViewSpectatorGameField,
   setViewSpectatorStatus,
-  setViewResetView
+  setViewResetView,
+  setViewHideResetButton
 } from "./view.js";
 
 import {
   getGameFields,
   getHeaderInfoContent,
-  getHeaderInfoCurrentPlayer
+  getHeaderInfoCurrentPlayer,
 } from "../helpers/domHelper.js";
 
 import {
-  determineStatusMessage
+  determineEndGameMessage
 } from "./model.js"
 
 export const setClientType = (socket, clientType) => {
@@ -29,24 +30,33 @@ export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
-    setViewFooterStatus(determineStatusMessage(newGame.gameState));
+    setViewFooterStatus(newGame.gameState.status);
   }
   setViewNewGameField();
   setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  socket.gameState = updatedGame;
-  setViewUpdateGameField(updatedGame);
-  setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
-  setViewFooterStatus(determineStatusMessage(updatedGame));
+  console.log(updatedGame);
+  if (updatedGame.valid) {
+    socket.gameState = updatedGame;
+    setViewUpdateGameField(updatedGame);
+    setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
+    // setViewFooterStatus(updatedGame.status);
+    if (updatedGame.result !== '') {
+      setViewFooterStatus(determineEndGameMessage(updatedGame));
+    }
+  } else {
+    setViewFooterStatus(updatedGame.status);
+  }
 };
 
 export const setSpectatorState = (socket, currentGame) => {
   socket.gameState = currentGame.gameState;
+  setViewHideResetButton();
+  setViewHeaderCurrentPlayer(currentGame.gameState.currentPlayer);
   setViewSpectatorGameField(currentGame.gameState);
   setViewSpectatorStatus();
-  setViewHeaderCurrentPlayer(currentGame.gameState.currentPlayer);
 };
 
 const setPlayerSymbol = (socket, players) => {
@@ -70,7 +80,7 @@ export const setGameState = (socket, gameState) => {
   setViewUpdateField(gameState);
 };
 
-export const setWaitForOpponent = gameState => {
+export const setWaitForOpponent = message => {
   setViewResetView();
-  setViewFooterStatus(determineStatusMessage(gameState));
+  setViewFooterStatus(message.status);
 };
