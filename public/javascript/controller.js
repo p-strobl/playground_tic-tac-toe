@@ -37,12 +37,10 @@ export const startNewGame = (socket, newGame) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  console.log(updatedGame);
   if (updatedGame.valid) {
     socket.gameState = updatedGame;
     setViewUpdateGameField(updatedGame);
     setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
-    // setViewFooterStatus(updatedGame.status);
     if (updatedGame.result !== '') {
       setViewFooterStatus(determineEndGameMessage(updatedGame));
     }

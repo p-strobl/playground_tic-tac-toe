@@ -12,11 +12,10 @@ import {
 import {
   setClientType,
   startNewGame,
-  setSpectatorState,
   updateGameState,
+  setSpectatorState,
   setWaitForOpponent
 } from './controller.js';
-
 
 const init = () => {
   const socket = io.connect();
