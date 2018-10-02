@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const Server = require("../../server.js");
+const Server = require('../../server.js');
 
 module.exports = function () {
   return Server.clients.filter(client =>
-    client.type === "player");
+    client.type === 'player');
 };

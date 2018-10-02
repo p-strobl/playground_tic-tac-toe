@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const Server = require("../../server.js");
-const playerRoomLength = require("./playerRoomLength.js");
+const Server = require('../../server.js');
+const playerRoomLength = require('./playerRoomLength.js');
 
 class Client {
   constructor(socket) {
@@ -14,8 +14,8 @@ class Client {
 
   defineType() {
     return playerRoomLength() < 2 ?
-      "player" :
-      "spectator";
+      'player' :
+      'spectator';
   }
 
   addToClients() {
@@ -28,7 +28,7 @@ class Client {
   }
 
   emitClientType() {
-    this.socket.emit("setClientType", Server.clients.find(client =>
+    this.socket.emit('setClientType', Server.clients.find(client =>
       client.id === this.socket.id).type);
   }
 

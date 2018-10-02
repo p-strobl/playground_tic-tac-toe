@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const Server = require("./server.js")
-const connectedPlayer = require("./app/module/connectedPlayer.js");
+const Server = require('./server.js')
+const connectedPlayer = require('./app/module/connectedPlayer.js');
 
 class Game {
   constructor(startPlayer) {
@@ -28,7 +28,7 @@ class Game {
     this.currentPlayer = this.randomizeStartPlayer(randomizedSymbols);
     this.gameField = new Array(9).fill(null);
     this.result = '';
-    Server.io.emit("startGame", {
+    Server.io.emit('startGame', {
       playerSymbols: playerSymbols,
       gameState: { ...this.gameState(),
         status: 'Zwei Spieler verbunden. Spiel kann beginnen!',
@@ -81,7 +81,7 @@ class Game {
         valid: false
       }
     }
-    Server.io.emit("updateGame", gameState);
+    Server.io.emit('updateGame', gameState);
     return validateMove;
   }
 
@@ -104,7 +104,7 @@ class Game {
         this.result = player;
         break;
       } else if (winnerFound === false && !this.gameField.includes(null)) {
-        this.result = '­-';
+        this.result = '-';
         break;
       }
     }

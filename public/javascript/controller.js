@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import {
   setViewHeaderPlayerSymbol,
@@ -10,17 +10,17 @@ import {
   setViewSpectatorStatus,
   setViewResetView,
   setViewHideResetButton
-} from "./view.js";
+} from './view.js';
 
 import {
   getGameFields,
   getHeaderInfoContent,
   getHeaderInfoCurrentPlayer,
-} from "../helpers/domHelper.js";
+} from '../helpers/domHelper.js';
 
 import {
   determineEndGameMessage
-} from "./model.js"
+} from './model.js'
 
 export const setClientType = (socket, clientType) => {
   socket.type = clientType;
@@ -28,7 +28,7 @@ export const setClientType = (socket, clientType) => {
 
 export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
-  if (socket.type === "player") {
+  if (socket.type === 'player') {
     setPlayerSymbol(socket, newGame.playerSymbols);
     setViewFooterStatus(newGame.gameState.status);
   }
