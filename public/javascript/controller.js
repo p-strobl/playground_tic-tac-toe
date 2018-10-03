@@ -19,49 +19,48 @@ import {
 } from "../helpers/domHelper.js";
 
 import {
-  determineEndGameMessage
+  // determineEndGameMessage
 } from "./model.js"
 
 export const setClientType = (socket, clientType) => {;
   socket.type = clientType;
+  // console.log("Socket", socket);
 };
 
 export const startNewGame = (socket, newGame) => {
-  socket.gameState = newGame.gameState;
+  // console.log(newGame);
+  socket.game = newGame.game;
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
-    setViewFooterStatus(newGame.gameState.status);
+    setViewFooterStatus(newGame.game.status);
   }
   setViewNewGameField();
-  setViewHeaderCurrentPlayer(newGame.gameState.currentPlayer);
+  setViewHeaderCurrentPlayer(newGame.game.currentPlayer);
+  console.log(socket.game);
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  console.log(updatedGame);
   if (updatedGame.valid) {
-    socket.gameState = updatedGame;
+    socket.game = updatedGame;
     setViewUpdateGameField(updatedGame);
     setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
-    if (updatedGame.result !== "") {
-      setViewFooterStatus(determineEndGameMessage(updatedGame));
-    }
-  } else {
-    setViewFooterStatus(updatedGame.status);
   }
+  setViewFooterStatus(updatedGame.status);
+  console.log("GameUpdate", updatedGame);
 };
 
 export const setSpectatorState = (socket, currentGame) => {
-  socket.gameState = currentGame.gameState;
+  socket.game = currentGame;
   setViewHideResetButton();
-  setViewHeaderCurrentPlayer(currentGame.gameState.currentPlayer);
-  setViewSpectatorGameField(currentGame.gameState);
+  setViewHeaderCurrentPlayer(currentGame.currentPlayer);
+  setViewSpectatorGameField(currentGame);
   setViewSpectatorStatus();
 };
 
 const setPlayerSymbol = (socket, players) => {
   socket.symbol = players.find(player => player.id === socket.id).symbol;
   setViewHeaderPlayerSymbol(socket.symbol);
-  console.log("Socket symbol", socket.symbol);
+  // console.log("Socket symbol", socket.symbol);
 };
 
 export const setStartPlayer = (socket, startPlayer) => {
@@ -82,5 +81,5 @@ export const setGameState = (socket, gameState) => {
 
 export const setWaitForOpponent = message => {
   setViewResetView();
-  setViewFooterStatus(message.status);
+  setViewFooterStatus(message);
 };

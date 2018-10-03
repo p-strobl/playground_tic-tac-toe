@@ -1,7 +1,5 @@
 "use strict";
 
-const connectedPlayer = require("./connectedPlayer.js");
-
 module.exports.playerRoomLength = function (io, clients) {
   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {
     return io.sockets.adapter.rooms.player.length;
@@ -11,13 +9,13 @@ module.exports.playerRoomLength = function (io, clients) {
 };
 
 module.exports.randomizeSymbol = function (clients) {
-  const player = connectedPlayer(clients);
+  const players = clients.filter(client => client.type === "player");
   const possibleSymbol = "XO";
-  player[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
-  player[0].symbol === "X" ?
-    player[1].symbol = "O" :
-    player[1].symbol = "X";
-  return player;
+  players[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
+  players[0].symbol === "X" ?
+    players[1].symbol = "O" :
+    players[1].symbol = "X";
+  return players;
 };
 
 module.exports.getPlayerSymbols = function (randomizedSymbols) {
@@ -31,4 +29,8 @@ module.exports.getPlayerSymbols = function (randomizedSymbols) {
 
 module.exports.randomizeStartPlayer = function (randomizedSymbol) {
   return randomizedSymbol[Math.floor(Math.random() * randomizedSymbol.length)].symbol;
+};
+
+module.exports.removeClient = function (socket, clients) {
+  return clients.filter(client => client.id !== socket.id);
 };
