@@ -11,9 +11,9 @@ const webServer = http.Server(server);
 const io = socketIo(webServer);
 
 const Client = require('./app/module/Client.js');
-const removeFromClients = require('./app/module/removeFromClients.js');
-const playerRoomLength = require('./app/module/playerRoomLength.js');
+const playerRoomLength = require('./app/module/get-playerRoomLength.js');
 const gameModule = require('./GameModule.js');
+const removeClient = require('./app/module/set-removeClient.js');
 
 let clients = [];
 
@@ -47,60 +47,81 @@ class Server {
   };
 };
 
-class Listener {
-  constructor() {
-    this.events();
-  }
+io.sockets.on('connection', socket => {
+  const client = new Client(io, socket, clients);
+  clients.push(client);
+  socket.emit('setClientType', client.type);
 
-  events() {
-    console.log('Listner', gameModule);
-    const game = new gameModule.Game();
+  console.log('New Client:', client);
 
-    io.sockets.on('connection', socket => {
-      new Client(socket);
-      this.determineGameStart(socket, game);
-      console.log('Client connected, cliets.length = ' + clients.length);
+  // console.log(clients);
+  // this.determineGameStart(socket, game);
+  // console.log('Client connected, cliets.length = ' + clients.length);
 
-      socket.on('playerMove', updateGameState => game.move(updateGameState.player, updateGameState.fieldId));
-      socket.on('userSideGameRestart', () => this.userSideGameRestart(socket, game));
+  socket.on('playerMove', updateGameState => game.move(updateGameState.player, updateGameState.fieldId));
+  socket.on('userSideGameRestart', () => this.userSideGameRestart(socket, game));
 
-      socket.on('disconnect', () => {
-        new removeFromClients(socket);
-        console.log('Client disconnected, cliets.length = ' + clients.length);
-      });
-    });
+  socket.on('disconnect', () => {
+    clients = removeClient(socket, clients);
+    // console.log(clients);
+    // console.log('Client disconnected, cliets.length = ' + clients.length);
+  });
+});
 
-  }
+// class Listener {
+//   constructor() {
+//     this.events();
+//   }
 
-  determineGameStart(socket, game) {
-    if (socket.type === 'player' && playerRoomLength() === 1) {
-      socket.emit('waitForOpponent', {
-        status: 'Bitte warten Sie auf Ihren Gegner!'
-      });
-    } else if (socket.type === 'player' && playerRoomLength() === 2) {
-      game.start();
-    } else if (socket.type === 'spectator') {
-      socket.emit('spectateGame', {
-        gameState: game
-      });
-    }
-  }
+//   events() {
+//     console.log('Listner', gameModule);
+//     const game = new gameModule.Game();
 
-  userSideGameRestart(socket, game) {
-    if (playerRoomLength() === 2) {
-      game.start();
-    } else {
-      socket.emit('waitForOpponent', {
-        status: 'Bitte warten Sie auf Ihren Gegner!'
-      });
-    }
-  }
+//     io.sockets.on('connection', socket => {
+//       new Client(socket);
+//       this.determineGameStart(socket, game);
+//       console.log('Client connected, cliets.length = ' + clients.length);
 
-};
+//       socket.on('playerMove', updateGameState => game.move(updateGameState.player, updateGameState.fieldId));
+//       socket.on('userSideGameRestart', () => this.userSideGameRestart(socket, game));
+
+//       socket.on('disconnect', () => {
+//         new removeFromClients(socket);
+//         console.log('Client disconnected, cliets.length = ' + clients.length);
+//       });
+//     });
+
+//   }
+
+//   determineGameStart(socket, game) {
+//     if (socket.type === 'player' && playerRoomLength() === 1) {
+//       socket.emit('waitForOpponent', {
+//         status: 'Bitte warten Sie auf Ihren Gegner!'
+//       });
+//     } else if (socket.type === 'player' && playerRoomLength() === 2) {
+//       game.start();
+//     } else if (socket.type === 'spectator') {
+//       socket.emit('spectateGame', {
+//         gameState: game
+//       });
+//     }
+//   }
+
+//   userSideGameRestart(socket, game) {
+//     if (playerRoomLength() === 2) {
+//       game.start();
+//     } else {
+//       socket.emit('waitForOpponent', {
+//         status: 'Bitte warten Sie auf Ihren Gegner!'
+//       });
+//     }
+//   }
+
+// };
 
 const init = () => {
   new Server();
-  new Listener();
+  // new Listener();
 };
 
 init();

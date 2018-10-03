@@ -22,7 +22,7 @@ import {
   determineEndGameMessage
 } from './model.js'
 
-export const setClientType = (socket, clientType) => {
+export const setClientType = (socket, clientType) => {;
   socket.type = clientType;
 };
 
