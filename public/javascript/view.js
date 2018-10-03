@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import {
   getGameFields,
@@ -6,7 +6,7 @@ import {
   getHeaderInfoCurrentPlayer,
   getFooterStatusContent,
   getRestartButton
-} from '../helpers/domHelper.js';
+} from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
   getHeaderInfoPlayerSymbol.textContent = `Sie spielen als ${playerSymbol}`;
@@ -21,12 +21,12 @@ export const setViewFooterStatus = statusMessage => {
 };
 
 export const setViewNewGameField = () => {
-  getGameFields.forEach(field => field.textContent = '');
+  getGameFields.forEach(field => field.textContent = "");
 };
 
 export const setViewResetView = () => {
-  getHeaderInfoPlayerSymbol.textContent = '';
-  getHeaderInfoCurrentPlayer.textContent = '';
+  getHeaderInfoPlayerSymbol.textContent = "";
+  getHeaderInfoCurrentPlayer.textContent = "";
   setViewNewGameField();
 };
 
@@ -41,14 +41,14 @@ export const setViewSpectatorGameField = gameState => {
 };
 
 export const setViewSpectatorStatus = () => {
-  getHeaderInfoPlayerSymbol.textContent = 'Sie befinden sich im Zuschauer-Modus!';
-  getFooterStatusContent.textContent = 'Sorry, es waren bereits genug Spieler online.';
+  getHeaderInfoPlayerSymbol.textContent = "Sie befinden sich im Zuschauer-Modus!";
+  getFooterStatusContent.textContent = "Sorry, es waren bereits genug Spieler online.";
 };
 
 export const setViewHideResetButton = () => {
-  getRestartButton.classList.add('hide');
+  getRestartButton.classList.add("hide");
 };
 
 export const setViewShowResetButton = () => {
-  getRestartButton.classList.remove('hide');
+  getRestartButton.classList.remove("hide");
 };

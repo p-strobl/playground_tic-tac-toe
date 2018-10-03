@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import {
   setViewHeaderPlayerSymbol,
@@ -10,17 +10,17 @@ import {
   setViewSpectatorStatus,
   setViewResetView,
   setViewHideResetButton
-} from './view.js';
+} from "./view.js";
 
 import {
   getGameFields,
   getHeaderInfoContent,
   getHeaderInfoCurrentPlayer,
-} from '../helpers/domHelper.js';
+} from "../helpers/domHelper.js";
 
 import {
   determineEndGameMessage
-} from './model.js'
+} from "./model.js"
 
 export const setClientType = (socket, clientType) => {;
   socket.type = clientType;
@@ -28,7 +28,7 @@ export const setClientType = (socket, clientType) => {;
 
 export const startNewGame = (socket, newGame) => {
   socket.gameState = newGame.gameState;
-  if (socket.type === 'player') {
+  if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
     setViewFooterStatus(newGame.gameState.status);
   }
@@ -37,11 +37,12 @@ export const startNewGame = (socket, newGame) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
+  console.log(updatedGame);
   if (updatedGame.valid) {
     socket.gameState = updatedGame;
     setViewUpdateGameField(updatedGame);
     setViewHeaderCurrentPlayer(updatedGame.currentPlayer);
-    if (updatedGame.result !== '') {
+    if (updatedGame.result !== "") {
       setViewFooterStatus(determineEndGameMessage(updatedGame));
     }
   } else {
@@ -60,6 +61,7 @@ export const setSpectatorState = (socket, currentGame) => {
 const setPlayerSymbol = (socket, players) => {
   socket.symbol = players.find(player => player.id === socket.id).symbol;
   setViewHeaderPlayerSymbol(socket.symbol);
+  console.log("Socket symbol", socket.symbol);
 };
 
 export const setStartPlayer = (socket, startPlayer) => {

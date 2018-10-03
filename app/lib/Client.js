@@ -1,7 +1,7 @@
-// 'use strict';
+// "use strict";
 
-// const Server = require('../../server.js');
-// const playerRoomLength = require('./playerRoomLength.js');
+// const Server = require("../../server.js");
+// const playerRoomLength = require("./playerRoomLength.js");
 
 // class Client {
 //   constructor(socket) {
@@ -14,8 +14,8 @@
 
 //   defineType() {
 //     return playerRoomLength() < 2 ?
-//       'player' :
-//       'spectator';
+//       "player" :
+//       "spectator";
 //   }
 
 //   addToClients() {
@@ -28,7 +28,7 @@
 //   }
 
 //   emitClientType() {
-//     this.socket.emit('setClientType', Server.clients.find(client =>
+//     this.socket.emit("setClientType", Server.clients.find(client =>
 //       client.id === this.socket.id).type);
 //   }
 
@@ -36,9 +36,9 @@
 
 // module.exports = Client;
 
-'use strict';
+"use strict";
 
-const playerRoomLength = require('./get-playerRoomLength.js');
+const utility = require("./utilities.js");
 
 class Client {
   constructor(io, socket, clients) {
@@ -47,18 +47,12 @@ class Client {
   }
 
   defineType(io, socket, clients) {
-    const type = playerRoomLength(io, clients) < 2 ?
-      'player' :
-      'spectator';
+    const type = utility.playerRoomLength(io, clients) < 2 ?
+      "player" :
+      "spectator";
     socket.join(type);
     return type;
   }
-
-  // emitClientType() {
-  //   this.socket.emit('setClientType', this.clients.find(client =>
-  //     client.id === this.socket.id).type);
-  // }
-
 };
 
 module.exports = Client;

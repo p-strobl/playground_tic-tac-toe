@@ -1,8 +1,8 @@
 
-'Shift+Cmd+N' // Triggers `Todo: Toggle Box`
-'Option+D' // Triggers `Todo: Toggle Done`
-'Option+C' // Triggers `Todo: Toggle Cancelled`
-'Option+S' // Triggers `Todo: Toggle Start`
+"Shift+Cmd+N" // Triggers `Todo: Toggle Box`
+"Option+D" // Triggers `Todo: Toggle Done`
+"Option+C" // Triggers `Todo: Toggle Cancelled`
+"Option+S" // Triggers `Todo: Toggle Start`
 
 Todo:
   ✔ User class restructure @done(18-09-25 23:03)

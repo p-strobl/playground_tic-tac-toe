@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 import {
   determineClickedField,
   userSideGameRestart
-} from './model.js';
+} from "./model.js";
 
 import {
   setViewFooterStatus
-} from './view.js';
+} from "./view.js";
 
 import {
   setClientType,
@@ -15,7 +15,7 @@ import {
   updateGameState,
   setSpectatorState,
   setWaitForOpponent
-} from './controller.js';
+} from "./controller.js";
 
 const init = () => {
   const socket = io.connect();
@@ -23,12 +23,12 @@ const init = () => {
   determineClickedField(socket);
   userSideGameRestart(socket);
 
-  socket.on('connect', () => {
-    socket.on('setClientType', clientType => setClientType(socket, clientType));
-    socket.on('waitForOpponent', message => setWaitForOpponent(message));
-    socket.on('startGame', newGame => startNewGame(socket, newGame));
-    socket.on('updateGame', updatedGame => updateGameState(socket, updatedGame));
-    socket.on('spectateGame', currentGame => setSpectatorState(socket, currentGame));
+  socket.on("connect", () => {
+    socket.on("setClientType", clientType => setClientType(socket, clientType));
+    socket.on("waitForOpponent", message => setWaitForOpponent(message));
+    socket.on("startGame", newGame => startNewGame(socket, newGame));
+    socket.on("updateGame", updatedGame => updateGameState(socket, updatedGame));
+    socket.on("spectateGame", currentGame => setSpectatorState(socket, currentGame));
   });
 };
 
