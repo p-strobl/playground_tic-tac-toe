@@ -16,7 +16,10 @@ class Game {
     this.gameField = new Array(9).fill(null);
     this.result = "";
     this.status = "Zwei Spieler verbunden. Spiel kann beginnen!";
-    return playerSymbols;
+    return {
+      game: this,
+      playerSymbols: playerSymbols
+    };
   }
 
   updateGameField(player, fieldId) {
@@ -33,12 +36,12 @@ class Game {
   determineFailedMove(player, fieldId) {
     if (this.gameField[fieldId] !== null && this.currentPlayer === player) {
       return `Ungueltiger Zug: Feld ${fieldId} ist nicht frei!`;
+    } else if (player === "spectator") {
+      return "Sie können gerade nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!";
     } else if (player !== this.currentPlayer && this.result === "") {
       return `Ungueltiger Zug: ${player} ist nicht am Zug!`;
     } else if (this.result === "X" || this.result === "O" || this.result === "-") {
       return `Ungueltiger Zug: Das Spiel ist zu Ende!`;
-    } else if (player === "spectator") {
-      return "Sie können gerade nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!";
     } else {
       return "";
     }

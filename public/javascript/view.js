@@ -40,15 +40,15 @@ export const setViewSpectatorGameField = gameState => {
   });
 };
 
-export const setViewSpectatorStatus = () => {
-  getHeaderInfoPlayerSymbol.textContent = "Sie befinden sich im Zuschauer-Modus!";
-  getFooterStatusContent.textContent = "Sorry, es waren bereits genug Spieler online.";
+export const setViewSpectatorStatus = (status) => {
+  getHeaderInfoPlayerSymbol.textContent = status.header;
+  getFooterStatusContent.textContent = status.footer;
 };
 
 export const setViewHideResetButton = () => {
-  getRestartButton.classList.add("hide");
+  getRestartButton.style.display = "none";
 };
 
-export const setViewShowResetButton = () => {
-  getRestartButton.classList.remove("hide");
+export const setViewShowResetButton = socket => {
+  if (socket.type === "player") getRestartButton.style.display = "block";
 };

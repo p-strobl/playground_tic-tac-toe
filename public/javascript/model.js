@@ -17,11 +17,12 @@ export const userSideGameRestart = socket => {
 
 export const determineClickedField = socket => {
   getGameFields.forEach(clickedField => clickedField.addEventListener("click", () => {
-    if (socket.type === "player") {
-      socket.emit("playerMove", {
-        fieldId: clickedField.id.substring(4),
-        player: socket.symbol
-      });
-    }
+    // if (socket.type === "player") {
+    socket.emit("playerMove", {
+      fieldId: clickedField.id.substring(4),
+      player: socket.symbol,
+      type: socket.type
+    });
+    // } 
   }));
 };

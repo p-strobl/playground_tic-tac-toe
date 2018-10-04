@@ -17,55 +17,75 @@ const gameModule = require("./GameModule.js");
 const game = new gameModule.Game();
 let clients = [];
 
-io.sockets.on("connection", socket => {
-  const client = new Client(io, socket, clients);
-  clients.push(client);
-  socket.emit("setClientType", client.type);
+const init = () => {
 
-  if (client.type === "player" && utilities.playerRoomLength(io, clients) === 1) {
-    socket.emit("waitForOpponent", "Bitte warten Sie auf Ihren Gegner!");
+  const addNewClient = (socket, clients, newClient) => {
+    clients.push(newClient);
+    socket.emit("setClientType", newClient.type);
+    return newClient.type;
+  };
 
-  } else if (client.type === "player" && utilities.playerRoomLength(io, clients) === 2) {
-    let playerSymbols = game.start(clients);
-    io.sockets.in("player").emit("startGame", {
+  const waitForOpponent = io => {
+    utilities.playerRoomCount(io, clients) === 1 ?
+      io.sockets.in("player").emit("waitForOpponent", "Bitte warten Sie auf Ihren Gegner!") :
+      "";
+  };
+
+  const startGame = (game, clients) => {
+    return io.sockets.in("player").emit("startGame", game.start(clients));
+  };
+
+  const spactateGame = (socket, game) => {
+    return socket.emit("spectateGame", {
       game,
-      playerSymbols
+      status: {
+        header: "Sie befinden sich im Zuschauer-Modus!",
+        footer: "Sorry, es waren bereits genug Spieler online."
+      }
+    });
+  };
+
+  const playerMove = (io, socket, clicked) => {
+    clicked.type === "spectator" ? clicked.player = clicked.type : "";
+    game.move(clicked.player, clicked.fieldId) === "" ?
+      io.emit("updateGame", game) :
+      socket.emit("updateGame", game);
+  };
+
+  const userSideGameRestart = (io, socket, clients, game) => {
+    utilities.playerRoomCount(io, clients) === 2 ?
+      startGame(game, clients) :
+      waitForOpponent(io);
+  };
+
+  io.sockets.on("connection", socket => {
+    const newClient = new Client(io, socket, clients);
+    const newClientType = addNewClient(socket, clients, newClient);
+    const playerRoomCount = utilities.playerRoomCount(io, clients);
+
+    if (newClientType === "player" && playerRoomCount === 1) {
+      waitForOpponent(io);
+    } else if (newClientType === "player" && playerRoomCount === 2) {
+      startGame(game, clients);
+    } else {
+      spactateGame(socket, game);
+    }
+
+    socket.on("playerMove", clicked => {
+      playerMove(io, socket, clicked);
     });
 
-  } else {
-    socket.emit("spectateGame", game);
-  }
+    socket.on("userSideGameRestart", () => {
+      userSideGameRestart(io, socket, clients, game);
+    });
 
-  socket.on("playerMove", clicked => {
-    const move = game.move(clicked.player, clicked.fieldId);
-    if (move === "") {
-      io.emit("updateGame", game);
-
-    } else {
-      socket.emit("updateGame", game);
-    }
+    socket.on("disconnect", () => {
+      clients = utilities.removeClient(socket, clients);
+      waitForOpponent(io);
+    });
   });
 
-  socket.on("userSideGameRestart", () => {
-    console.log(utilities.playerRoomLength(io, clients));
-    if (utilities.playerRoomLength(io, clients) === 2) {
-      let playerSymbols = game.start(clients);
-      io.sockets.in("player").emit("startGame", {
-        game,
-        playerSymbols
-      });
-
-    } else {
-      socket.emit('waitForOpponent', {
-        status: 'Bitte warten Sie auf Ihren Gegner!'
-      });
-    }
-  });
-
-  socket.on("disconnect", () => {
-    clients = utilities.removeClient(socket, clients);
-  });
-});
+};
 
 class Server {
   constructor() {
@@ -95,3 +115,4 @@ class Server {
 };
 
 new Server();
+init();

@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports.playerRoomLength = function (io, clients) {
+module.exports.playerRoomCount = function (io, clients) {
   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {
     return io.sockets.adapter.rooms.player.length;
   } else {
