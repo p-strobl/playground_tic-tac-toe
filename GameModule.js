@@ -52,7 +52,7 @@ class Game {
       case "X":
       case "O":
         return `Spiel beendet: Spieler ${result} hat gewonnen!`;
-      case "­-":
+      case "-":
         return "Spiel endet unentschieden!";
       default:
         return "";

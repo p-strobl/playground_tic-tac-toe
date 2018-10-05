@@ -35,8 +35,8 @@ const init = () => {
     return io.sockets.in("player").emit("startGame", game.start(clients));
   };
 
-  const spactateGame = (socket, game) => {
-    return socket.emit("spectateGame", {
+  const spactateGame = (io, game) => {
+    return io.sockets.in("spectator").emit("spectateGame", {
       game,
       status: {
         header: "Sie befinden sich im Zuschauer-Modus!",
@@ -56,6 +56,7 @@ const init = () => {
     utilities.playerRoomCount(io, clients) === 2 ?
       startGame(game, clients) :
       waitForOpponent(io);
+    spactateGame(io, game);
   };
 
   io.sockets.on("connection", socket => {
@@ -68,7 +69,7 @@ const init = () => {
     } else if (newClientType === "player" && playerRoomCount === 2) {
       startGame(game, clients);
     } else {
-      spactateGame(socket, game);
+      spactateGame(io, game);
     }
 
     socket.on("playerMove", clicked => {
