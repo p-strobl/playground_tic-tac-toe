@@ -24,13 +24,17 @@ body {
 }
 
 .header__wrap h1 {
-  font-size: 5vw;
+  font-size: 3vw;
 }
 
 .header__info {
   width: 80%;
   place-self: center;
-  font-size: 2vw;
+  font-size: 1.3vw;
+}
+
+.header__info__currentPlayer {
+  justify-self: center;
 }
 
 .main__wrap {
@@ -44,25 +48,70 @@ body {
   place-content: center;
 }
 
-.field__wrap {
-  border-collapse: separate;
-  border-collapse: separate;
-  border-spacing: 1;
-  border: 1px solid black;
-  border-radius: 10px;
+.field__boarder {
+  border-left: 4vw outset darkgrey;
+  border-right: 4vw inset darkgrey;
+  border-top: 6vh inset gainsboro;
+  border-bottom: 6vh outset gainsboro;
+  border-radius: 4px;
+  box-shadow: 0px -5px 100px 10px rgba(0, 0, 0, .2);
+}
+
+.table__wrap {
+  padding: 20px;
+  border: 6px double darkgoldenrod;
+  background-color: gainsboro;
+  border-radius: 1px;
+  box-shadow: 20px 20px 60px 20px rgba(0, 0, 0, .2);
+}
+
+.field__tbody {
+  background-color: ghostwhite;
+  /* background: none; */
 }
 
 .field {
   border: 1px solid black;
-  height: 10vw;
-  width: 10vw;
+  border-radius: 3px;
+  height: 6vw;
+  width: 6vw;
   vertical-align: middle;
   text-align: center;
   font-family: sans-serif;
-  font-size: 6vw;
+  font-size: 4vw;
   cursor: pointer;
+
+  /* background: none; */
+  /* position: absolute; */
+  /* transform-style: preserve-3d; */
+  /* transition: all 0.5s ease-in-out; */
+
+  /* transform: translate(-50%, -50%); */
   /* transform: rotateX(0); */
 }
+
+/* .field:hover {
+  transform: rotateY(180deg);
+} */
+
+/* .fronCard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  overflow: hidden;
+  /* background-color: ghostwhite; */
+/* } */
+
+/* .backCard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background-color: goldenrod;
+  transform: rotateY(180deg);
+} */
 
 /* .field.clicked {
   transform: rotateX(180deg);
@@ -73,21 +122,21 @@ body {
   box-shadow: 0 0px 10px 0px rgba(0, 0, 0, .5);
 }
 
-#feld0 {
-  border-radius: 10px 0 0 0;
+/* #feld0 {
+  border-radius: 6px 0 0 0;
 }
 
 #feld2 {
-  border-radius: 0 10px 0 0;
+  border-radius: 0 6px 0 0;
 }
 
 #feld6 {
-  border-radius: 0 0 0 10px;
+  border-radius: 0 0 0 6px;
 }
 
 #feld8 {
-  border-radius: 0 0 10px 0;
-}
+  border-radius: 0 0 6px 0;
+} */
 
 .footer__wrap {
   width: 80%;
@@ -98,7 +147,7 @@ body {
 .footer__status {
   width: 100%;
   align-self: start;
-  font-size: 2vw;
+  font-size: 1.3vw;
 }
 
 .restart__wrap {
@@ -112,6 +161,7 @@ body {
   height: 20px;
   width: 100px;
   border-radius: 3px;
+  display: none;
 }
 
 .restart__button:hover {
