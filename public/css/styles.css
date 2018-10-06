@@ -14,28 +14,41 @@ body {
 }
 
 .page__wrap {
+  overflow: hidden;
   display: grid;
-  grid-template-rows: 15% 10% auto;
+  grid-template-rows: 30% auto auto;
   height: 100vh;
   background-color: #b4b4b4;
   font-family: 'calibri', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .header__wrap {
-  place-self: center;
+  display: grid;
+  /* place-self: center; */
 }
 
 .header__wrap h1 {
+  margin: auto 0;
   font-size: 5vw;
+  text-align: center;
+  /* font-size: 5vw; */
 }
 
 .header__info {
-  place-self: center;
+  display: grid;
+  font-size: 2.5vw;
+  text-align: center;
+  height: 100%;
+  /* place-self: center;
   display: grid;
   height: 100%;
   width: 80%;
   font-size: 2.5vw;
-  justify-items: center;
+  justify-items: center; */
+}
+
+.header__info__playerSymbol {
+  align-self: center;
 }
 
 .header__info__currentPlayer {
@@ -52,20 +65,35 @@ body {
 }
 
 .main__wrap {
-  place-self: center;
+  justify-self: center;
+  align-self: flex-start;
+  /* place-self: center;
   padding-top: 1vw;
   width: 100%;
-  height: 100%;
+  height: 100%; */
 }
 
-.field__wrap {
+.field__board {
+  grid-gap: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, 8vw);
+  grid-template-rows: repeat(3, 8vw);
+  border-left: 6vw outset #676767;
+  border-right: 6vw inset #8e8e8e;
+  border-top: 2vw outset #585858;
+  border-bottom: 2vw inset #969696;
+  border-radius: 4px;
+  box-shadow: -20px -10px 70px -15px rgba(0, 0, 0, .2);
+}
+
+/* .field__wrap {
   display: grid;
   place-content: center;
   grid-template-columns: repeat(3, auto);
   grid-gap: 3px;
-}
+} */
 
-.game__board {
+/* .game__board {
   display: grid;
   height: 28vw;
   width: 28vw;
@@ -75,27 +103,16 @@ body {
   border-bottom: 4vw inset #535353;
   border-radius: 4px;
   box-shadow: -33px -15px 50px 10px rgba(0, 0, 0, .1);
-}
+} */
 
 /* .field__row {
   display: flex;
 } */
 
-/* .card__container {
- ;
-} */
 
-.card {
-  height: 100%;
-  width: 100%;
-  transition: all 0.6s ease;
-  transform-style: preserve-3d;
-  background-color: lightcoral;
-}
-
-.card:hover {
+/* .card:hover {
   transform: rotateX(108deg);
-}
+} */
 
 /* .main__board {
   display: grid;
@@ -130,6 +147,22 @@ body {
 .field {
   border: 1px solid goldenrod;
   border-radius: 5px;
+  /* height: 8vw;
+  width: 8vw; */
+  /* vertical-align: middle; */
+  /* text-align: center; */
+  /* font-family: sans-serif; */
+  font-size: 7vw;
+  text-shadow: 0 0 5px rgba(150, 150, 150, 1);
+  cursor: pointer;
+  background-color: ghostwhite;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  /* position: relative; */
+  /* border: 1px solid goldenrod;
+  border-radius: 5px;
   height: 6vw;
   width: 6vw;
   vertical-align: middle;
@@ -140,29 +173,21 @@ body {
   cursor: pointer;
   background-color: ghostwhite;
 
-  perspective: 700
+  perspective: 700 */
 }
 
-/* .field>card {
-  height: 100%;
-  width: 100%;
-  transition: transform 0.6s ease;
-  transform-style: preserve-3d;
-}
-
-.field>card:hover {
-  transform: rotateY(180deg);
-}
-
-.field:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0px 20px 1px rgba(0, 0, 0, .2);
+/* .card {
+  height: 8vw;
+  width: 8vw;
+  background-color: aqua;
+  font-size: 4vw;
 } */
 
 .footer__wrap {
   width: 100%;
+  /* width: 100%;
   justify-self: center;
-  display: flex;
+  display: flex; */
 }
 
 .footer__status {
@@ -170,6 +195,10 @@ body {
   height: 100%;
   font-size: 2.5vw;
   text-align: center;
+  /* width: 100%;
+  height: 100%;
+  font-size: 2.5vw;
+  text-align: center; */
 }
 
 .footer__status__content {
@@ -178,7 +207,7 @@ body {
 
 .footer__status__content.grow {
   transition: transform 0.2s ease-out;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .restart__wrap {
