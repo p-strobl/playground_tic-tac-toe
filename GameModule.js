@@ -87,6 +87,7 @@ class Game {
       [0, 4, 8],
       [2, 4, 6]
     ];
+
     let moves = this.gameField.reduce((foundItems, element, index) =>
       (element === player) ? foundItems.concat(index) : foundItems, []);
     if (moves.length > 2) {

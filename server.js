@@ -46,14 +46,13 @@ const init = () => {
   };
 
   const playerMove = (io, socket, clicked) => {
-    console.log(clicked);
     clicked.type === "spectator" ? clicked.player = clicked.type : "";
     game.move(clicked.player, clicked.fieldId) === "" ?
       io.emit("updateGame", game) :
       socket.emit("updateGame", game);
   };
 
-  const userSideGameRestart = (io, socket, clients, game) => {
+  const userSideGameRestart = (io, clients, game) => {
     utilities.playerRoomCount(io, clients) === 2 ?
       startGame(game, clients) :
       waitForOpponent(io);
