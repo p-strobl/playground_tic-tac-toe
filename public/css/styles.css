@@ -46,8 +46,6 @@ body {
   height: 100%;
 }
 
-.header__info__playerSymbol {}
-
 .header__info__currentPlayer {
   text-decoration: underline;
 }
@@ -95,6 +93,10 @@ body {
 
 .field__wrap.flip {
   transform: rotateY(180deg);
+}
+
+.field__wrap:hover {
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, .3);
 }
 
 .frontCard,

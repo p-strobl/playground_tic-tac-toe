@@ -46,6 +46,7 @@ const init = () => {
   };
 
   const playerMove = (io, socket, clicked) => {
+    console.log(clicked);
     clicked.type === "spectator" ? clicked.player = clicked.type : "";
     game.move(clicked.player, clicked.fieldId) === "" ?
       io.emit("updateGame", game) :

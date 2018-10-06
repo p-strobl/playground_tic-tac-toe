@@ -8,6 +8,10 @@ export const getHeaderInfoCurrentPlayer = document.querySelector(".header__info_
 
 export const getFooterStatusContent = document.querySelector(".footer__status__content");
 
-export const getGameFields = Array.from(document.querySelectorAll(".field"));
+export const getFrontCards = Array.from(document.querySelectorAll(".frontCard"));
+
+export const getBackCards = Array.from(document.querySelectorAll(".backCard"));
+
+export const getFieldWraps = Array.from(document.querySelectorAll(".field__wrap"));
 
 export const getRestartButton = document.querySelector(".restart__button");

@@ -1,6 +1,10 @@
 "use strict";
 
 import {
+  removeFlipClass
+} from "./model.js";
+
+import {
   setViewHeaderPlayerSymbol,
   setViewHeaderCurrentPlayer,
   setViewFooterStatus,
@@ -14,9 +18,9 @@ import {
 } from "./view.js";
 
 import {
-  getGameFields,
+  getFrontCards,
   getHeaderInfoContent,
-  getHeaderInfoCurrentPlayer,
+  getHeaderInfoCurrentPlayer
 } from "../helpers/domHelper.js";
 
 export const setClientType = (socket, clientType) => {;
@@ -25,11 +29,12 @@ export const setClientType = (socket, clientType) => {;
 
 export const startNewGame = (socket, newGame) => {
   socket.game = newGame.game;
+  removeFlipClass();
   if (socket.type === "player") {
     setPlayerSymbol(socket, newGame.playerSymbols);
     setViewFooterStatus(newGame.game.status);
   }
-  // setViewNewGameField(newGame.game.gameField);
+  setViewNewGameField(newGame.game.gameField);
   setViewHeaderCurrentPlayer(newGame.game.currentPlayer);
   setViewHideResetButton();
 };

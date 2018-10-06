@@ -1,11 +1,13 @@
 "use strict";
 
 import {
-  getGameFields,
   getHeaderInfoPlayerSymbol,
   getHeaderInfoCurrentPlayer,
   getFooterStatusContent,
-  getRestartButton
+  getRestartButton,
+  getFrontCards,
+  getBackCards,
+  getFieldWraps
 } from "../helpers/domHelper.js";
 
 export const setViewHeaderPlayerSymbol = playerSymbol => {
@@ -29,7 +31,8 @@ export const setViewFooterStatus = statusMessage => {
 };
 
 export const setViewNewGameField = gameField => {
-  getGameFields.forEach((field, index) => field.textContent = gameField[index]);
+  getBackCards.forEach((field, index) => field.textContent = gameField[index]);
+  getFrontCards.forEach(card => card.classList.remove("flip"));
 };
 
 export const setViewResetView = () => {
@@ -38,12 +41,13 @@ export const setViewResetView = () => {
 };
 
 export const setViewUpdateGameField = updatedGame => {
-  return getGameFields[updatedGame.clickedField].textContent = updatedGame.clickedPlayer;
+  getBackCards[updatedGame.clickedField].textContent = updatedGame.clickedPlayer;
+  getFieldWraps[updatedGame.clickedField].classList.add("flip");
 };
 
 export const setViewSpectatorGameField = gameState => {
   Object.entries(gameState.gameField).forEach(([key, value]) => {
-    getGameFields[key].textContent = value;
+    getFrontCards[key].textContent = value;
   });
 };
 
