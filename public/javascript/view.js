@@ -14,10 +14,18 @@ export const setViewHeaderPlayerSymbol = playerSymbol => {
 
 export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.textContent = `Am Zug ist: ${currentPlayer}`;
+  getHeaderInfoCurrentPlayer.classList.add("wiggleMe");
+  getHeaderInfoCurrentPlayer.addEventListener("animationend", () => {
+    getHeaderInfoCurrentPlayer.classList.remove("wiggleMe");
+  }, false);
 };
 
 export const setViewFooterStatus = statusMessage => {
   getFooterStatusContent.textContent = statusMessage;
+  getFooterStatusContent.classList.add("grow");
+  getFooterStatusContent.addEventListener("transitionend", () => {
+    getFooterStatusContent.classList.remove("grow");
+  });
 };
 
 export const setViewNewGameField = () => {

@@ -40,6 +40,7 @@ const setPlayerSymbol = (socket, players) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
+  // getHeaderInfoCurrentPlayer.classList.remove("wiggleMe");
   if (updatedGame.valid) {
     socket.game = updatedGame;
     setViewUpdateGameField(updatedGame);

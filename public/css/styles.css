@@ -15,9 +15,9 @@ body {
 
 .page__wrap {
   display: grid;
-  grid-template-rows: 20% 10% auto;
+  grid-template-rows: 15% 10% auto;
   height: 100vh;
-  background-color: gainsboro;
+  background-color: #b4b4b4;
   font-family: 'calibri', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -42,6 +42,15 @@ body {
   text-decoration: underline;
 }
 
+.wiggleMe {
+  animation-name: wiggleMe;
+  animation-timing-function: ease-in;
+}
+
+.header__info__currentPlayer.wiggleMe {
+  animation-duration: .8s;
+}
+
 .main__wrap {
   justify-self: center;
   padding-top: 1vw;
@@ -55,19 +64,21 @@ body {
 }
 
 .field__boarder {
-  border-left: 4vw outset #4e4e4e;
-  border-right: 4vw inset #f1f1f1;
-  border-top: 4vw outset #363636;
-  border-bottom: 4vw inset #fff;
+  border-left: 6vw outset #0e0e0e;
+  border-right: 6vw inset #6c6c6c;
+  border-top: 4vw outset #292929;
+  border-bottom: 4vw inset #535353;
   border-radius: 4px;
   box-shadow: -20px -10px 70px -15px rgba(0, 0, 0, .2);
+  background-color: #dedede;
 }
 
 .table__wrap {
   padding: 20px;
+  margin: 10px;
   border: 6px double darkgoldenrod;
   background-color: gainsboro;
-  border-radius: 1px;
+  border-radius: 30px;
   box-shadow: 20px 20px 60px 20px rgba(0, 0, 0, .2);
 }
 
@@ -78,14 +89,13 @@ body {
 
 .field {
   border: 1px solid black;
-  border-radius: 3px;
   height: 6vw;
   width: 6vw;
   vertical-align: middle;
   text-align: center;
   font-family: sans-serif;
   font-size: 4vw;
-  text-shadow: 0 0 10px rgba(150, 150, 150, 1);
+  text-shadow: 0 0 5px rgba(150, 150, 150, 1);
   cursor: pointer;
 
   /* background: none; */
@@ -126,24 +136,9 @@ body {
 } */
 
 .field:hover {
-  box-shadow: 0 0px 10px 0px rgba(0, 0, 0, .5);
+  transform: scale(1.05);
+  box-shadow: 0 0px 20px 1px rgba(0, 0, 0, .2);
 }
-
-/* #feld0 {
-  border-radius: 6px 0 0 0;
-}
-
-#feld2 {
-  border-radius: 0 6px 0 0;
-}
-
-#feld6 {
-  border-radius: 0 0 0 6px;
-}
-
-#feld8 {
-  border-radius: 0 0 6px 0;
-} */
 
 .footer__wrap {
   width: 100%;
@@ -156,6 +151,15 @@ body {
   height: 100%;
   font-size: 2.5vw;
   text-align: center;
+}
+
+.footer__status__content {
+  transform: scale(1);
+}
+
+.footer__status__content.grow {
+  transition: all 0.1s ease;
+  transform: scale(1.2);
 }
 
 .restart__wrap {
@@ -174,4 +178,50 @@ body {
 
 .restart__button:hover {
   box-shadow: 0 1px 5px 1px rgba(0, 0, 0, .2);
+}
+
+@keyframes wiggleMe {
+  0% {
+    transform: skewY(9deg);
+  }
+
+  10% {
+    transform: skewY(-8deg);
+  }
+
+  20% {
+    transform: skewY(7deg);
+  }
+
+  30% {
+    transform: skewY(-6deg);
+  }
+
+  40% {
+    transform: skewY(5deg);
+  }
+
+  50% {
+    transform: skewY(-4deg);
+  }
+
+  60% {
+    transform: skewY(3deg);
+  }
+
+  70% {
+    transform: skewY(-2deg);
+  }
+
+  80% {
+    transform: skewY(1deg);
+  }
+
+  90% {
+    transform: skewY(0deg);
+  }
+
+  100% {
+    transform: skewY(0deg);
+  }
 }
