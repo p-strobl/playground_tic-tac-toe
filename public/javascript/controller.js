@@ -29,9 +29,9 @@ export const startNewGame = (socket, newGame) => {
     setPlayerSymbol(socket, newGame.playerSymbols);
     setViewFooterStatus(newGame.game.status);
   }
-  setViewNewGameField();
-  setViewHideResetButton();
+  // setViewNewGameField(newGame.game.gameField);
   setViewHeaderCurrentPlayer(newGame.game.currentPlayer);
+  setViewHideResetButton();
 };
 
 const setPlayerSymbol = (socket, players) => {
@@ -40,7 +40,6 @@ const setPlayerSymbol = (socket, players) => {
 };
 
 export const updateGameState = (socket, updatedGame) => {
-  // getHeaderInfoCurrentPlayer.classList.remove("wiggleMe");
   if (updatedGame.valid) {
     socket.game = updatedGame;
     setViewUpdateGameField(updatedGame);
@@ -56,23 +55,6 @@ export const setSpectatorState = (socket, currentGame) => {
   setViewSpectatorGameField(currentGame.game);
   setViewSpectatorStatus(currentGame.status);
 };
-
-
-// export const setStartPlayer = (socket, startPlayer) => {
-//   socket.startPlayer = startPlayer;
-//   setCurrentPlayer(socket, startPlayer);
-// };
-
-// export const setCurrentPlayer = (socket, currentPlayer) => {
-//   socket.currentPlayer = currentPlayer;
-//   setViewHeaderCurrentPlayer(currentPlayer);
-// };
-
-// export const setGameState = (socket, gameState) => {
-//   socket.currentPlayer = gameState.currentPlayer;
-//   socket.gameField = gameState.gameField;
-//   setViewUpdateField(gameState);
-// };
 
 export const setWaitForOpponent = message => {
   setViewResetView();

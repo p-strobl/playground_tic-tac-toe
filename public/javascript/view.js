@@ -17,7 +17,7 @@ export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.classList.add("wiggleMe");
   getHeaderInfoCurrentPlayer.addEventListener("animationend", () => {
     getHeaderInfoCurrentPlayer.classList.remove("wiggleMe");
-  }, false);
+  }, true);
 };
 
 export const setViewFooterStatus = statusMessage => {
@@ -25,17 +25,16 @@ export const setViewFooterStatus = statusMessage => {
   getFooterStatusContent.classList.add("grow");
   getFooterStatusContent.addEventListener("transitionend", () => {
     getFooterStatusContent.classList.remove("grow");
-  });
+  }, true);
 };
 
-export const setViewNewGameField = () => {
-  getGameFields.forEach(field => field.textContent = "");
+export const setViewNewGameField = gameField => {
+  getGameFields.forEach((field, index) => field.textContent = gameField[index]);
 };
 
 export const setViewResetView = () => {
   getHeaderInfoPlayerSymbol.textContent = "";
   getHeaderInfoCurrentPlayer.textContent = "";
-  setViewNewGameField();
 };
 
 export const setViewUpdateGameField = updatedGame => {
