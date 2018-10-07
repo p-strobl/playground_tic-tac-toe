@@ -1,4 +1,5 @@
 "use strict";
+//@ts-check
 
 module.exports.playerRoomCount = function (io, clients) {
   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {

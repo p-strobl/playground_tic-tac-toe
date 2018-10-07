@@ -1,4 +1,5 @@
 "use strict";
+//@ts-check
 
 const utility = require("./app/lib/utilities.js");
 
