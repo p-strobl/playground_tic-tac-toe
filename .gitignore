@@ -1,5 +1,4 @@
 /.idea
-/package.json
 /node_modules
 .vscode/
 npm-debug.log
