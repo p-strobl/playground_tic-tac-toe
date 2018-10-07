@@ -3,11 +3,11 @@
 import {
   determineClickedField,
   userSideGameRestart
-} from "./model.js";
+} from "./gameModel.js";
 
 import {
   setViewFooterStatus
-} from "./view.js";
+} from "./gameView.js";
 
 import {
   setClientType,
@@ -15,7 +15,7 @@ import {
   updateGameState,
   setSpectatorState,
   setWaitForOpponent
-} from "./controller.js";
+} from "./gameController.js";
 
 const init = () => {
   const socket = io.connect();

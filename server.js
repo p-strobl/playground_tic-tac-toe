@@ -52,7 +52,7 @@ const init = () => {
       socket.emit("updateGame", game);
   };
 
-  const userSideGameRestart = (io, clients, game) => {
+  const userSideGameRestart = (io, socket, clients, game) => {
     utilities.playerRoomCount(io, clients) === 2 ?
       startGame(game, clients) :
       waitForOpponent(io);

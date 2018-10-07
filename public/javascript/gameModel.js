@@ -7,7 +7,7 @@ import {
 
 import {
   setViewFooterStatus
-} from "./view.js";
+} from "./gameView.js";
 
 export const userSideGameRestart = socket => {
   removeFlipClass();

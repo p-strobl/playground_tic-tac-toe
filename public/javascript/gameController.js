@@ -2,7 +2,7 @@
 
 import {
   removeFlipClass
-} from "./model.js";
+} from "./gameModel.js";
 
 import {
   setViewHeaderPlayerSymbol,
@@ -15,7 +15,7 @@ import {
   setViewResetView,
   setViewHideResetButton,
   setViewShowResetButton
-} from "./view.js";
+} from "./gameView.js";
 
 import {
   getFrontCards,
