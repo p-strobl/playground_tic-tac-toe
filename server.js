@@ -94,7 +94,6 @@ const init = () => {
    * @returns {emit}          Emits move to all player or the error message to the single player who clicked
    */
   const playerMove = (io, socket, clicked) => {
-    console.log(typeof clicked);
     clicked.type === "spectator" ? clicked.player = clicked.type : "";
     game.move(clicked.player, clicked.fieldId) === "" ?
       io.emit("updateGame", game) :

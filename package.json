@@ -1,0 +1,32 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "2-Player Tic-Tac-Toe online game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/p-strobl/playground-tic-tac-toe.git"
+  },
+  "keywords": [
+    "Tic-Tac-Toe",
+    "online",
+    "game"
+  ],
+  "author": "P. Strobl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/p-strobl/playground-tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/p-strobl/playground-tic-tac-toe#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
