@@ -1,6 +1,13 @@
 "use strict";
 //@ts-check
 
+/**
+ * Count's connected clients in player room
+ * @function playerRoomCount
+ * @param   {Object} io      Global io object
+ * @param   {Array}  clients Global client array
+ * @returns {Number} How many player are connected
+ */
 module.exports.playerRoomCount = function (io, clients) {
   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {
     return io.sockets.adapter.rooms.player.length;
@@ -9,6 +16,12 @@ module.exports.playerRoomCount = function (io, clients) {
   }
 };
 
+/**
+ * Gives connected payer randomized symbols
+ * @function randomizeSymbol
+ * @param   {Array}  clients Global client array
+ * @returns {Object} Player with randomized symbols
+ */
 module.exports.randomizeSymbol = function (clients) {
   const players = clients.filter(client => client.type === "player");
   const possibleSymbol = "XO";
@@ -19,6 +32,12 @@ module.exports.randomizeSymbol = function (clients) {
   return players;
 };
 
+/**
+ * Get clients with type player
+ * @function getPlayerSymbols
+ * @param   {Object} randomizedSymbols Player with randomized symbols
+ * @returns {Object} Player id and symbol
+ */
 module.exports.getPlayerSymbols = function (randomizedSymbols) {
   return Object.values(randomizedSymbols).map(player => {
     return {
@@ -28,10 +47,23 @@ module.exports.getPlayerSymbols = function (randomizedSymbols) {
   });
 };
 
+/**
+ * Randomize wihch player startes
+ * @function randomizeStartPlayer
+ * @param   {Object} randomizedSymbol Player with randomized symbols
+ * @returns {String} Random start player
+ */
 module.exports.randomizeStartPlayer = function (randomizedSymbol) {
   return randomizedSymbol[Math.floor(Math.random() * randomizedSymbol.length)].symbol;
 };
 
+/**
+ * Removes disconnected client from global clients array
+ * @function removeClient
+ * @param  {Object} socket  Clients socket object
+ * @param  {Array}  clients Global client array
+ * @return {Array} Remaining clients
+ */
 module.exports.removeClient = function (socket, clients) {
   return clients.filter(client => client.id !== socket.id);
 };

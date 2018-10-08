@@ -10,10 +10,21 @@ import {
   getFieldWraps
 } from "../helpers/domHelper.js";
 
+/**
+ * Set player symbol in header status
+ * @function setViewHeaderPlayerSymbol
+ * @param {String} playerSymbol Player symbol
+ */
 export const setViewHeaderPlayerSymbol = playerSymbol => {
   getHeaderInfoPlayerSymbol.textContent = `Sie spielen als ${playerSymbol}`;
 };
 
+/**
+ * Set current player in header status
+ * Add "wiggle" class to it and removes it after animation ends
+ * @function setViewHeaderCurrentPlayer
+ * @param {String} currentPlayer Current player symbol
+ */
 export const setViewHeaderCurrentPlayer = currentPlayer => {
   getHeaderInfoCurrentPlayer.textContent = `Am Zug ist: ${currentPlayer}`;
   getHeaderInfoCurrentPlayer.classList.add("wiggleMe");
@@ -22,6 +33,12 @@ export const setViewHeaderCurrentPlayer = currentPlayer => {
   }, true);
 };
 
+/**
+ * Set status message in footer status
+ * Add "grow" class to it and removes it after animation ends
+ * @function setViewFooterStatus
+ * @param {String} statusMessage Footer status message
+ */
 export const setViewFooterStatus = statusMessage => {
   getFooterStatusContent.textContent = statusMessage;
   getFooterStatusContent.classList.add("grow");

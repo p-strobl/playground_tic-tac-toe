@@ -3,13 +3,24 @@
 
 const utility = require("./app/lib/utilities.js");
 
+/** Create default Game */
 class Game {
+  /**
+   * @constructor Game
+   * @param {String || undefined} startPlayer testGame.js passes a startplayer, else it's undefined 
+   */
   constructor(startPlayer) {
     this.currentPlayer = startPlayer || "X";
     this.gameField = new Array(9).fill(null);
     this.result = "";
   }
 
+  /**
+   * Set's default game values and determine player symbols
+   * @function start
+   * @param   {Array}  clients Global client array
+   * @returns {Object} new game state and player symbols
+   */
   start(clients) {
     const randomizedSymbols = utility.randomizeSymbol(clients);
     const playerSymbols = utility.getPlayerSymbols(randomizedSymbols);
@@ -23,10 +34,22 @@ class Game {
     };
   }
 
+  /**
+   * Add's player symbol to gameField array based on given fieldId
+   * @function updateGameField
+   * @param {String} player  Clicked player
+   * @param {Number} fieldId Clicked field ID
+   */
   updateGameField(player, fieldId) {
     this.gameField[fieldId] = player;
   }
 
+  /**
+   * Switches current player
+   * @function switchCurrentPlayer
+   * @param   {String} player Clicked player
+   * @returns {String} New determined player symbol
+   */
   switchCurrentPlayer(player) {
     player === "X" ?
       this.currentPlayer = "O" :
@@ -34,6 +57,13 @@ class Game {
     return this.currentPlayer;
   }
 
+  /**
+   * Determine message if a wrong move occured
+   * @function determineFailedMove
+   * @param   {String} player Clicked player
+   * @param   {Number} fieldId Clicked field ID
+   * @returns {String} Error message
+   */
   determineFailedMove(player, fieldId) {
     if (this.gameField[fieldId] !== null && this.currentPlayer === player) {
       return `Ungueltiger Zug: Feld ${fieldId} ist nicht frei!`;
@@ -48,6 +78,12 @@ class Game {
     }
   }
 
+  /**
+   * Determine message when the game end's
+   * @function determineEndGame
+   * @param   {String} result End game result
+   * @returns {String} Based on the determineResult function
+   */
   determineEndGame(result) {
     switch (result) {
       case "X":
@@ -60,6 +96,14 @@ class Game {
     }
   };
 
+  /**
+   * If valid move, update current game object
+   * Else determine error message
+   * @function move
+   * @param   {String} player Clicked player
+   * @param   {Number} fieldId Clicked field ID
+   * @returns {Object} Valid current game || Invalid error message
+   */
   move(player, fieldId) {
     let moveFailed = this.determineFailedMove(player, fieldId);
     if (moveFailed === "") {
@@ -77,6 +121,12 @@ class Game {
     return moveFailed;
   }
 
+  /**
+   * Determine game result
+   * @function determineResult
+   * @param   {String} player Clicked player
+   * @returns {String} player symbol || draw symbol || empty string
+   */
   determineResult(player) {
     const winCombinations = [
       [0, 1, 2],

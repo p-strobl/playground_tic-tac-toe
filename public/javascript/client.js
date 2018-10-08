@@ -1,5 +1,6 @@
 "use strict";
 
+
 import {
   determineClickedField,
   userSideGameRestart
@@ -23,6 +24,7 @@ const init = () => {
   determineClickedField(socket);
   userSideGameRestart(socket);
 
+  // Listen for server events
   socket.on("connect", () => {
     socket.on("setClientType", clientType => setClientType(socket, clientType));
     socket.on("waitForOpponent", message => setWaitForOpponent(message));

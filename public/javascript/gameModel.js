@@ -9,6 +9,12 @@ import {
   setViewFooterStatus
 } from "./gameView.js";
 
+/**
+ * Listen for user side game restart event
+ * @function userSideGameRestart
+ * @param   {Object} socket Clients socket object
+ * @returns {Event}         Emit userSideGameRestart event
+ */
 export const userSideGameRestart = socket => {
   removeFlipClass();
   getRestartButton.addEventListener("click", () => {
@@ -16,6 +22,12 @@ export const userSideGameRestart = socket => {
   });
 };
 
+/**
+ * Listen for client side field click
+ * @function determineClickedField
+ * @param   {Object} socket Clients socket object
+ * @returns {Object} player symbol & clicked field id & player type
+ */
 export const determineClickedField = socket => {
   getFieldWraps.forEach(clickedField => clickedField.addEventListener("click", () => {
     socket.emit("playerMove", {
@@ -26,6 +38,10 @@ export const determineClickedField = socket => {
   }));
 };
 
+/**
+ * Find all Fields with class flipped attached and removes it
+ * @function removeFlipClass
+ */
 export const removeFlipClass = () => {
   getFieldWraps.forEach(field => field.classList.remove("flipped"));
 };

@@ -223,19 +223,69 @@
 // console.log(bla.symbol);
 
 
-const test1 = ["O", "O", "O", "", "", "", "", "", "", ];
-const test2 = ["", "", "", "O", "O", "O", "", "", "", ];
-const test3 = ["", "", "", "", "", "", "O", "O", "O", ];
+// const test1 = ["O", "O", "O", "", "", "", "", "", "", ];
+// const test2 = ["", "", "", "O", "O", "O", "", "", "", ];
+// const test3 = ["", "", "", "", "", "", "O", "O", "O", ];
 
-const test4 = ["O", "", "", "O", "", "", "O", "", "", ];
-const test5 = ["", "O", "", "", "O", "", "", "O", "", ];
-const test6 = ["", "", "O", "", "", "O", "", "", "O", ];
+// const test4 = ["O", "", "", "O", "", "", "O", "", "", ];
+// const test5 = ["", "O", "", "", "O", "", "", "O", "", ];
+// const test6 = ["", "", "O", "", "", "O", "", "", "O", ];
 
-const test7 = ["O", "", "", "", "O", "", "", "", "O", ];
-const test8 = ["", "", "O", "", "O", "", "O", "", "", ];
+// const test7 = ["O", "", "", "", "O", "", "", "", "O", ];
+// const test8 = ["", "", "O", "", "O", "", "O", "", "", ];
 
-test1.forEach((value, index) => {
-  console.log(`${index}:${value}`);
-  console.log(Array.from(value));
-  // console.log(value.every(item => item !== ""));
+// test1.forEach((value, index) => {
+//   console.log(`${index}:${value}`);
+//   console.log(Array.from(value));
+//   // console.log(value.every(item => item !== ""));
+// });
+// const test1 = ["O", "O", "O", "", "", "", "", "", "", ];
+// const test2 = ["", "", "", "O", "O", "O", "", "", "", ];
+// const test3 = ["", "", "", "", "", "", "O", "O", "O", ];
+
+// const test4 = ["O", "", "", "O", "", "", "O", "", "", ];
+// const test5 = ["", "O", "", "", "O", "", "", "O", "", ];
+// const test6 = ["", "", "O", "", "", "O", "", "", "O", ];
+
+// const test7 = ["O", "", "", "", "O", "", "", "", "O", ];
+// const test8 = ["", "", "O", "", "O", "", "O", "", "", ];
+
+// test1.forEach((value, index) => {
+//   console.log(`${index}:${value}`);
+//   console.log(Array.from(value));
+//   // console.log(value.every(item => item !== ""));
+// });
+
+let cc = [
+
+];
+
+cc.push({
+  type: "player",
+  id: "ggg"
 });
+cc.push({
+  type: "player",
+  id: "hhh"
+});
+cc.push({
+  type: "spectator",
+  id: "www"
+});
+cc.push({
+  type: "spectator",
+  id: "ddd"
+});
+const randomizeSymbol = function (cc) {
+  const players = cc.filter(client => client.type === "player");
+  console.log(players);
+  const possibleSymbol = "XO";
+  players[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
+  players[0].symbol === "X" ?
+    players[1].symbol = "O" :
+    players[1].symbol = "X";
+  return players;
+};
+
+let test = randomizeSymbol(cc);
+console.log(test);

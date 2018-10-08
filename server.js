@@ -37,11 +37,12 @@ let clients = [];
 const init = () => {
 
   /**
-   * @function addNewClient     Add's new client to clients array and send's him/her his/her defined type.
-   * @param  {Object} socket      Clients socket object
-   * @param  {Array} clients     Global clients array
-   * @param  {Object} newClient   New Client with defined type and set room
-   * @returns {String}          What kind of type the new client have.
+   * Add's new client to clients array and send's him/her his/her defined type.
+   * @function addNewClient
+   * @param   {Object} socket    Clients socket object
+   * @param   {Array}  clients   Global client array
+   * @param   {Object} newClient New Client with defined type and set room
+   * @returns {String} What kind of type the new client have.
    */
   const addNewClient = (socket, clients, newClient) => {
     clients.push(newClient);
@@ -50,9 +51,10 @@ const init = () => {
   };
 
   /**
-   * @function waitForOpponent  Send's please wait message to waiting player.
-   * @param  {Object} io        Global io object
-   * @returns {emit}            Emit string
+   * Send's please wait message to waiting player.
+   * @function waitForOpponent
+   * @param   {Object} io Global io object
+   * @returns {String} Emit
    */
   const waitForOpponent = io => {
     utilities.playerRoomCount(io, clients) === 1 ?
@@ -61,22 +63,24 @@ const init = () => {
   };
 
   /**
+   * Emit new game to all players in room "player"
    * @function startGame
-   * @param  {Object} game    Game module
-   * @param  {Array} clients  Global array
-   * @returns {emit}          Emit new game to all players in room "player"
+   * @param   {Object} game   Game module
+   * @param   {Array}  clients Global client array
+   * @returns {Object} Emit new game object
    */
   const startGame = (game, clients) => {
     io.sockets.in("player").emit("startGame", game.start(clients));
   };
 
   /**
-   * @function spactateGame
-   * @param  {Object} io    Global io object
-   * @param  {Object} game  Game module
-   * @returns {emit}        Emit game object and header / footer status message
+   * Get current game object, emit it with a header and footer message
+   * @function spectateGame
+   * @param   {Object} io   Global io object
+   * @param   {Object} game Game module
+   * @returns {Object} Emit game object and header / footer status message
    */
-  const spactateGame = (io, game) => {
+  const spectateGame = (io, game) => {
     io.sockets.in("spectator").emit("spectateGame", {
       game,
       status: {
@@ -87,11 +91,12 @@ const init = () => {
   };
 
   /**
+   * Receives's player click and process it
    * @function playerMove
-   * @param  {Object} io      Global io object
-   * @param  {Object} socket  Clients socket object
-   * @param  {Object} clicked What player and what field got clicked
-   * @returns {emit}          Emits move to all player or the error message to the single player who clicked
+   * @param   {Object} io      Global io object
+   * @param   {Object} socket  Clients socket object
+   * @param   {Object} clicked What player and what field got clicked
+   * @returns {Object} Emits move to all player or the error message to the single player who clicked
    */
   const playerMove = (io, socket, clicked) => {
     clicked.type === "spectator" ? clicked.player = clicked.type : "";
@@ -101,43 +106,45 @@ const init = () => {
   };
 
   /**
-   * @function userSideGameRestart  Determine if a new game should start / a single player should wait / to spactate the current game
-   * @param  {Object} io            Global io object
-   * @param  {Array} clients        Global array
-   * @param  {Object} game          Game module
+   * Determine if a new game should start || a single player should wait || to spactate the current game
+   * @function userSideGameRestart
+   * @param {Object} io      Global io object
+   * @param {Array}  clients Global client array
+   * @param {Object} game    Game module
    */
   const userSideGameRestart = (io, clients, game) => {
     utilities.playerRoomCount(io, clients) === 2 ?
       startGame(game, clients) :
       waitForOpponent(io);
-    spactateGame(io, game);
+    spectateGame(io, game);
   };
 
-  // On socket connection
+  // Listen for connection
   io.sockets.on("connection", socket => {
     const newClient = new Client(io, socket, clients);
     const newClientType = addNewClient(socket, clients, newClient);
     const playerRoomCount = utilities.playerRoomCount(io, clients);
 
+    // determine what to do, based on connected player count
     if (newClientType === "player" && playerRoomCount === 1) {
       waitForOpponent(io);
     } else if (newClientType === "player" && playerRoomCount === 2) {
       startGame(game, clients);
     } else {
-      spactateGame(io, game);
+      spectateGame(io, game);
     }
 
-    // Player makes a move
+    // Listen for player move
     socket.on("playerMove", clicked => {
       playerMove(io, socket, clicked);
     });
 
-    // Player restartes the game
+    // Listen for user side game restart
     socket.on("userSideGameRestart", () => {
       userSideGameRestart(io, clients, game);
     });
 
-    // Client disconnectes
+    // Listen for disconnection
     socket.on("disconnect", () => {
       clients = utilities.removeClient(socket, clients);
       waitForOpponent(io);
@@ -146,7 +153,7 @@ const init = () => {
 
 };
 
-/** Class creating new Server  */
+/** Class creating new Server */
 class Server {
   constructor() {
     this.webServer = webServer;
