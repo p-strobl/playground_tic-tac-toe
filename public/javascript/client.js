@@ -7,10 +7,6 @@ import {
 } from "./gameModel.js";
 
 import {
-  setViewFooterStatus
-} from "./gameView.js";
-
-import {
   setClientType,
   startNewGame,
   updateGameState,

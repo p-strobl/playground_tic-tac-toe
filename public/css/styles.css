@@ -65,7 +65,7 @@ body {
   justify-self: center;
   padding-top: 2vh;
   perspective: 1000px;
-  -webkit-perspective: 1000;
+  -webkit-perspective: 1000px;
 }
 
 .field__board {
