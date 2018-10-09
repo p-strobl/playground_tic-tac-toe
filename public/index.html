@@ -5,71 +5,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="socket.io/socket.io.js" type="text/javascript" defer="defer"></script>
-  <script src="javascript/client.js" type="module"></script>
-  <link href="css/styles.css" rel="stylesheet">
+  <script src="client.js" type="module"></script>
+  <link href="styles.css" rel="stylesheet">
   <title>2-Player Tic-Tac-Toe online game</title>
 </head>
 
 <body>
-  <div class="page__wrap">
-    <header class="header__wrap">
-      <h1>
-        Tic-Tac-Toe
-      </h1>
-      <section class="header__info">
-        <p class="header__info__playerSymbol"></p>
-        <p class="header__info__currentPlayer"></p>
-      </section>
-    </header>
-    <main class="main__wrap">
-      <section class="field__board">
-        <div class="field__wrap">
-          <div class="frontCard" id="feld0"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld1"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld2"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld3"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld4"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld5"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld6"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld7"></div>
-          <div class="backCard"></div>
-        </div>
-        <div class="field__wrap">
-          <div class="frontCard" id="feld8"></div>
-          <div class="backCard"></div>
-        </div>
-      </section>
-    </main>
-    <footer class="footer__wrap">
-      <section class="footer__status">
-        <p class="footer__status__content"></p>
-      </section>
-    </footer>
-    <div class="restart__wrap">
-      <button class="restart__button" type="button">Neu Start</button>
-    </div>
+<div class="page__wrap">
+  <header class="header__wrap">
+    <h1>
+      Tic-Tac-Toe
+    </h1>
+    <section class="header__info">
+      <p class="header__info__playerSymbol"></p>
+      <p class="header__info__currentPlayer"></p>
+    </section>
+  </header>
+  <main class="main__wrap">
+    <section class="field__board">
+      <div class="field__wrap">
+        <div class="frontCard" id="feld0"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld1"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld2"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld3"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld4"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld5"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld6"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld7"></div>
+        <div class="backCard"></div>
+      </div>
+      <div class="field__wrap">
+        <div class="frontCard" id="feld8"></div>
+        <div class="backCard"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer__wrap">
+    <section class="footer__status">
+      <p class="footer__status__content"></p>
+    </section>
+  </footer>
+  <div class="restart__wrap">
+    <button class="restart__button" type="button">Neu Start</button>
   </div>
+</div>
 </body>
 
 </html>
