@@ -108,7 +108,7 @@ body {
   transform: rotateY(0deg);
 }
 
-.field__wrap.flipped>.backCard {
+.field__wrap.flipped > .backCard {
   -webkit-transform: rotateY(0deg);
   transform: rotateY(0deg);
 }
