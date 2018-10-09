@@ -60,9 +60,9 @@ module.exports.randomizeStartPlayer = function (randomizedSymbol) {
 /**
  * Removes disconnected client from global clients array
  * @function removeClient
- * @param  {Object} socket  Clients socket object
- * @param  {Array}  clients Global client array
- * @return {Array} Remaining clients
+ * @param   {Object} socket  Clients socket object
+ * @param   {Array}  clients Global client array
+ * @returns {Array} Remaining clients
  */
 module.exports.removeClient = function (socket, clients) {
   return clients.filter(client => client.id !== socket.id);

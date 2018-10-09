@@ -67,6 +67,8 @@ class Game {
   determineFailedMove(player, fieldId) {
     if (this.gameField[fieldId] !== null && this.currentPlayer === player) {
       return `Ungueltiger Zug: Feld ${fieldId} ist nicht frei!`;
+    } else if (player === "single") {
+      return "Das Spielt hat noch nicht begonnen, bitte warten Sie auf Ihren Gegner!"
     } else if (player === "spectator") {
       return "Sie können gerade nicht in das Spielgeschehen eingreifen, bitte genießen Sie das laufende Spiel!";
     } else if (player !== this.currentPlayer && this.result === "") {

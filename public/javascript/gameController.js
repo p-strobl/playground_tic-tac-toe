@@ -29,7 +29,7 @@ import {
  * @param {Object} socket     Clients socket object
  * @param {String} clientType player || spectator
  */
-export const setClientType = (socket, clientType) => {;
+export const setClientType = (socket, clientType) => {
   socket.type = clientType;
 };
 
@@ -86,6 +86,7 @@ export const updateGameState = (socket, updatedGame) => {
  */
 export const setSpectatorState = (socket, currentGame) => {
   socket.game = currentGame.game;
+  setViewNewGameField(currentGame.game.gameField);
   setViewHeaderCurrentPlayer(currentGame.game.currentPlayer);
   setViewSpectatorGameField(currentGame.game);
   setViewSpectatorStatus(currentGame.status);

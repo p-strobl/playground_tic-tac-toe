@@ -1,7 +1,7 @@
 "use strict";
 //@ts-check
 
-const utility = require("./utilities.js");
+const utilities = require("./utilities.js");
 
 // /** Class create new Client  */
 class Client {
@@ -25,7 +25,7 @@ class Client {
    * @returns {String} Player type
    */
   defineType(io, clients) {
-    const type = utility.playerRoomCount(io, clients) < 2 ?
+    const type = utilities.playerRoomCount(io, clients) < 2 ?
       "player" :
       "spectator";
     return type;
