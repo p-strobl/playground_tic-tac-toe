@@ -29,7 +29,7 @@ const utilities = require("./app/lib/utilities.js");
 const gameModule = require("./GameModule.js");
 
 // init new Game modul
-let game = new gameModule.Game();
+const game = new gameModule.Game();
 
 // init global Clients array
 let clients = [];
@@ -113,7 +113,6 @@ const init = () => {
    */
   const userSideGameRestart = (io, clients, game) => {
     if (utilities.playerRoomCount(io, clients) === 2) {
-      game = new gameModule.Game();
       startGame(game, clients);
     } else {
       waitForOpponent(io);
@@ -131,7 +130,6 @@ const init = () => {
     if (newClientType === "player" && playerRoomCount === 1) {
       waitForOpponent(io);
     } else if (newClientType === "player" && playerRoomCount === 2) {
-      game = new gameModule.Game();
       startGame(game, clients);
     } else {
       spectateGame(io, game);
