@@ -118,9 +118,6 @@ const init = () => {
     } else {
       waitForOpponent(io);
     }
-    // utilities.playerRoomCount(io, clients) === 2 ?
-    //   startGame(game, clients) :
-    //   waitForOpponent(io);
     spectateGame(io, game);
   };
 
