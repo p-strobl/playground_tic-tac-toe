@@ -9,8 +9,8 @@ class Game {
    * @constructor Game
    * @param {String || undefined} startPlayer testGame.js passes a startplayer, else it's undefined 
    */
-  constructor(startPlayer) {
-    this.currentPlayer = startPlayer || "X";
+  constructor(startPlayer = "X") {
+    this.currentPlayer = startPlayer;
     this.gameField = new Array(9).fill(null);
     this.result = "";
   }
@@ -51,9 +51,7 @@ class Game {
    * @returns {String} New determined player symbol
    */
   switchCurrentPlayer(player) {
-    player === "X" ?
-      this.currentPlayer = "O" :
-      this.currentPlayer = "X";
+    this.currentPlayer = player === "X" ? "O" : "X";
     return this.currentPlayer;
   }
 
@@ -76,7 +74,7 @@ class Game {
     } else if (this.result === "X" || this.result === "O" || this.result === "-") {
       return `Ungueltiger Zug: Das Spiel ist zu Ende!`;
     } else {
-      return "";
+      return this.result;
     }
   }
 

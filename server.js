@@ -1,6 +1,9 @@
 "use strict";
 //@ts-check
 
+// Set port number
+const PORT = 8083;
+
 // Require Express.js
 const express = require("express");
 const path = require("path");
@@ -8,9 +11,6 @@ const http = require("http");
 
 // Require socket.io
 const socketIo = require("socket.io");
-
-// Set port number
-const PORT = 8083;
 
 // init server
 const server = express();
@@ -20,7 +20,7 @@ const webServer = http.Server(server);
 const io = socketIo(webServer);
 
 // Require Client class
-const Client = require("./app/lib/Client.js");
+const client = require("./app/lib/Client.js");
 
 // Require utilitiy functions
 const utilities = require("./app/lib/utilities.js");
@@ -56,9 +56,7 @@ const init = () => {
    * @returns {String} Emit
    */
   const waitForOpponent = io => {
-    utilities.playerRoomCount(io, clients) === 1 ?
-      io.sockets.in("player").emit("waitForOpponent", "Bitte warten Sie auf Ihren Gegner!") :
-      "";
+    if (utilities.playerRoomCount(io, clients) === 1) io.sockets.in("player").emit("waitForOpponent", "Bitte warten Sie auf Ihren Gegner!");
   };
 
   /**
@@ -98,7 +96,7 @@ const init = () => {
    * @returns {Object} Emits move to all player or the error message to the single player who clicked
    */
   const playerMove = (io, socket, clicked) => {
-    clicked.type === "spectator" ? clicked.player = clicked.type : "";
+    if (clicked.type === "spectator") clicked.player = clicked.type;
     game.move(clicked.player, clicked.fieldId) === "" ?
       io.emit("updateGame", game) :
       socket.emit("updateGame", game);
@@ -122,7 +120,7 @@ const init = () => {
 
   // Listen for connection
   io.sockets.on("connection", socket => {
-    const newClient = new Client(io, socket, clients);
+    const newClient = new client(io, socket, clients);
     const newClientType = addNewClient(socket, clients, newClient);
     const playerRoomCount = utilities.playerRoomCount(io, clients);
 

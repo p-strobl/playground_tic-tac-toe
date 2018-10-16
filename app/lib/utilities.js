@@ -8,7 +8,7 @@
  * @param   {Array}  clients Global client array
  * @returns {Number} How many player are connected
  */
-module.exports.playerRoomCount = function (io, clients) {
+module.exports.playerRoomCount = (io, clients) => {
   if (clients.length !== 0 && io.sockets.adapter.rooms.hasOwnProperty("player")) {
     return io.sockets.adapter.rooms.player.length;
   } else {
@@ -22,13 +22,11 @@ module.exports.playerRoomCount = function (io, clients) {
  * @param   {Array}  clients Global client array
  * @returns {Object} Player with randomized symbols
  */
-module.exports.randomizeSymbol = function (clients) {
+module.exports.randomizeSymbol = clients => {
   const players = clients.filter(client => client.type === "player");
   const possibleSymbol = "XO";
   players[0].symbol = possibleSymbol.charAt(Math.floor(Math.random() * possibleSymbol.length));
-  players[0].symbol === "X" ?
-    players[1].symbol = "O" :
-    players[1].symbol = "X";
+  players[1].symbol = players[0].symbol === "X" ? "O" : "X";
   return players;
 };
 
@@ -38,7 +36,7 @@ module.exports.randomizeSymbol = function (clients) {
  * @param   {Object} randomizedSymbols Player with randomized symbols
  * @returns {Object} Player id and symbol
  */
-module.exports.getPlayerSymbols = function (randomizedSymbols) {
+module.exports.getPlayerSymbols = (randomizedSymbols) => {
   return Object.values(randomizedSymbols).map(player => {
     return {
       id: player.id,
@@ -53,7 +51,7 @@ module.exports.getPlayerSymbols = function (randomizedSymbols) {
  * @param   {Object} randomizedSymbol Player with randomized symbols
  * @returns {String} Random start player
  */
-module.exports.randomizeStartPlayer = function (randomizedSymbol) {
+module.exports.randomizeStartPlayer = randomizedSymbol => {
   return randomizedSymbol[Math.floor(Math.random() * randomizedSymbol.length)].symbol;
 };
 
@@ -64,6 +62,6 @@ module.exports.randomizeStartPlayer = function (randomizedSymbol) {
  * @param   {Array}  clients Global client array
  * @returns {Array} Remaining clients
  */
-module.exports.removeClient = function (socket, clients) {
+module.exports.removeClient = (socket, clients) => {
   return clients.filter(client => client.id !== socket.id);
 };
